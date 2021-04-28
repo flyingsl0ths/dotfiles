@@ -1,0 +1,11 @@
+[user]
+	email = <email>
+	name = <username>
+
+[alias]
+	co = checkout
+	graph = log --all --graph --decorate --oneline
+	br = branch
+	ci = commit
+	st = status
+	last = log -1 HEAD
