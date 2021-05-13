@@ -1,6 +1,6 @@
 export ZSH=$HOME/.oh-my-zsh
 
-export PATH=$PATH:$HOME/.local/bin:$HOME/.gem/ruby/2.7.0/bin:$HOME/.cabal/bin
+export PATH=$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.gem/ruby/2.7.0/bin:$HOME/.cabal/bin
 
 
 ZSH_THEME="norm"
@@ -59,6 +59,7 @@ alias cabal_install="cabal install --ghc-options=-dynamic"
 alias cmake-c-config="cmake -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 alias cmake-cpp-config="cmake -G Ninja -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 alias cmake-build="cmake --build"
+alias cmake-target="cmake --build . --target"
 
 # ryzen laptop related
 alias ryzen-cpu-profile="sudo ryzenadj --slow-time=100 --vrmmax-current=300000 --min-gfxclk=4000 --tctl-temp=75 --max-gfxclk=4000 --min-fclk-frequency=1900 --max-fclk-frequency=1900 --stapm-limit=60000 --stapm-time=3600 --fast-limit=60000 --slow-limit=60000 && sudo zenstates -p0 --enable -f 0xea -d 0xd -v 0x53 && sudo zenstates --c6-disable"

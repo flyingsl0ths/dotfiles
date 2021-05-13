@@ -23,7 +23,7 @@ set ttyfast
 set gdefault
 set number
 set hls
-"set cursorline
+set cursorline
 set nostartofline
 set ignorecase
 set smartcase
@@ -75,13 +75,7 @@ Plugin 'itchyny/vim-gitbranch'
 Plugin 'dense-analysis/ale'
 Plugin 'itchyny/lightline.vim'
 Plugin 'maximbaz/lightline-ale'
-Plugin 'chriskempson/base16-vim'
-Plugin 'francoiscabrol/ranger.vim'
 Plugin 'preservim/tagbar'
-"
-
-" ranger.vim settings
-let g:ranger_replace_netrw = 1
 "
 
 " ALE Settings
@@ -92,7 +86,7 @@ let g:ale_fixers = { '*':
 			\'c' : ['clang-format','clangtidy'],
 			\'cpp': ['clang-format','clangtidy'],
 			\'cmake' : 'cmakeformat',
-			\'java': ['clangtidy', 'clang-format'],
+			\'java': 'clang-format',
 			\'markdown': 'prettier',
 			\'html': 'prettier',
 			\'python': ['black', 'reorder-python-imports'],
@@ -100,7 +94,6 @@ let g:ale_fixers = { '*':
 
 let g:ale_fix_on_save=1
 let g:ale_haskell_ghc_options = '-fno-code -v0 -dynamic'
-let g:ale_cpp_cc_options = '-std=c++17 -Wall -Werror'
 "
 
 " YCM Settings
@@ -116,7 +109,7 @@ augroup END
 " Lightline Settings
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'landscape',
+      \ 'colorscheme': 'seoul256',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified', 'gitbranch'] ],
@@ -140,5 +133,3 @@ let g:lightline = {
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-"set termguicolors
-colorscheme base16-gruvbox-dark-hard
