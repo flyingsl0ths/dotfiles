@@ -32,8 +32,9 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # Startup
 exec_always --no-startup-id (nohup picom &)
 exec_always --no-startup-id xinput set-prop 12 314 1
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id nm-applet
-exec --no-startup-id feh --bg-fill /home/flyingsl0ths/Pictures/wallpaper/laundry.png
+exec --no-startup-id feh --bg-fill $HOME/Pictures/wallpaper/laundry.png
 exec --no-startup-id gammy
 exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
@@ -155,16 +156,3 @@ bindsym $mod+z mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-    colors {
-        background #373737
-        statusline #eeeeee
-        separator #eeeeee
-
-        focused_workspace #4678b2 #4678b2 #eeeeee
-        }
-        font pango: JetBrainsMonoMedium Nerd Font 14
-        tray_padding 5
-        position bottom
-        status_command i3status
-}
