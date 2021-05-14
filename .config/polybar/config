@@ -3,9 +3,7 @@
 ;
 ;
 ;   ██████╗  ██████╗ ██╗  ██╗   ██╗██████╗  █████╗ ██████╗
-;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗
-;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝
-;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
+;   ██╔══██╗██╔═══██╗██║  ╚██╗ ██╔╝██╔══██╗██╔══██╗██╔══██╗ ;   ██████╔╝██║   ██║██║   ╚████╔╝ ██████╔╝███████║██████╔╝ ;   ██╔═══╝ ██║   ██║██║    ╚██╔╝  ██╔══██╗██╔══██║██╔══██╗
 ;   ██║     ╚██████╔╝███████╗██║   ██████╔╝██║  ██║██║  ██║
 ;   ╚═╝      ╚═════╝ ╚══════╝╚═╝   ╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝
 ;
@@ -41,20 +39,19 @@ background = ${theme-colors.bg}
 foreground = ${theme-colors.fg}
 
 padding-left = 1
-padding-right = 2
-module-margin-left = 2
+padding-right = 1
+module-margin-left = 1
 module-margin-right = 1
 
 override-redirect = true
 wm-restack = i3
 
-;line-size = 3
-;line-color = ${theme-colors.line-color}
+line-size = 3
+line-color = ${theme-colors.line-color}
 
 font-0 = "JetBrainsMonoMedium Nerd Font:size=13;1"
 
 modules-left = i3
-;modules-center = xwindow
 modules-right = battery audio date
 
 tray-background = ${theme-colors.bg}
@@ -135,7 +132,7 @@ ramp-volume-1 = 
 ramp-volume-2 = 
 
 label-muted = ﱝ
-label-muted-foreground = ${theme-colors-urgent}
+label-muted-foreground = ${theme-colors.urgent-bg}
 
 [module/battery]
 type = internal/battery
@@ -143,8 +140,8 @@ battery = BAT1
 adapter = ADP1
 full-at = 100
 
-format-charging = <ramp-capacity>
-format-discharging = <ramp-capacity>
+format-charging = <ramp-capacity> <label-charging>%
+format-discharging = <ramp-capacity> <label-discharging>%
 
 label-full = 
 label-full-foreground = ${theme-colors.fg}
@@ -161,6 +158,7 @@ ramp-capacity-8 = 
 ramp-capacity-9 = 
 ramp-capacity-foreground = ${theme-colors.fg}
 
-label-discharging =
-label-discharging-foreground = ${theme-colors.urgent}
+label-charging = %percentage%
+label-discharging = %percentage%
+label-discharging-foreground = ${theme-colors.urgent-bg}
 label-charging-foreground = ${theme-colors.fg}
