@@ -17,8 +17,8 @@ volume master {
 }
 
 wireless wlp1s0 {
-        format_up = "W: %essid, %bitrate"
-        format_down = "W: down "
+        format_up = "W: %essid"
+        format_down = "W: down"
 }
 
 ethernet _first_ {
@@ -27,7 +27,7 @@ ethernet _first_ {
 }
 
 tztime local {
-        format = "%m/%d/%Y %I:%M%P"
+        format = "%m/%d/%Y %a %I:%M%P"
         separator = true
         separator_block_width = 15
 }

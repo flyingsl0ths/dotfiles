@@ -5,6 +5,8 @@ set $mod Mod4
 
 for_window [class="^.*"] border pixel 6
 
+default_border pixel
+
 new_window none
 new_float normal
 
@@ -19,6 +21,11 @@ smart_gaps on
 for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
+# class                 border  backgr. text    indicator child_border
+client.focused          #cf5181 #bb2a5a #fcefeb #eeeeee   #cf5181
+client.focused_inactive #45859f #8acac2 #fcefeb #eeeeee   #45859f
+client.urgent           #cf5181 #bb2a5a #fcefeb #eeeeee   #cf5181
+
 ###
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -32,9 +39,10 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # Startup
 exec_always --no-startup-id (nohup picom &)
 exec_always --no-startup-id xinput set-prop 12 314 1
+exec_always --no-startup-id lxqt-sudo corectrl
 #exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id nm-applet
-exec --no-startup-id feh --bg-fill $HOME/Pictures/wallpaper/laundry.png
+exec --no-startup-id feh --bg-fill $HOME/Pictures/wallpaper/miku-designer.png
 exec --no-startup-id gammy
 exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
@@ -135,10 +143,10 @@ mode "resize" {
         # Pressing right will grow the window’s width.
         # Pressing up will shrink the window’s height.
         # Pressing down will grow the window’s height.
-        bindsym j resize shrink width 10 px or 10 ppt
-        bindsym k resize grow height 10 px or 10 ppt
-        bindsym l resize shrink height 10 px or 10 ppt
-        bindsym semicolon resize grow width 10 px or 10 ppt
+        bindsym h resize shrink width 10 px or 10 ppt
+        bindsym j resize grow height 10 px or 10 ppt
+        bindsym k resize shrink height 10 px or 10 ppt
+        bindsym l resize grow width 10 px or 10 ppt
 
         # same bindings, but for the arrow keys
         bindsym Left resize shrink width 10 px or 10 ppt
@@ -158,11 +166,12 @@ bindsym $mod+z mode "resize"
 # finds out, if available)
 bar {
     colors {
-        background #373737
-        statusline #eeeeee
-        separator #eeeeee
+        background #5b5b6f
+        statusline #fcefeb
+        separator #fcefeb
 
-        focused_workspace #4678b2 #4678b2 #eeeeee
+        focused_workspace #bb2a5a #cf5181 #fcefeb
+        inactive_workspace #45859f #8bcbc2 #fcefeb
         }
         font pango: JetBrainsMonoMedium Nerd Font 14
         tray_padding 5
