@@ -20,6 +20,7 @@ bindkey -v
 
 #vars
 EDITOR=vim
+PAGER=bat
 #
 
 # aliases
@@ -36,6 +37,7 @@ alias tls="tmux ls"
 alias yt="ytfzf"
 
 alias please="sudo"
+alias please_="lxqt-sudo"
 alias cat="bat"
 alias ls="exa --all --tree --level=1"
 alias la="exa -l --all --tree --level=2"
@@ -51,6 +53,7 @@ alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
 alias code="vscodium"
 alias openf="xdg-open"
+alias fso="du -h"
 
 alias py="python"
 
