@@ -3,19 +3,19 @@ set $mod Mod4
 
 # window style
 
-for_window [class="^.*"] border pixel 6
+for_window [class="^.*"] border pixel 5
 
-default_border pixel
+default_border none
 
 new_window none
 new_float normal
 
 hide_edge_borders both
 
-gaps inner 13
-gaps outer 13
+gaps inner 10
+gaps outer 25
 
-smart_gaps on
+#smart_gaps on
 
 # popups
 for_window [window_role="pop-up"] floating enable
@@ -39,10 +39,10 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 # Startup
 exec_always --no-startup-id (nohup picom &)
 exec_always --no-startup-id xinput set-prop 12 314 1
-exec_always --no-startup-id lxqt-sudo corectrl
-#exec_always --no-startup-id $HOME/.config/polybar/launch.sh
+#exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id nm-applet
-exec --no-startup-id feh --bg-fill $HOME/Pictures/wallpaper/miku-designer.png
+exec --no-startup-id feh --bg-fill "$HOME/Pictures/wallpaper/miku-designer.png"
 exec --no-startup-id gammy
 exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
@@ -52,6 +52,8 @@ bindsym $mod+F7 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% &
 bindsym $mod+F6 exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym $mod+F3 exec lux -a 5%
 bindsym $mod+F2 exec lux -s 5%
+bindsym $mod+c exec --no-startup-id betterlockscreen -l dim
+#bindsym $mod+Shift+M exec rofi -theme "$HOME/.config/rofi/rofi/powermenu/powermenu.rasi" &
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -63,7 +65,8 @@ bindsym $mod+f exec thunar
 bindsym $mod+Shift+p exec xfce4-taskmanager
 bindsym $mod+p exec pamac-manager
 bindsym $mod+g exec gimp
-bindsym $mod+r exec --no-startup-id rofi -show run
+bindsym $mod+r exec --no-startup-id rofi -theme ".config/rofi/rofi/dmenu.rasi"  -show run
+bindsym $mod+Shift+E exec gnome-characters
 
 # kill focused window
 bindsym $mod+q kill
@@ -164,17 +167,17 @@ bindsym $mod+z mode "resize"
 
 # Start i3bar to display a workspace bar (plus the system information i3status
 # finds out, if available)
-bar {
-    colors {
-        background #5b5b6f
-        statusline #fcefeb
-        separator #fcefeb
-
-        focused_workspace #bb2a5a #cf5181 #fcefeb
-        inactive_workspace #45859f #8bcbc2 #fcefeb
-        }
-        font pango: JetBrainsMonoMedium Nerd Font 14
-        tray_padding 5
-        position bottom
-        status_command i3status
-}
+#bar {
+#    colors {
+#        background #5b5b6f
+#        statusline #fcefeb
+#        separator #fcefeb
+#
+#        focused_workspace #bb2a5a #cf5181 #fcefeb
+#        inactive_workspace #45859f #8bcbc2 #fcefeb
+#        }
+#        font pango: JetBrainsMonoMedium Nerd Font 14
+#        tray_padding 5
+#        position bottom
+#        status_command i3status
+#}
