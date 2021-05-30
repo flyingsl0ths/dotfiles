@@ -11,8 +11,8 @@
 }
 
 window {
-    anchor:     north;
-    location:   north;
+    anchor:     south;
+    location:   south;
     width:      100%;
     padding:    4px;
     children:   [ horibox ];
@@ -32,7 +32,7 @@ listview {
 entry {
     padding: 0px 0px 0px 5px;
     expand:     false;
-    width:      10em;
+    width:      7em;
 }
 
 element {
