@@ -76,6 +76,7 @@ Plugin 'dense-analysis/ale'
 Plugin 'itchyny/lightline.vim'
 Plugin 'maximbaz/lightline-ale'
 Plugin 'preservim/tagbar'
+Plugin 'chriskempson/base16-vim'
 "
 
 " ALE Settings
@@ -109,7 +110,7 @@ augroup END
 " Lightline Settings
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'seoul256',
+      \ 'colorscheme': 'Tomorrow_Night_Eighties',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified', 'gitbranch'] ],
@@ -133,3 +134,5 @@ let g:lightline = {
 call vundle#end()            " required
 filetype plugin indent on    " required
 
+set termguicolors
+colorscheme base16-gruvbox-dark-soft

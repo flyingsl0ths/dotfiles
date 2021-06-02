@@ -3,7 +3,7 @@ set $mod Mod4
 
 # window style
 
-for_window [class="^.*"] border pixel 5
+for_window [class="^.*"] border pixel 6
 
 default_border none
 
@@ -37,14 +37,14 @@ font pango:JetBrainsMonoMedium Nerd Font 10
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # Startup
+exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id (nohup picom &)
 exec_always --no-startup-id xinput set-prop 12 314 1
-#exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
-exec_always --no-startup-id $HOME/.config/polybar/launch.sh
 exec --no-startup-id nm-applet
 exec --no-startup-id feh --bg-fill "$HOME/Pictures/wallpaper/miku-designer.png"
 exec --no-startup-id gammy
 exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
+#exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym $mod+F8 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +10% && $refresh_i3status
@@ -52,8 +52,7 @@ bindsym $mod+F7 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -10% &
 bindsym $mod+F6 exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
 bindsym $mod+F3 exec lux -a 5%
 bindsym $mod+F2 exec lux -s 5%
-bindsym $mod+c exec --no-startup-id betterlockscreen -l dim
-#bindsym $mod+Shift+M exec rofi -theme "$HOME/.config/rofi/rofi/powermenu/powermenu.rasi" &
+#bindsym $mod+c exec --no-startup-id betterlockscreen -l dim
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
