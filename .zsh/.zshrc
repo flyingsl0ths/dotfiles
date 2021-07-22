@@ -22,7 +22,7 @@ EDITOR=vim
 PAGER=bat
 
 # aliases
-source .zshaliases
+source $HOME/.zshaliases
 
 source $ZSH/custom/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
