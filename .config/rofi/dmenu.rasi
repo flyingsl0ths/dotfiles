@@ -4,16 +4,16 @@
  * Copyright: Dave Davenport
  */
 * {
-    background-color:      #4585a0;
-    border-color:          #5ba7aa;
-    text-color:           #fcefeb;
+    background-color:      #383e55;
+    border-color:          #44869d;
+    text-color:           #fbf0ec;
     font:            "JetBrainsMonoMedium Nerd Font 14";
 }
 
 window {
     anchor:     south;
     location:   south;
-    width:      100%;
+    width:      98%;
     padding:    4px;
     children:   [ horibox ];
 }
@@ -40,5 +40,5 @@ element {
 }
 
 element selected {
-    background-color: #cf4f80;
+    background-color: #ba2b59;
 }
