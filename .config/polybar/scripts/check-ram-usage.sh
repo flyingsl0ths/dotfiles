@@ -1,3 +1,3 @@
-#!/usr/bin/bash
+#!/usr/bin/env bash
 
-free -m | grep Mem | awk '{print ($3)}'
+free -h --si | grep Mem | awk '{print ($3)}'
