@@ -11,14 +11,15 @@ env:
   # Note that some xterm terminfo databases don't declare support for italics.
   # You can verify this by checking for the presence of `smso` and `sitm` in
   # `infocmp xterm-256color`.
+  EDITOR: vim
   TERM: xterm-256color
 
 # Window dimensions in character columns and lines
 # (changes require restart)
 window:
   dimensions:
-    columns: 110
-    lines: 33
+    columns: 120
+    lines: 35
 
   # Adds this many blank pixels of padding around the window
   # Units are physical pixels; this is not DPI aware.
@@ -27,7 +28,7 @@ window:
     x: 5
     y: 5
 
-background_opacity: 0.96
+background_opacity: 1
 
 # The FreeType rasterizer needs to know the device DPI for best results
 # (changes require restart)
@@ -59,41 +60,39 @@ font:
     style: Italic
 
   # Point size of the font
-  size: 11.0
+  size: 12.0
 
 # Should display the render timer
 debug.render_timer: false
 
-# Colors (Gruvbox dark)
+# Colors (Monokai Pro)
 colors:
   # Default colors
   primary:
-    # hard contrast: background = '#1d2021'
-    background: '#282828'
-    # soft contrast: background = '#32302f'
-    foreground: '#ebdbb2'
+    background: '#2D2A2E'
+    foreground: '#FCFCFA'
 
   # Normal colors
   normal:
-    black:   '#282828'
-    red:     '#cc241d'
-    green:   '#98971a'
-    yellow:  '#d79921'
-    blue:    '#458588'
-    magenta: '#b16286'
-    cyan:    '#689d6a'
-    white:   '#a89984'
+    black:   '#403E41'
+    red:     '#FF6188'
+    green:   '#A9DC76'
+    yellow:  '#FFD866'
+    blue:    '#FC9867'
+    magenta: '#AB9DF2'
+    cyan:    '#78DCE8'
+    white:   '#FCFCFA'
 
   # Bright colors
   bright:
-    black:   '#928374'
-    red:     '#fb4934'
-    green:   '#b8bb26'
-    yellow:  '#fabd2f'
-    blue:    '#83a598'
-    magenta: '#d3869b'
-    cyan:    '#8ec07c'
-    white:   '#ebdbb2'
+    black:   '#727072'
+    red:     '#FF6188'
+    green:   '#A9DC76'
+    yellow:  '#FFD866'
+    blue:    '#FC9867'
+    magenta: '#AB9DF2'
+    cyan:    '#78DCE8'
+    white:   '#FCFCFA'
 
 # Values for `mouse`:
 # - Middle

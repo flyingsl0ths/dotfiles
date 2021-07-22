@@ -1,11 +1,19 @@
 [user]
-	email = <email>
-	name = <username>
+    email = <email>
+    name = <username>
 
 [alias]
 	co = checkout
 	graph = log --all --graph --decorate --oneline
 	br = branch
-	ci = commit
+	ci = commit -v
 	st = status
 	last = log -1 HEAD
+	unstaged = diff
+	next-commit = diff --staged
+	rmk = rm --cached
+	rmkf = rm --cached -f
+	lg = log --abbrev-commit --name-status --relative-date
+
+[core]
+	editor = vim

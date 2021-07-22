@@ -1,16 +1,28 @@
-" Variables
 set encoding=utf-8
 
-set tabstop=4     " (ts) width (in spaces) that a <tab> is displayed as
-set expandtab     " (et) expand tabs to spaces (use :retab to redo entire file)
-set shiftwidth=4  " (sw) width (in spaces) used in each step of autoindent (aswell as << and >>)
+set background=dark
+
+set guifont="JetBrainsMonoMedium Nerd Font" 11
+
+" Height of the command bar
+set cmdheight=1
+
+" width (in spaces) that a <tab> is displayed as
+set tabstop=4
+
+" width (in spaces) used in each step of autoindent (aswell as << and >>)
+set shiftwidth=4
 
 " Enable mouse support
 set mouse=a
 
 set modelines=4
-set history=500
+
+" Entries showed in command history
+set history=20
+
 set completeopt-=preview
+
 set backspace=indent,eol,start
 
 " Disable audible bell
@@ -18,33 +30,80 @@ set noerrorbells visualbell t_vb=
 
 set shell=/bin/zsh
 
+" Set to auto read when a file is changed from the outside
+set autoread
+au FocusGained,BufEnter * checktime
+
+set smarttab
+
+" expand tabs to spaces (use :retab to redo entire file)
+set expandtab
+
+" For regular expressions turn magic on
+set magic
+
 set modeline
+
 set ttyfast
+
 set gdefault
+
 set number
+
+" Highlight search results
 set hls
+
 set cursorline
+
 set nostartofline
+
+" Used when in search mode
 set ignorecase
 set smartcase
+
 set title
+
 set ruler
+
 set ic
+
 set is
+
 set nobackup
+
 set nowb
+
 set noswapfile
+
 set wildmenu
-set ai "Auto indent
-set si "Smart indent
-set wrap "Wrap lines
+
+"Auto indent
+set ai
+
+"Smart indent
+set si
+
+"Wrap lines
+set wrap
+
 set nocompatible              " be iMproved, required
+
 filetype off                  " required
+
+" Enables syntax highlighting
 syntax enable
+
+" Hides current mode in gutter
 set noshowmode
+
+let base16colorspace=256
 "
 
 " Key mappings
+" :W sudo saves the file
+" (useful for handling the permission-denied error)
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+
 nmap Q <Nop>
 
 " Used to prevent use of arrow keys
@@ -60,9 +119,30 @@ nnoremap <C-K> <C-w><C-k>
 nnoremap <C-L> <C-w><C-l>
 nnoremap <C-H> <C-w><C-h>
 
-
-" Tagbar mappings
 nmap <F8> :TagbarToggle<CR>
+nmap <leader>f :NERDTree<CR>
+
+map <leader>tn :tabnew<CR>
+map <leader>to :tabonly<CR>
+map <leader>tc :tabclose<CR>
+map <leader>tm :tabmove<CR>
+map <leader>n :tabn<CR>
+map <leader>p :tabp<CR>
+
+" Unhighlight highlighted search results
+map <silent> <leader><cr> :noh<cr>
+
+" Opens a new tab with the current buffer's path
+map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/
+
+" Fast saving
+nmap <leader>w :w!<cr>
+
+" Copy/Paste to clipboard
+vnoremap <C-c> :w !xclip -i -sel c<CR><CR>
+
+noremap <C-p> :r !xsel -o -b<CR><CR>
+
 "
 
 " set the runtime path to include Vundle and initialize
@@ -77,6 +157,15 @@ Plugin 'itchyny/lightline.vim'
 Plugin 'maximbaz/lightline-ale'
 Plugin 'preservim/tagbar'
 Plugin 'chriskempson/base16-vim'
+Plugin 'preservim/nerdtree'
+Plugin 'Xuyuanp/nerdtree-git-plugin'
+Plugin 'ryanoasis/vim-devicons'
+Plugin 'ycm-core/YouCompleteMe'
+Plugin 'udalov/kotlin-vim'
+"
+
+" nerdtree git
+let g:NERDTreeGitStatusUseNerdFonts = 1
 "
 
 " ALE Settings
@@ -91,7 +180,8 @@ let g:ale_fixers = { '*':
 			\'markdown': 'prettier',
 			\'html': 'prettier',
 			\'python': ['black', 'reorder-python-imports'],
-			\ 'ruby': 'rubocop'}
+			\ 'ruby': 'rubocop',
+            \ 'sql': 'sqlfmt'}
 
 let g:ale_fix_on_save=1
 let g:ale_haskell_ghc_options = '-fno-code -v0 -dynamic'
@@ -110,7 +200,7 @@ augroup END
 " Lightline Settings
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'Tomorrow_Night_Eighties',
+      \ 'colorscheme': 'darcula',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified', 'gitbranch'] ],
@@ -121,12 +211,12 @@ let g:lightline = {
       \              [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ] ]
       \ },
       \ 'component_function': {
-      \   'gitbranch': 'gitbranch#name',
-      \  'linter_checking': 'lightline#ale#checking',
-      \  'linter_infos': 'lightline#ale#infos',
-      \  'linter_warnings': 'lightline#ale#warnings',
-      \  'linter_errors': 'lightline#ale#errors',
-      \  'linter_ok': 'lightline#ale#ok'
+      \ 'gitbranch': 'gitbranch#name',
+      \ 'linter_checking': 'lightline#ale#checking',
+      \ 'linter_infos': 'lightline#ale#infos',
+      \ 'linter_warnings': 'lightline#ale#warnings',
+      \ 'linter_errors': 'lightline#ale#errors',
+      \ 'linter_ok': 'lightline#ale#ok'
       \ },
       \ }
 "
@@ -135,4 +225,4 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 set termguicolors
-colorscheme base16-gruvbox-dark-soft
+colorscheme base16-monokai
