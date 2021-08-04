@@ -97,7 +97,12 @@ syntax enable
 set noshowmode
 
 let base16colorspace=256
-"
+
+" Default to static completion for SQL
+let g:omni_sql_default_compl_type = 'syntax'
+
+" Removes 'Error - SQLComplete: The debxt plugin must be loaded for dynamic SQL completion'
+let g:omni_sql_no_default_maps = 1
 
 " Key mappings
 " :W sudo saves the file
@@ -156,12 +161,12 @@ Plugin 'dense-analysis/ale'
 Plugin 'itchyny/lightline.vim'
 Plugin 'maximbaz/lightline-ale'
 Plugin 'preservim/tagbar'
-Plugin 'chriskempson/base16-vim'
 Plugin 'preservim/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'ryanoasis/vim-devicons'
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'udalov/kotlin-vim'
+Plugin 'doums/darcula'
 "
 
 " nerdtree git
@@ -225,4 +230,4 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 set termguicolors
-colorscheme base16-monokai
+colorscheme darcula

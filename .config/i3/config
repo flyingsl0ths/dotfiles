@@ -3,7 +3,7 @@ set $mod Mod4
 
 # window style
 
-for_window [class="^.*"] border pixel 4.5
+for_window [class="^.*"] border pixel 5
 
 new_window none
 
@@ -11,13 +11,11 @@ new_float normal
 
 hide_edge_borders both
 
-default_border pixel 0
-
 default_floating_border none
 
-gaps inner 10
+gaps inner 15
 
-gaps outer 26
+gaps outer 19
 
 smart_gaps on
 
@@ -27,9 +25,9 @@ for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #ba2b59 #383e55 #fbf0ec #6da8a8 #6da8a8
-client.focused_inactive #ba2b59 #383e55 #fbf0ec #6da8a8 #6da8a8
-client.urgent           #ba2b59 #383e55 #fbf0ec #6da8a8 #6da8a8
+client.focused          #282a36 #282a36 #f8f8f2 #bd93f9   #bd93f9
+client.focused_inactive #282a36 #282a36 #f8f8f2 #bd93f9   #bd93f9
+client.urgent           #282a36 #282a36 #f8f8f2 #bd93f9   #bd93f9
 ###
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -44,10 +42,10 @@ exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 exec_always --no-startup-id light-locker
 exec_always --no-startup-id ~/.config/polybar/launch.sh
 exec_always --no-startup-id (nohup picom &)
-exec_always --no-startup-id xinput set-prop 12 314 1
+exec_always --no-startup-id xinput set-prop 12 316 1
 #exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nm-applet
-exec --no-startup-id feh --bg-center "/usr/share/pixmaps/wallpaper/miku-designer.png"
+exec --no-startup-id feh --bg-fill "/usr/share/pixmaps/wallpaper/shovel knight - camp fire.jpg"
 exec --no-startup-id gammy
 exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
@@ -65,11 +63,11 @@ floating_modifier $mod
 bindsym $mod+w exec librewolf
 bindsym $mod+Return exec alacritty
 bindsym $mod+f exec alacritty --command 'zsh' '-i' '-c' 'ranger'
-bindsym $mod+Shift+p exec xfce4-taskmanager
 bindsym $mod+p exec pamac-manager
 bindsym $mod+g exec gimp
-bindsym $mod+Shift+s exec xfce4-screenshooter
 bindsym $mod+r exec --no-startup-id rofi -theme ".config/rofi/rofi/dmenu.rasi"  -show run
+bindsym $mod+Shift+p exec xfce4-taskmanager
+bindsym $mod+Shift+s exec xfce4-screenshooter
 bindsym $mod+Shift+E exec gnome-characters
 
 # kill focused window
@@ -142,6 +140,7 @@ bindsym $mod+Shift+6 move container to workspace number $ws6
 bindsym $mod+Shift+c reload
 # restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
 bindsym $mod+Shift+r restart
+
 # exit i3 (logs you out of your X session)
 bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
 

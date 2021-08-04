@@ -28,13 +28,11 @@ window:
     x: 5
     y: 5
 
-background_opacity: 1
+  history: 10000
 
-# The FreeType rasterizer needs to know the device DPI for best results
-# (changes require restart)
-dpi:
-  x: 128.0
-  y: 128.0
+  save_to_clipboard: true
+
+  live_config_reload: true
 
 # When true, bold text is drawn using the bright variant of colors.
 draw_bold_text_with_bright_colors: true
@@ -62,50 +60,46 @@ font:
   # Point size of the font
   size: 12.0
 
-# Should display the render timer
-debug.render_timer: false
+  ligatures: true
 
-# Colors (Monokai Pro)
+  glyphs: true
+
+# Colors (Dracula)
 colors:
   # Default colors
   primary:
-    background: '#2D2A2E'
-    foreground: '#FCFCFA'
+    background: '#282a36'
+    foreground: '#f8f8f2'
 
   # Normal colors
   normal:
-    black:   '#403E41'
-    red:     '#FF6188'
-    green:   '#A9DC76'
-    yellow:  '#FFD866'
-    blue:    '#FC9867'
-    magenta: '#AB9DF2'
-    cyan:    '#78DCE8'
-    white:   '#FCFCFA'
+    black:   '#000000'
+    red:     '#ff5555'
+    green:   '#50fa7b'
+    yellow:  '#f1fa8c'
+    blue:    '#caa9fa'
+    magenta: '#ff79c6'
+    cyan:    '#8be9fd'
+    white:   '#bfbfbf'
 
   # Bright colors
   bright:
-    black:   '#727072'
-    red:     '#FF6188'
-    green:   '#A9DC76'
-    yellow:  '#FFD866'
-    blue:    '#FC9867'
-    magenta: '#AB9DF2'
-    cyan:    '#78DCE8'
-    white:   '#FCFCFA'
+    black:   '#575b70'
+    red:     '#ff6e67'
+    green:   '#5af78e'
+    yellow:  '#f4f99d'
+    blue:    '#caa9fa'
+    magenta: '#ff92d0'
+    cyan:    '#9aedfe'
+    white:   '#e6e6e6'
 
-# Values for `mouse`:
-# - Middle
-# - Left
-# - Right
-# - Numeric identifier such as `5`
-#
-# Values for `action`:
-# - Paste
-# - PasteSelection
-# - Copy (TODO)
-mouse_bindings:
-  - { mouse: Middle, action: PasteSelection }
+
+key_bindings:
+  - { key: V, mods: Control|Shift, action: Paste }
+  - { key: C, mods: Control|Shift, action: Copy }
+  - { key: Key0,   mods: Control, action: ResetFontSize }
+  - { key: Minus,  mods: Control, action: DecreaseFontSize }
+  - { key: Equals, mods: Control, action: IncreaseFontSize }
 
 # Shell
 #
@@ -116,3 +110,4 @@ shell:
   program: /bin/zsh
 #  args:
 #    - --login
+
