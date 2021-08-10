@@ -4,9 +4,9 @@
  * Copyright: Dave Davenport
  */
 * {
-    background-color:      #282a36;
-    border-color:          #44475a;
-    text-color:           #f8f8f2;
+    background-color:      #2e3440;
+    border-color:          #5e81ac;
+    text-color:           #eceff4;
     font:            "JetBrainsMonoMedium Nerd Font 14";
 }
 
@@ -40,5 +40,5 @@ element {
 }
 
 element selected {
-    background-color: #bd93f9;
+    background-color: #d08770;
 }

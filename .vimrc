@@ -167,6 +167,7 @@ Plugin 'ryanoasis/vim-devicons'
 Plugin 'ycm-core/YouCompleteMe'
 Plugin 'udalov/kotlin-vim'
 Plugin 'doums/darcula'
+Plugin 'chriskempson/base16-vim'
 "
 
 " nerdtree git
@@ -205,7 +206,7 @@ augroup END
 " Lightline Settings
 set laststatus=2
 let g:lightline = {
-      \ 'colorscheme': 'darcula',
+      \ 'colorscheme': 'nord',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified', 'gitbranch'] ],
@@ -230,4 +231,4 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 set termguicolors
-colorscheme darcula
+colorscheme base16-nord

@@ -3,7 +3,7 @@ set $mod Mod4
 
 # window style
 
-for_window [class="^.*"] border pixel 5
+for_window [class="^.*"] border pixel 6.6
 
 new_window none
 
@@ -13,9 +13,9 @@ hide_edge_borders both
 
 default_floating_border none
 
-gaps inner 15
+gaps inner 14
 
-gaps outer 19
+gaps outer 20
 
 smart_gaps on
 
@@ -25,9 +25,9 @@ for_window [window_role="pop-up"] floating enable
 for_window [window_role="task_dialog"] floating enable
 
 # class                 border  backgr. text    indicator child_border
-client.focused          #282a36 #282a36 #f8f8f2 #bd93f9   #bd93f9
-client.focused_inactive #282a36 #282a36 #f8f8f2 #bd93f9   #bd93f9
-client.urgent           #282a36 #282a36 #f8f8f2 #bd93f9   #bd93f9
+client.focused          #2e3440 #2e3440 #eceff4 #88c0d0   #88c0d0
+client.focused_inactive #2e3440 #2e3440 #eceff4 #88c0d0   #88c0d0
+client.urgent           #2e3440 #2e3440 #eceff4 #88c0d0   #88c0d0
 ###
 
 # Font for window titles. Will also be used by the bar unless a different font
@@ -45,7 +45,7 @@ exec_always --no-startup-id (nohup picom &)
 exec_always --no-startup-id xinput set-prop 12 316 1
 #exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nm-applet
-exec --no-startup-id feh --bg-fill "/usr/share/pixmaps/wallpaper/shovel knight - camp fire.jpg"
+exec --no-startup-id feh --bg-fill "/usr/share/pixmaps/wallpaper/vapor.png"
 exec --no-startup-id gammy
 exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
