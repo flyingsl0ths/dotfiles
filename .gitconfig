@@ -1,6 +1,6 @@
 [user]
-    email = <email>
-    name = <username>
+	email = <email>
+	name = <name>
 
 [alias]
 	co = checkout
@@ -10,10 +10,17 @@
 	st = status
 	last = log -1 HEAD
 	unstaged = diff
-	next-commit = diff --staged
+	nci = diff --staged
 	rmk = rm --cached
 	rmkf = rm --cached -f
-	lg = log --abbrev-commit --name-status --relative-date
+	unstage = restore --staged
+	tgd = tag -d
+	tgrep = tag -l
+	athd = checkout master
 
 [core]
 	editor = vim
+
+[pull]
+	rebase = false
+
