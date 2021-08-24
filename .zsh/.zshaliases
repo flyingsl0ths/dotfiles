@@ -6,6 +6,7 @@ alias sp="scratchpad"
 
 alias compile-cpp="clang++ -g -Wall -Werror -std=c++17"
 alias compile-c="clang -g -Wall -Werror -std=c99 -pedantic -o main"
+alias lua="lua5.3"
 alias ghc="ghc -dynamic"
 alias v="vim"
 alias nv="nvim"

@@ -18,7 +18,7 @@ zstyle ':autocomplete:*' min-input 3
 bindkey -v
 
 #env vars
-EDITOR=vim
+EDITOR=nvim
 PAGER=bat
 
 # aliases

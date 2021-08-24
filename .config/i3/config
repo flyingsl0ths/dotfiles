@@ -63,9 +63,10 @@ floating_modifier $mod
 bindsym $mod+w exec librewolf
 bindsym $mod+Return exec alacritty
 bindsym $mod+f exec alacritty --command 'zsh' '-i' '-c' 'ranger'
+bindsym $mod+Shift+M exec thunar
 bindsym $mod+p exec pamac-manager
 bindsym $mod+g exec gimp
-bindsym $mod+r exec --no-startup-id rofi -theme ".config/rofi/rofi/dmenu.rasi"  -show run
+bindsym $mod+r exec --no-startup-id rofi -theme ".config/rofi/rofi/dmenu.rasi" -show run
 bindsym $mod+Shift+p exec xfce4-taskmanager
 bindsym $mod+Shift+s exec xfce4-screenshooter
 bindsym $mod+Shift+E exec gnome-characters
