@@ -232,3 +232,4 @@ filetype plugin indent on    " required
 
 set termguicolors
 colorscheme base16-nord
+
