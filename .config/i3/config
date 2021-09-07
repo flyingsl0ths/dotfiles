@@ -44,7 +44,7 @@ exec_always --no-startup-id (nohup picom &)
 exec_always --no-startup-id xinput set-prop 12 316 1
 #exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
 exec --no-startup-id nm-applet
-exec --no-startup-id feh --bg-center "/usr/share/pixmaps/wallpaper/laundry.png"
+exec --no-startup-id feh --bg-center "/usr/share/pixmaps/wallpaper/tomorrow.png"
 exec --no-startup-id gammy
 exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
@@ -61,8 +61,8 @@ floating_modifier $mod
 # Programs
 bindsym $mod+w exec librewolf
 
-bindsym $mod+Return exec alacritty
-bindsym $mod+f exec alacritty --command 'zsh' '-i' '-c' 'ranger'
+bindsym $mod+Return exec kitty
+bindsym $mod+f exec kitty 'zsh' '-i' '-c' 'ranger'
 bindsym $mod+Shift+M exec thunar
 bindsym $mod+p exec pamac-manager
 bindsym $mod+g exec gimp
