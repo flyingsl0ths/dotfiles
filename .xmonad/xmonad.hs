@@ -53,8 +53,6 @@ myKeys =
 
 myStartUpHook = setWMName "LG3D" >> spawn "~/.xmonad/startup.sh"
 
-myEventHook = ewmhDesktopsEventHook
-
 myConfig = def { modMask            = mod4Mask
                , workspaces         = myWorkspaces
                , layoutHook         = myLayout
