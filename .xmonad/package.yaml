@@ -1,0 +1,20 @@
+name: my-xmonad
+version: 0.1.0.0
+license: BSD3
+author: "flyingsl0ths"
+
+build-type: Simple
+
+dependencies:
+  - base >= 4.7 && < 5
+  - xmonad >= 0.13
+  - xmonad-contrib >= 0.13
+
+executables:
+  my-xmonad:
+    main: xmonad.hs
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+      - -Werror
