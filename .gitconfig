@@ -1,25 +1,27 @@
 [user]
+	name = <username>
 	email = <email>
-	name = <name>
 
 [alias]
-	co = checkout
-	graph = log --all --graph --decorate --oneline
-	br = branch
+	am = commit --amend
+	ah = checkout master
 	ci = commit -v
-	st = status
+	co = checkout
+	br = branch
+	graph = log --all --graph --decorate --oneline
 	last = log -1 HEAD
-	unstaged = diff
 	nci = diff --staged
 	rmk = rm --cached
 	rmkf = rm --cached -f
-	unstage = restore --staged
+	st = status
+	sw = switch
 	tgd = tag -d
 	tgrep = tag -l
-	athd = checkout master
-
+	unstage = restore --staged
+	unstaged = diff
+        
 [core]
-	editor = vim
+	editor = nvim
 
 [pull]
 	rebase = false
