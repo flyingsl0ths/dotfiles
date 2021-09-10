@@ -1,8 +1,9 @@
 # aliases
 alias compile-cpp="clang++ -g -Wall -Werror -std=c++17"
 alias compile-c="clang -g -Wall -Werror -std=c99 -pedantic -o main"
-alias lua="lua5.3"
-alias ghc="ghc -dynamic"
+alias lua="lua5.4"
+alias ghc="stack ghc"
+alias ghci="stack ghci"
 alias v="vim"
 alias n="nvim"
 
@@ -12,8 +13,6 @@ alias pip_install="pip3 install --user"
 alias mariadb_srvc="sudo systemctl start mariadb"
 alias st_mariadb_srvc="sudo systemctl stop mariadb"
 alias sql_login="sudo mycli -u root"
-
-alias cabal_install="cabal install --ghc-options=-dynamic"
 
 alias cmake-c-config="cmake -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 alias cmake-cpp-config="cmake -G Ninja -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
