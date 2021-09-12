@@ -14,7 +14,7 @@ kill_startup_apps() {
 # Used when restarting the window manager
 kill_startup_apps
 
-/usr/bin/xautolock -time 10 -locker ~/.bin/i3lock-fancy-rapid_sl -detectsleep &
+/usr/bin/xautolock -time 10 -locker ~/.bin/i3lock-fancy-rapid -detectsleep &
 
 "$HOME"/.config/polybar/launch.sh "split"
 

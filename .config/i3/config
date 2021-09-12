@@ -37,7 +37,7 @@ font pango:JetBrainsMonoMedium Nerd Font 0
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # Startup
-exec_always --no-startup-id "/usr/bin/xautolock -time 5 -locker ~/.bin/i3lock-fancy-rapid_sl -detectsleep"
+exec_always --no-startup-id "/usr/bin/xautolock -time 5 -locker ~/.bin/i3lock-fancy-rapid -detectsleep"
 
 exec_always --no-startup-id "~/.config/polybar/launch.sh 'i3'"
 
