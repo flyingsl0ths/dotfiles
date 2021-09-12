@@ -1,11 +1,24 @@
 import           XMonad
-import           XMonad.Hooks.EwmhDesktops
-import           XMonad.Hooks.ManageDocks
-import           XMonad.Hooks.SetWMName
-import           XMonad.Layout.Spacing
-import           XMonad.Layout.ThreeColumns
-import           XMonad.Util.EZConfig
-import           XMonad.Util.Ungrab
+
+import           XMonad.Hooks.EwmhDesktops      ( ewmh
+                                                , fullscreenEventHook
+                                                )
+
+import           XMonad.Hooks.ManageDocks       ( avoidStruts
+                                                , docks
+                                                )
+
+import           XMonad.Hooks.SetWMName         ( setWMName )
+
+import           XMonad.Layout.Spacing          ( Border(Border)
+                                                , spacingRaw
+                                                )
+
+import           XMonad.Layout.ThreeColumns     ( ThreeCol(ThreeColMid) )
+
+import           XMonad.Util.EZConfig           ( additionalKeysP )
+
+import           XMonad.Util.Ungrab             ( unGrab )
 
 main :: IO ()
 
@@ -20,7 +33,7 @@ myLayout = spacingRaw
   (Border 10 10 10 10)
   True
   (avoidStruts
-    (tiled ||| Mirror tiled ||| Full ||| ThreeColMid nmaster delta ratio)
+    (Full ||| tiled ||| Mirror tiled ||| ThreeColMid nmaster delta ratio)
   )
  where
   tiled   = Tall nmaster delta ratio
@@ -30,23 +43,30 @@ myLayout = spacingRaw
 
 -- Theme
 colorNormalBorder = "#4c566a"
-colorFocusedBorder = "#88c0d0"
+colorFocusedBorder = "#5e81ac"
 
 myKeys =
-  [ ("M-S-s", unGrab *> spawn "xfce4-screenshooter")
-  , ("M-w"       , spawn "librewolf")
+  [ ("M-w"       , spawn "librewolf")
+  , ("M-y"       , spawn "typora")
   , ("M-f"       , spawn "thunar")
-  , ("M-S-f", spawn (myTerminal ++ " zsh -i -c 'ranger'"))
   , ("M-v"       , spawn "vscodium")
   , ("M-g"       , spawn "gimp")
   , ("M-c"       , spawn "lxqt-sudo corectrl")
-  , ("M-S-t"     , spawn "xfce4-taskmanager")
+  , ("M-z"       , spawn "zathura")
   , ("M-p"       , spawn "pamac-manager")
   , ("M-<Return>", spawn myTerminal)
   , ("M-r", spawn "rofi -theme '.config/rofi/rofi/dmenu.rasi' -show run")
+  , ("M-S-a", spawn "~/.bin/game_mode android-studio")
+  , ("M-S-s", unGrab *> spawn "xfce4-screenshooter")
+  , ("M-S-t"     , spawn "xfce4-taskmanager")
+  , ("M-S-f", spawn (myTerminal ++ " zsh -i -c 'ranger'"))
   , ("M-S-l"     , spawn "xdg-screensaver lock")
+  , ("M-S-w"     , spawn "librewolf --private-window")
   , ("M-<F3>"    , spawn "lux -a 5%")
   , ("M-<F2>"    , spawn "lux -s 5%")
+  , ("M-<F8>"    , spawn "amixer sset Master 5%+")
+  , ("M-<F7>"    , spawn "amixer sset Master 5%-")
+  , ("M-<F6>"    , spawn "amixer sset Master toggle")
   , ("M-S-r"     , spawn "xmonad --restart")
   , ("M-q"       , kill)
   ]
@@ -58,7 +78,7 @@ myConfig = def { modMask            = mod4Mask
                , layoutHook         = myLayout
                , normalBorderColor  = colorNormalBorder
                , focusedBorderColor = colorFocusedBorder
-               , borderWidth        = 5
+               , borderWidth        = 0
                , startupHook        = myStartUpHook
                , handleEventHook    = fullscreenEventHook
                }
