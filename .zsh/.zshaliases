@@ -51,10 +51,9 @@ alias mtp="jmtpfs -o auto_unmount"
 alias zth="zathura"
 alias paste="xclip -i -sel c"
 alias gtc="nvim ~/.gitconfig"
-alias clr="clear" 
+alias clr="clear"
 
 # ryzen laptop related
 alias ryzen-cpu-profile="sudo ryzenadj --slow-time=100 --vrmmax-current=300000 --min-gfxclk=4000 --tctl-temp=75 --max-gfxclk=4000 --min-fclk-frequency=1900 --max-fclk-frequency=1900 --stapm-limit=60000 --stapm-time=3600 --fast-limit=60000 --slow-limit=60000 && sudo zenstates -p0 --enable -f 0xea -d 0xd -v 0x53 && sudo zenstates --c6-disable"
 
 alias ryzen-gpu-profile="sudo ryzenadj --slow-time=100 --vrmmax-current=60000 --min-gfxclk=1300 --max-gfxclk=1300 --tctl-temp=75 --min-fclk-frequency=1900 --max-fclk-frequency=1900 --stapm-limit=40000 --stapm-time=3600 --fast-limit=40000 --slow-limit=40000 --min-lclk=5000  --max-lclk=5000 && sudo zenstates -p0 --enable -f 0x68 -d 0xd -v 0x53 && sudo zenstates --c6-disable"
-

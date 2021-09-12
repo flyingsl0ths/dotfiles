@@ -37,16 +37,22 @@ font pango:JetBrainsMonoMedium Nerd Font 0
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 # Startup
-#
-exec_always --no-startup-id /usr/bin/xautolock -time 5 -locker ~/.bin/i3lock-fancy-rapid_sl -detectsleep
-exec_always --no-startup-id ~/.config/polybar/launch.sh
+exec_always --no-startup-id "/usr/bin/xautolock -time 5 -locker ~/.bin/i3lock-fancy-rapid_sl -detectsleep"
+
+exec_always --no-startup-id "~/.config/polybar/launch.sh 'i3'"
+
 exec_always --no-startup-id (nohup picom &)
-exec_always --no-startup-id xinput set-prop 12 316 1
-#exec_always --no-startup-id /usr/lib/polkit-gnome/polkit-gnome-authentication-agent-1
+
+exec_always --no-startup-id "xinput set-prop 12 316 1"
+
 exec --no-startup-id nm-applet
-exec --no-startup-id feh --bg-center "/usr/share/pixmaps/wallpaper/tomorrow.png"
+
+exec --no-startup-id "feh --bg-center '/usr/share/pixmaps/wallpaper/tomorrow.png'"
+
 exec --no-startup-id gammy
-exec --no-startup-id /usr/lib/xfce4/notifyd/xfce4-notifyd &
+
+exec --no-startup-id "/usr/lib/xfce4/notifyd/xfce4-notifyd &"
+#####
 
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym $mod+F8 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
@@ -62,18 +68,33 @@ floating_modifier $mod
 bindsym $mod+w exec librewolf
 
 bindsym $mod+Return exec kitty
-bindsym $mod+f exec kitty 'zsh' '-i' '-c' 'ranger'
-bindsym $mod+Shift+M exec thunar
+
+bindsym $mod+f exec thunar
+
 bindsym $mod+p exec pamac-manager
+
 bindsym $mod+g exec gimp
-bindsym $mod+r exec --no-startup-id rofi -theme ".config/rofi/rofi/dmenu.rasi" -show run
+
+bindsym $mod+c exec xfce4-screenshooter
+
+bindsym $mod+r exec --no-startup-id "rofi -theme '.config/rofi/rofi/dmenu.rasi' -show run"
+
+bindsym $mod+Shift+W exec "librewolf --private-window"
+
+bindsym $mod+Shift+M exec "kitty 'zsh' '-i' '-c' 'ranger'"
 
 bindsym $mod+Shift+p exec xfce4-taskmanager
-bindsym $mod+Shift+s exec xfce4-screenshooter
+
+bindsym $mod+Shift+A exec "~/.bin/game_mode android-studio"
+
 bindsym $mod+Shift+E exec gnome-characters
+
 bindsym $mod+Shift+Z exec zathura
+
 bindsym $mod+Shift+V exec vscodium
-bindsym $mod+c exec lxqt-sudo corectrl
+
+bindsym $mod+u exec "lxqt-sudo corectrl"
+#######
 
 # kill focused window
 bindsym $mod+q kill
@@ -97,7 +118,7 @@ bindsym $mod+n split h
 bindsym $mod+m split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+Shift+a fullscreen toggle
+bindsym $mod+Shift+S fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking

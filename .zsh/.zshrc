@@ -18,12 +18,15 @@ zstyle ':autocomplete:*' min-input 3
 bindkey -v
 
 #env vars
-EDITOR=nvim
-PAGER=bat
+export EDITOR=nvim
+export PAGER=bat
+export READER=zathura
+export TERMINAL=kitty
+export VISUAL=nvim
+export SUDO_EDITOR=nvim
 
 # aliases
-source $HOME/.zshaliases
+[ -f ~/.zshaliases ] && source $HOME/.zshaliases
 
 source $ZSH/custom/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
