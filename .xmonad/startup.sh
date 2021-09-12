@@ -1,10 +1,22 @@
-#!/bin/bash
+#!/bin/env bash
+
+kill_startup_apps() {
+  BG_APPS=("xautolock" "picom" "nm-applet" "gammy" "xfce4-notifyd")
+
+  for bg_app in ${BG_APPS[*]}; do
+    kill "$(pgrep "$bg_app")"
+  done
+
+}
 
 ##### Startup #####
 
-/usr/bin/xautolock -time 5 -locker ~/.bin/i3lock-fancy-rapid_sl -detectsleep &
+# Used when restarting the window manager
+kill_startup_apps
 
-$HOME/.config/polybar/launch.sh
+/usr/bin/xautolock -time 10 -locker ~/.bin/i3lock-fancy-rapid_sl -detectsleep &
+
+"$HOME"/.config/polybar/launch.sh "split"
 
 (nohup picom &)
 
@@ -12,7 +24,7 @@ xinput set-prop 12 316 1
 
 nm-applet &
 
-feh --bg-center "/usr/share/pixmaps/wallpaper/tomorrow.png"
+feh --bg-center "/usr/share/pixmaps/wallpaper/life.png"
 
 gammy &
 
