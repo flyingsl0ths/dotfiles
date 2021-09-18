@@ -3,17 +3,20 @@
  * User: Qball
  * Copyright: Dave Davenport
  */
+
+@import "../theme.rasi"
+
 * {
-    background-color:      #2e3440;
-    border-color:          #5e81ac;
-    text-color:           #eceff4;
-    font:            "JetBrainsMonoMedium Nerd Font 14";
+    background-color:      @polar-1;
+    border-color:          @polar-2;
+    text-color:            @foreground;
+    font:                  "JetBrainsMono Nerd Font 12";
 }
 
 window {
     anchor:     south;
     location:   south;
-    width:      98%;
+    width:      100%;
     padding:    4px;
     children:   [ horibox ];
 }
@@ -30,9 +33,8 @@ listview {
 }
 
 entry {
-    padding: 0px 0px 0px 5px;
     expand:     false;
-    width:      7em;
+    width:      10em;
 }
 
 element {
@@ -40,5 +42,5 @@ element {
 }
 
 element selected {
-    background-color: #d08770;
+    background-color: @frost-4;
 }

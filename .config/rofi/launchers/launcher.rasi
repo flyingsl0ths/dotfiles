@@ -1,0 +1,17 @@
+/* The default configuration incase none is specified */
+configuration {
+	width: 500;
+	show-icons: true;
+	terminal: "kitty";
+	auto-select: false;
+	theme: "nord";
+	display-run: "";
+	display-drun: "λ";
+	display-window: "  ";
+	drun-display-format: "{icon}{name}";
+	font: "JetBrainsMonoMedium Nerd Font 11";
+	show-icons: true;
+}
+
+@import "../theme.rasi"
+
