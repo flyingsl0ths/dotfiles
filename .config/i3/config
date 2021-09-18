@@ -36,33 +36,16 @@ font pango:JetBrainsMonoMedium Nerd Font 0
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
-# Startup
-exec_always --no-startup-id "/usr/bin/xautolock -time 5 -locker ~/.bin/i3lock-fancy-rapid -detectsleep"
-
-exec_always --no-startup-id "~/.config/polybar/launch.sh 'i3'"
-
-exec_always --no-startup-id (nohup picom &)
-
-exec_always --no-startup-id "xinput set-prop 12 316 1"
-
-exec --no-startup-id nm-applet
-
-exec --no-startup-id "feh --bg-center '/usr/share/pixmaps/wallpaper/tomorrow.png'"
-
-exec --no-startup-id gammy
-
-exec --no-startup-id "/usr/lib/xfce4/notifyd/xfce4-notifyd &"
-#####
-
 set $refresh_i3status killall -SIGUSR1 i3status
 bindsym $mod+F8 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
 bindsym $mod+F7 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym $mod+F6 exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
-bindsym $mod+F3 exec lux -a 5%
-bindsym $mod+F2 exec lux -s 5%
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
+
+## Startup script ##
+exec_always --no-startup-id "~/.config/i3/startup.sh"
 
 # Programs
 bindsym $mod+w exec librewolf
@@ -77,15 +60,25 @@ bindsym $mod+g exec gimp
 
 bindsym $mod+c exec xfce4-screenshooter
 
-bindsym $mod+r exec --no-startup-id "rofi -theme '.config/rofi/rofi/dmenu.rasi' -show run"
+bindsym $mod+F3 exec lux -a 5%
+
+bindsym $mod+F2 exec lux -s 5%
+
+bindsym $mod+r exec --no-startup-id "~/.config/rofi/launchers/dmenu.sh"
+
+bindsym $mod+Shift+N exec --no-startup-id "vscodium; zathura"
+
+bindsym $mod+Shift+P exec --no-startup-id "~/.config/rofi/launchers/ribbon.sh"
 
 bindsym $mod+Shift+W exec "librewolf --private-window"
 
 bindsym $mod+Shift+M exec "kitty 'zsh' '-i' '-c' 'ranger'"
 
-bindsym $mod+Shift+p exec xfce4-taskmanager
+bindsym $mod+Shift+B exec "kitty 'zsh' '-i' '-c' 'br'"
 
-bindsym $mod+Shift+A exec "~/.bin/game_mode android-studio"
+bindsym $mod+Shift+T exec xfce4-taskmanager
+
+bindsym $mod+Shift+S exec "~/.bin/game_mode android-studio"
 
 bindsym $mod+Shift+E exec gnome-characters
 
@@ -118,7 +111,7 @@ bindsym $mod+n split h
 bindsym $mod+m split v
 
 # enter fullscreen mode for the focused container
-bindsym $mod+Shift+S fullscreen toggle
+bindsym $mod+Shift+A fullscreen toggle
 
 # change container layout (stacked, tabbed, toggle split)
 bindsym $mod+s layout stacking
@@ -201,12 +194,12 @@ bindsym $mod+z mode "resize"
 # finds out, if available)
 #bar {
 #    colors {
-#        background #5b5b6f
-#        statusline #fcefeb
-#        separator #fcefeb
+#        background #2e3440
+#        statusline #eceff4
+#        separator #eceff4
 #
-#        focused_workspace #bb2a5a #cf5181 #fcefeb
-#        inactive_workspace #45859f #8bcbc2 #fcefeb
+#        focused_workspace  #5e81ac  #88c0d0 #eceff4
+#        inactive_workspace #2e3440  #4c566a #eceff4
 #        }
 #        font pango: JetBrainsMonoMedium Nerd Font 14
 #        tray_padding 5
