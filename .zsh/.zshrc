@@ -24,9 +24,12 @@ export READER=zathura
 export TERMINAL=kitty
 export VISUAL=nvim
 export SUDO_EDITOR=nvim
+export WALLPAPERS="/usr/share/pixmaps/wallpaper"
 
 # aliases
 [ -f ~/.zshaliases ] && source $HOME/.zshaliases
 
 source $ZSH/custom/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+source /home/flyingsl0ths/.config/broot/launcher/bash/br

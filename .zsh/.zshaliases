@@ -19,7 +19,8 @@ alias cmake-cpp-config="cmake -G Ninja -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_EXPO
 alias cmake-build="cmake --build"
 alias cmake-target="cmake --build . --target"
 
-alias yt="ytfzf"
+alias yt="ytfzf -t -l"
+alias ytm="ytfzf -m -t -l"
 alias ani="ani-cli"
 alias ftch="neofetch"
 alias sp="scratchpad"
