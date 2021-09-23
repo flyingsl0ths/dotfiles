@@ -184,6 +184,7 @@ Plugin 'doums/darcula'
 Plugin 'chriskempson/base16-vim'
 Plugin 'Shougo/deol.nvim'
 Plugin 'chrisbra/Colorizer'
+Plugin 'ctrlpvim/ctrlp.vim'
 "
 
 " nerdtree git
@@ -304,6 +305,21 @@ let g:tagbar_type_kotlin = {
 
 
 let g:colorizer_auto_filetype='css,html,dosini,sh,conf,rasi'
+
+" ctrlp Settings
+" Key binding to run command
+let g:ctrlp_map = '<C-f>'
+
+" Used to specifiy root directory of all searches
+" by using the cwd of any file in the list
+let g:ctrlp_root_markers = ['pom.xml', 'package.yaml', 'gradlew', 'compile_commands.json']
+
+" Open file already opened, in new buffer instead of switching to it
+let g:ctrlp_switch_buffer = 'et'
+
+" Exclude files in .gitignore
+let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
+"
 
 call vundle#end()            " required
 filetype plugin indent on    " required
