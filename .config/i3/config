@@ -48,29 +48,33 @@ floating_modifier $mod
 exec_always --no-startup-id "~/.config/i3/startup.sh"
 
 # Programs
-bindsym $mod+w exec librewolf
+bindsym $mod+w exec firedragon
 
 bindsym $mod+Return exec kitty
 
 bindsym $mod+f exec thunar
 
-bindsym $mod+p exec pamac-manager
+bindsym $mod+p exec "pamac-manager"
 
 bindsym $mod+g exec gimp
 
 bindsym $mod+c exec xfce4-screenshooter
 
-bindsym $mod+F3 exec lux -a 5%
+bindsym $mod+r exec "~/.config/rofi/launchers/dmenu.sh"
 
-bindsym $mod+F2 exec lux -s 5%
+bindsym $mod+u exec "corectrl"
 
-bindsym $mod+r exec --no-startup-id "~/.config/rofi/launchers/dmenu.sh"
+bindsym $mod+y exec typora
 
-bindsym $mod+Shift+N exec --no-startup-id "vscodium; zathura"
+bindsym $mod+Shift+G exec "gammy"
 
-bindsym $mod+Shift+P exec --no-startup-id "~/.config/rofi/launchers/ribbon.sh"
+bindsym $mod+Shift+D exec "xdg-screensaver lock"
 
-bindsym $mod+Shift+W exec "librewolf --private-window"
+bindsym $mod+Shift+N exec "vscodium; zathura"
+
+bindsym $mod+Shift+P exec "~/.config/rofi/launchers/ribbon.sh"
+
+bindsym $mod+Shift+W exec "firedragon --private-window"
 
 bindsym $mod+Shift+M exec "kitty 'zsh' '-i' '-c' 'ranger'"
 
@@ -86,7 +90,9 @@ bindsym $mod+Shift+Z exec zathura
 
 bindsym $mod+Shift+V exec vscodium
 
-bindsym $mod+u exec "lxqt-sudo corectrl"
+bindsym $mod+F3 exec "brightnessctl -q set 5%+"
+
+bindsym $mod+F2 exec "brightnessctl -q set 5%-"
 #######
 
 # kill focused window
