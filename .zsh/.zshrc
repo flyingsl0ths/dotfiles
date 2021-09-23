@@ -18,13 +18,13 @@ zstyle ':autocomplete:*' min-input 3
 bindkey -v
 
 #env vars
-export EDITOR=nvim
+export EDITOR=vim
 export PAGER=bat
 export READER=zathura
 export TERMINAL=kitty
-export VISUAL=nvim
-export SUDO_EDITOR=nvim
-export WALLPAPERS="/usr/share/pixmaps/wallpaper"
+export VISUAL=vim
+export SUDO_EDITOR=vim
+export WALLPAPERS="$HOME/Pictures/wallpapers"
 
 # aliases
 [ -f ~/.zshaliases ] && source $HOME/.zshaliases
@@ -32,4 +32,4 @@ export WALLPAPERS="/usr/share/pixmaps/wallpaper"
 source $ZSH/custom/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-source /home/flyingsl0ths/.config/broot/launcher/bash/br
+[ -f /usr/bin/broot ] && source /home/flyingsl0ths/.config/broot/launcher/bash/br

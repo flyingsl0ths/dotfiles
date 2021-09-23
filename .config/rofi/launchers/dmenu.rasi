@@ -26,6 +26,10 @@ horibox {
     children:   [ prompt, entry, listview ];
 }
 
+prompt {
+    padding: 0 10px 0 0;
+}
+
 listview {
     layout:     horizontal;
     spacing:    5px;
