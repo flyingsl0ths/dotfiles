@@ -28,11 +28,13 @@ set backspace=indent,eol,start
 " Disable audible bell
 set noerrorbells visualbell t_vb=
 
-set shell=/bin/zsh
+set shell=/usr/bin/zsh
 
 " Set to auto read when a file is changed from the outside
 set autoread
-au FocusGained,BufEnter * checktime
+
+augroup FocusGained,BufEnter * checktime
+augroup END
 
 set smarttab
 
@@ -51,7 +53,7 @@ set gdefault
 set number
 
 " Highlight search results
-set hls
+set hlsearch
 
 set cursorline
 
@@ -65,28 +67,26 @@ set title
 
 set ruler
 
-set ic
+set ignorecase
 
-set is
+set incsearch
 
 set nobackup
 
-set nowb
+set nowritebackup
 
 set noswapfile
 
 set wildmenu
 
 "Auto indent
-set ai
+set autoindent
 
 "Smart indent
-set si
+set smartindent
 
 "Wrap lines
 set wrap
-
-set nocompatible              " be iMproved, required
 
 filetype off                  " required
 
@@ -105,18 +105,18 @@ let g:omni_sql_default_compl_type = 'syntax'
 let g:omni_sql_no_default_maps = 1
 
 " Key mappings
+let mapleader = ' '
+
 " :W sudo saves the file
 " (useful for handling the permission-denied error)
 command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
 
-nmap Q <Nop>
-
 " Used to prevent use of arrow keys
 " In normal mode
-nnoremap <Left>  :echoe "Use h"<CR>
-nnoremap <Right> :echoe "Use l"<CR>
-nnoremap <Up>    :echoe "Use k"<CR>
-nnoremap <Down>  :echoe "Use j"<CR>
+nnoremap <Left>  :echo "Use h"<CR>
+nnoremap <Right> :echo "Use l"<CR>
+nnoremap <Up>    :echo "Use k"<CR>
+nnoremap <Down>  :echo "Use j"<CR>
 
 " Remaps keys used to switch between panes to ctrl-movementkeys
 nnoremap <C-J> <C-w><C-j>
@@ -124,34 +124,49 @@ nnoremap <C-K> <C-w><C-k>
 nnoremap <C-L> <C-w><C-l>
 nnoremap <C-H> <C-w><C-h>
 
+" Used to exit Deol terminal buffer
+tnoremap <ESC>   <C-\><C-n>
+
+" Remaps keys used to move buffers around
+nnoremap <C-Left>  <C-w>r
+nnoremap <C-Right> <C-w>r
+nnoremap <C-Up>    <C-w>H
+nnoremap <C-d>     <C-w>J
+nnoremap <Tab> :bnext<CR>
+nnoremap <S-Tab> :bprevious<CR>
+
+nnoremap <leader>bb :buffers<cr>:b<space>
+
 nmap <F8> :TagbarToggle<CR>
-nmap <leader>f :NERDTree<CR>
-
-map <leader>tn :tabnew<CR>
-map <leader>to :tabonly<CR>
-map <leader>tc :tabclose<CR>
-map <leader>tm :tabmove<CR>
-map <leader>n :tabn<CR>
-map <leader>p :tabp<CR>
-
-" Unhighlight highlighted search results
-map <silent> <leader><cr> :noh<cr>
-
-" Opens a new tab with the current buffer's path
-map <leader>te :tabedit <C-r>=expand("%:p:h")<cr>/
+nmap <leader>fm :ALEFix<CR>
+nmap <leader>f :NERDTreeToggle<CR>
+nmap <leader>ft :NERDTreeFocus<CR>
 
 " Fast saving
-nmap <leader>w :w!<cr>
+nmap <C-s> :w!<CR>
+
+map <S-t> :tabnew<CR>
+map <leader>x :tabclose<CR>
+map <C-n> :tabn<CR>
+map <S-p> :tabp<CR>
+
+" Toggle line numbers
+map <leader>n :set invnumber<CR>
+
+" Unhighlight highlighted search results
+map <silent> <leader><cr> :noh<CR>
+
+" Opens a new tab with the current buffer's path
+map <leader>te :tabedit <C-r>=expand("%:p:h")<CR>/
 
 " Copy/Paste to clipboard
-vnoremap <C-c> :w !xclip -i -sel c<CR><CR>
+vnoremap <C-c> :w !xclip -i -sel c<CR>
 
-noremap <C-p> :r !xsel -o -b<CR><CR>
-
+noremap <C-p> :r !xsel -o -b<CR>
 "
 
 " set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
+set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
 " Vundle managed
@@ -164,10 +179,11 @@ Plugin 'preservim/tagbar'
 Plugin 'preservim/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'ryanoasis/vim-devicons'
-Plugin 'ycm-core/YouCompleteMe'
 Plugin 'udalov/kotlin-vim'
 Plugin 'doums/darcula'
 Plugin 'chriskempson/base16-vim'
+Plugin 'Shougo/deol.nvim'
+Plugin 'chrisbra/Colorizer'
 "
 
 " nerdtree git
@@ -184,13 +200,11 @@ let g:ale_fixers = { '*':
 			\'cmake' : 'cmakeformat',
 			\'java': 'clang-format',
 			\'markdown': 'prettier',
+			\'yaml': 'prettier',
 			\'html': 'prettier',
 			\'python': ['black', 'reorder-python-imports'],
 			\ 'ruby': 'rubocop',
             \ 'sql': 'sqlfmt'}
-
-let g:ale_fix_on_save=1
-let g:ale_haskell_ghc_options = '-fno-code -v0 -dynamic'
 "
 
 " YCM Settings
@@ -227,9 +241,72 @@ let g:lightline = {
       \ }
 "
 
+let g:tagbar_type_haskell = {
+    \ 'ctagsbin'  : 'hasktags',
+    \ 'ctagsargs' : '-x -c -o-',
+    \ 'kinds'     : [
+        \  'm:modules:0:1',
+        \  'd:data: 0:1',
+        \  'd_gadt: data gadt:0:1',
+        \  't:type names:0:1',
+        \  'nt:new types:0:1',
+        \  'c:classes:0:1',
+        \  'cons:constructors:1:1',
+        \  'c_gadt:constructor gadt:1:1',
+        \  'c_a:constructor accessors:1:1',
+        \  'ft:function types:1:1',
+        \  'fi:function implementations:0:1',
+        \  'i:instance:0:1',
+        \  'o:others:0:1'
+    \ ],
+    \ 'sro'        : '.',
+    \ 'kind2scope' : {
+        \ 'm' : 'module',
+        \ 'c' : 'class',
+        \ 'd' : 'data',
+        \ 't' : 'type',
+        \ 'i' : 'instance'
+    \ },
+    \ 'scope2kind' : {
+        \ 'module'   : 'm',
+        \ 'class'    : 'c',
+        \ 'data'     : 'd',
+        \ 'type'     : 't',
+        \ 'instance' : 'i'
+    \ }
+\ }
+
+let g:tagbar_type_kotlin = {
+    \ 'ctagstype' : 'kotlin',
+    \ 'ctagsbin' : 'ctags-universal',
+    \ 'kinds'     : [
+        \ 'c:classes:0:1',
+        \ 'f:functions',
+        \ 'g:enums',
+        \ 'u:unions',
+        \ 's:structs',
+        \ 'm:members'
+    \ ],
+    \'sro': '.',
+    \ 'kind2scope' : {
+        \ 'c' : 'class',
+        \ 'g' : 'enum',
+        \ 's' : 'struct',
+        \ 'u' : 'union'
+    \},
+    \ 'scope2kind' : {
+        \ 'enum'      : 'g',
+        \ 'class'     : 'c',
+        \ 'struct'    : 's',
+        \ 'union'     : 'u'
+    \ }
+\ }
+
+
+let g:colorizer_auto_filetype='css,html,dosini,sh,conf,rasi'
+
 call vundle#end()            " required
 filetype plugin indent on    " required
 
 set termguicolors
 colorscheme base16-nord
-

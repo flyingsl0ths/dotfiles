@@ -1,27 +1,36 @@
+import qualified Data.Map                      as Map
+
 import           XMonad
 
+-- Utils
+import           XMonad.Util.EZConfig           ( additionalKeysP )
+import           XMonad.Util.Ungrab             ( unGrab )
+
+
+-- Hooks
 import           XMonad.Hooks.EwmhDesktops      ( ewmh
                                                 , fullscreenEventHook
                                                 )
-
 import           XMonad.Hooks.ManageDocks       ( avoidStruts
                                                 , docks
                                                 )
-
-import           XMonad.ManageHook              ( className )
-
 import           XMonad.Hooks.ManageHelpers     ( doCenterFloat
                                                 , isDialog
                                                 )
-
 import           XMonad.Hooks.SetWMName         ( setWMName )
+import           XMonad.ManageHook              ( className )
 
+
+-- Actions
+import           XMonad.Actions.GridSelect
+import           XMonad.Actions.WithAll         ( killAll )
+
+
+-- Layouts
+import           XMonad.Layout.NoBorders        ( noBorders )
 import           XMonad.Layout.Spacing          ( Border(Border)
                                                 , spacingRaw
                                                 )
-
-import           XMonad.Layout.ThreeColumns     ( ThreeCol(ThreeColMid) )
-
 import           XMonad.Layout.Tabbed           ( activeBorderColor
                                                 , activeColor
                                                 , activeTextColor
@@ -36,30 +45,42 @@ import           XMonad.Layout.Tabbed           ( activeBorderColor
                                                 , urgentColor
                                                 , urgentTextColor
                                                 )
-
-import           XMonad.Util.EZConfig           ( additionalKeysP )
-
-import           XMonad.Util.Ungrab             ( unGrab )
+import           XMonad.Layout.ThreeColumns     ( ThreeCol(ThreeColMid) )
 
 myManageHook :: ManageHook
 
+myFont = "xft:JetBrainsMono Nerd Font:size=10:antialias=true"
+
 myTerminal = "kitty"
+
+-- Used for commands that depend on binaries found in $PATH specified by .zshrc
+zshTerminalCommandPrefix = myTerminal ++ " zsh -i -c "
+
+gamemodeCommandPrefix = "~/.local/bin/game_mode "
+
+codeEditors =
+  [ zshTerminalCommandPrefix ++ "'vim'"
+  , gamemodeCommandPrefix ++ "android-studio"
+  , "vscodium"
+  , "typora"
+  , "drracket"
+  , "idea"
+  ]
 
 myWorkspaces = ["I", "II", "III", "IV", "V", "VI"]
 
-myTabConfig = def
-  { activeColor         = "#5e81ac"
-  , inactiveColor       = "#4c566a"
-  , urgentColor         = "#bf616a"
-  , activeBorderColor   = "#5e81ac"
-  , inactiveBorderColor = "#4c566a"
-  , urgentBorderColor   = "#bf616a"
-  , activeTextColor     = "#eceff4"
-  , inactiveTextColor   = "#2e3440"
-  , urgentTextColor     = "#eceff4"
-  , fontName            = "xft:JetBrainsMono Nerd Font:size=10:antialias=true"
-  , decoHeight          = 15
-  }
+myTabConfig = def { activeColor         = "#5e81ac"
+                  , inactiveColor       = "#4c566a"
+                  , urgentColor         = "#bf616a"
+                  , activeBorderColor   = "#5e81ac"
+                  , inactiveBorderColor = "#4c566a"
+                  , urgentBorderColor   = "#bf616a"
+                  , activeTextColor     = "#eceff4"
+                  , inactiveTextColor   = "#2e3440"
+                  , urgentTextColor     = "#eceff4"
+                  , fontName            = myFont
+                  , decoHeight          = 15
+                  }
 
 myLayout = avoidStruts
   (Full ||| tabbed shrinkText myTabConfig ||| spacingRaw
@@ -79,39 +100,78 @@ myLayout = avoidStruts
 colorNormalBorder = "#eceff4"
 colorFocusedBorder = "#5e81ac"
 
+
+myNavigation :: TwoD a (Maybe a)
+myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
+ where
+  navKeyMap = Map.fromList
+    [ ((0, xK_Escape), cancel)
+    , ((0, xK_Return), select)
+    , ((0, xK_slash) , substringSearch myNavigation)
+    , ((0, xK_Left)  , move (-1, 0) >> myNavigation)
+    , ((0, xK_Right) , move (1, 0) >> myNavigation)
+    , ((0, xK_Down)  , move (0, 1) >> myNavigation)
+    , ((0, xK_Up)    , move (0, -1) >> myNavigation)
+    , ((0, xK_h)     , move (-1, 0) >> myNavigation)
+    , ((0, xK_l)     , move (1, 0) >> myNavigation)
+    , ((0, xK_j)     , move (0, 1) >> myNavigation)
+    , ((0, xK_k)     , move (0, -1) >> myNavigation)
+    , ((0, xK_space) , setPos (0, 0) >> myNavigation)
+    ]
+  -- The navigation handler ignores unknown key symbols
+  navDefaultHandler = const myNavigation
+
+
+gridSelectionConfig = def { gs_cellheight = 150
+                          , gs_cellwidth  = 150
+                          , gs_navigate   = myNavigation
+                          , gs_font       = myFont
+                          , gs_colorizer  = fromClassName
+                          }
+
+editorGridSelectionConfig = def
+  { gs_cellheight = gs_cellheight gridSelectionConfig
+  , gs_cellwidth  = gs_cellwidth gridSelectionConfig
+  , gs_font       = gs_font gridSelectionConfig
+  }
+
 myKeys =
-  [ ("M-w"       , spawn "librewolf")
+  [ ("M-w"       , spawn "firedragon")
+  , ("M-p", spawn "firedragon --private-window")
   , ("M-y"       , spawn "typora")
   , ("M-f"       , spawn "thunar")
+  , ("M-g"       , spawn "gammy")
   , ("M-v"       , spawn "vscodium")
-  , ("M-g"       , spawn "gimp")
-  , ("M-c"       , spawn "lxqt-sudo corectrl")
+  , ("M-c"       , spawn "corectrl")
   , ("M-z"       , spawn "zathura")
-  , ("M-p"       , spawn "pamac-manager")
-  , ("M-<Return>", spawn myTerminal)
+  , ("M-m"       , spawn "pamac-manager")
   , ("M-r", spawn "~/.config/rofi/launchers/dmenu.sh")
+  , ("M-q"       , kill)      -- Kill active window
+  , ("M-S-a", spawn (gamemodeCommandPrefix ++ "android-studio"))
+  , ("M-S-g"     , spawn "gimp")
   , ("M-S-p", spawn "~/.config/rofi/launchers/ribbon.sh")
-  , ("M-S-a", spawn "~/.bin/game_mode android-studio")
   , ("M-S-s", unGrab *> spawn "xfce4-screenshooter")
   , ("M-S-t"     , spawn "xfce4-taskmanager")
-  , ("M-S-f", spawn (myTerminal ++ " zsh -i -c 'ranger'"))
-  , ("M-S-b", spawn (myTerminal ++ " zsh -i -c 'br'"))
+  , ("M-S-f", spawn (zshTerminalCommandPrefix ++ "'ranger'"))
+  , ("M-S-b", spawn (zshTerminalCommandPrefix ++ "'br'"))
   , ("M-S-l"     , spawn "xdg-screensaver lock")
   , ("M-S-n"     , spawn "vscodium; zathura")
-  , ("M-S-w"     , spawn "librewolf --private-window")
-  , ("M-<F3>"    , spawn "lux -a 5%")
-  , ("M-<F2>"    , spawn "lux -s 5%")
-  , ("M-<F8>"    , spawn "amixer sset Master 5%+")
-  , ("M-<F7>"    , spawn "amixer sset Master 5%-")
-  , ("M-<F6>"    , spawn "amixer sset Master toggle")
-  , ("M-S-r", spawn "xmonad --recompile ; xmonad --restart")
-  , ("M-q"       , kill)
+  , ("M-S-r"     , restart "xmonad" True)
+  , ("M-S-w"     , goToSelected gridSelectionConfig)
+  , ("M-S-e", spawnSelected editorGridSelectionConfig codeEditors)
+  , ("M-<Return>", spawn myTerminal)
+  , ("M-<F3>"    , spawn "brightnessctl -q s 5%+")
+  , ("M-<F2>"    , spawn "brightnessctl -q s 5%-")
+  , ("M-<F8>"    , spawn "pamixer -i 5")
+  , ("M-<F7>"    , spawn "pamixer -d 5")
+  , ("M-<F6>"    , spawn "pamixer -m")
+  , ("M-S-a"     , killAll)   -- Kill all windows on current workspace
   ]
 
 myStartUpHook = setWMName "LG3D" >> spawn "~/.xmonad/startup.sh"
 
 myManageHook =
-  composeAll [className =? "Gimp" --> doFloat, isDialog --> doFloat]
+  composeAll [className =? "Gimp" --> doCenterFloat, isDialog --> doCenterFloat]
 
 myConfig = def { modMask            = mod4Mask
                , workspaces         = myWorkspaces
