@@ -56,3 +56,9 @@ alias gtc="nvim ~/.gitconfig"
 alias clr="clear"
 alias ls="exa -1"
 alias la="exa -1 -a --color=always"
+
+hide_on_open() {
+    tdrop -a auto_hide && "$@" && tdrop -a auto_show
+}
+
+alias gc='hide_on_open alacritty'

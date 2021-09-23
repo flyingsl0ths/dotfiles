@@ -1,4 +1,5 @@
 import qualified Data.Map                      as Map
+                                                ( fromList )
 
 import           XMonad
 
@@ -30,6 +31,11 @@ import           XMonad.Actions.WithAll         ( killAll )
 import           XMonad.Layout.NoBorders        ( noBorders )
 import           XMonad.Layout.Spacing          ( Border(Border)
                                                 , spacingRaw
+                                                )
+
+import           XMonad.Layout.Hidden           ( hiddenWindows
+                                                , hideWindow
+                                                , popOldestHiddenWindow
                                                 )
 import           XMonad.Layout.Tabbed           ( activeBorderColor
                                                 , activeColor
@@ -82,14 +88,16 @@ myTabConfig = def { activeColor         = "#5e81ac"
                   , decoHeight          = 15
                   }
 
-myLayout = avoidStruts
-  (Full ||| tabbed shrinkText myTabConfig ||| spacingRaw
-    True
-    (Border 0 10 10 10)
-    True
-    (Border 10 10 10 10)
-    True
-    (tiled ||| Mirror tiled ||| ThreeColMid nmaster delta ratio)
+myLayout = hiddenWindows
+  (avoidStruts
+    (Full ||| tabbed shrinkText myTabConfig ||| spacingRaw
+      True
+      (Border 0 10 10 10)
+      True
+      (Border 10 10 10 10)
+      True
+      (tiled ||| Mirror tiled ||| ThreeColMid nmaster delta ratio)
+    )
   )
  where
   tiled   = Tall nmaster delta ratio
@@ -136,42 +144,62 @@ editorGridSelectionConfig = def
   }
 
 myKeys =
-  [ ("M-w"       , spawn "firedragon")
-  , ("M-p", spawn "firedragon --private-window")
-  , ("M-y"       , spawn "typora")
-  , ("M-f"       , spawn "thunar")
-  , ("M-g"       , spawn "gammy")
-  , ("M-v"       , spawn "vscodium")
-  , ("M-c"       , spawn "corectrl")
-  , ("M-z"       , spawn "zathura")
-  , ("M-m"       , spawn "pamac-manager")
-  , ("M-r", spawn "~/.config/rofi/launchers/dmenu.sh")
-  , ("M-q"       , kill)      -- Kill active window
+  [
+  -- Programs --
+    ("M-w"  , spawn "firedragon")
+  , ("M-p"  , spawn "firedragon --private-window")
+  , ("M-y"  , spawn "typora")
+  , ("M-f"  , spawn "thunar")
+  , ("M-g"  , spawn "gammy")
+  , ("M-v"  , spawn "vscodium")
+  , ("M-u"  , spawn "corectrl")
+  , ("M-z"  , spawn "zathura")
+  , ("M-m"  , spawn "pamac-manager")
+  , ("M-S-g", spawn (gamemodeCommandPrefix ++ "gimp"))
+  , ("M-S-t", spawn "xfce4-taskmanager")
   , ("M-S-a", spawn (gamemodeCommandPrefix ++ "android-studio"))
-  , ("M-S-g"     , spawn "gimp")
-  , ("M-S-p", spawn "~/.config/rofi/launchers/ribbon.sh")
-  , ("M-S-s", unGrab *> spawn "xfce4-screenshooter")
-  , ("M-S-t"     , spawn "xfce4-taskmanager")
-  , ("M-S-f", spawn (zshTerminalCommandPrefix ++ "'ranger'"))
-  , ("M-S-b", spawn (zshTerminalCommandPrefix ++ "'br'"))
-  , ("M-S-l"     , spawn "xdg-screensaver lock")
+  --------------
+  -- Dropdowns --
+  , ( "M-S-f"
+    , spawn "tdrop -w 1000 -h 800 -x 450 -y 130 alacritty -e zsh -i -c ranger"
+    )
+  , ( "M-S-m"
+    , spawn "tdrop -w 1000 -h 800 -x 450 -y 130 alacritty -e zsh -i -c ytm"
+    )
+  ---------------
+  -- Groups --
   , ("M-S-n"     , spawn "vscodium; zathura")
-  , ("M-S-r"     , restart "xmonad" True)
+  ------------
+  -- Tools --
+  , ("M-<Return>", spawn myTerminal)
+  , ("M-S-p", spawn "~/.config/rofi/launchers/ribbon.sh")
+  , ("M-r", spawn "~/.config/rofi/launchers/dmenu.sh")
+  , ("M-S-s", unGrab *> spawn "xfce4-screenshooter")
+  , ("M-S-l"     , spawn "xdg-screensaver lock")
   , ("M-S-w"     , goToSelected gridSelectionConfig)
   , ("M-S-e", spawnSelected editorGridSelectionConfig codeEditors)
-  , ("M-<Return>", spawn myTerminal)
+  , ("M-S-r"     , restart "xmonad" True)
   , ("M-<F3>"    , spawn "brightnessctl -q s 5%+")
   , ("M-<F2>"    , spawn "brightnessctl -q s 5%-")
   , ("M-<F8>"    , spawn "pamixer -i 5")
   , ("M-<F7>"    , spawn "pamixer -d 5")
   , ("M-<F6>"    , spawn "pamixer -m")
-  , ("M-S-a"     , killAll)   -- Kill all windows on current workspace
+  -----------
+  -- WM Actions --
+  , ("M-/"       , withFocused hideWindow)
+  , ("M-\\"      , popOldestHiddenWindow)
+  , ("M-q"       , kill)      -- Kill active window
+  , ("M-S-k"     , killAll)   -- Kill all windows on current workspace
+  ----------------
   ]
 
 myStartUpHook = setWMName "LG3D" >> spawn "~/.xmonad/startup.sh"
 
-myManageHook =
-  composeAll [className =? "Gimp" --> doCenterFloat, isDialog --> doCenterFloat]
+myManageHook = composeAll
+  [ className =? "Gimp" --> doCenterFloat
+  , className =? "Alacritty" --> doCenterFloat
+  , isDialog --> doCenterFloat
+  ]
 
 myConfig = def { modMask            = mod4Mask
                , workspaces         = myWorkspaces

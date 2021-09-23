@@ -2,16 +2,7 @@
 set $mod Mod4
 
 # window style
-
 for_window [class="^.*"] border none
-
-new_window none
-
-new_float normal
-
-hide_edge_borders both
-
-default_floating_border none
 
 gaps inner 14
 
@@ -21,6 +12,8 @@ gaps outer 20
 for_window [window_role="pop-up"] floating enable
 
 for_window [window_role="task_dialog"] floating enable
+
+for_window [class="Alacritty"] floating enable
 
 # class                 border  backgr. text    indicator child_border
 client.focused          #2e3440 #2e3440 #eceff4 #88c0d0   #88c0d0
@@ -37,6 +30,7 @@ font pango:JetBrainsMonoMedium Nerd Font 0
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 set $refresh_i3status killall -SIGUSR1 i3status
+
 bindsym $mod+F8 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
 bindsym $mod+F7 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
 bindsym $mod+F6 exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
@@ -52,43 +46,45 @@ bindsym $mod+w exec firedragon
 
 bindsym $mod+Return exec kitty
 
+bindsym $mod+Shift+G exec gammy
+
 bindsym $mod+f exec thunar
 
-bindsym $mod+p exec "pamac-manager"
-
-bindsym $mod+g exec gimp
-
-bindsym $mod+c exec xfce4-screenshooter
-
-bindsym $mod+r exec "~/.config/rofi/launchers/dmenu.sh"
-
-bindsym $mod+u exec "corectrl"
-
 bindsym $mod+y exec typora
-
-bindsym $mod+Shift+G exec "gammy"
-
-bindsym $mod+Shift+D exec "xdg-screensaver lock"
-
-bindsym $mod+Shift+N exec "vscodium; zathura"
-
-bindsym $mod+Shift+P exec "~/.config/rofi/launchers/ribbon.sh"
-
-bindsym $mod+Shift+W exec "firedragon --private-window"
-
-bindsym $mod+Shift+M exec "kitty 'zsh' '-i' '-c' 'ranger'"
-
-bindsym $mod+Shift+B exec "kitty 'zsh' '-i' '-c' 'br'"
-
-bindsym $mod+Shift+T exec xfce4-taskmanager
-
-bindsym $mod+Shift+S exec "~/.bin/game_mode android-studio"
 
 bindsym $mod+Shift+E exec gnome-characters
 
 bindsym $mod+Shift+Z exec zathura
 
 bindsym $mod+Shift+V exec vscodium
+
+bindsym $mod+c exec xfce4-screenshooter
+
+bindsym $mod+Shift+T exec xfce4-taskmanager
+
+bindsym $mod+p exec "pamac-manager"
+
+bindsym $mod+u exec "corectrl"
+
+bindsym $mod+g exec "~/.bin/game_mode gimp"
+
+bindsym $mod+Shift+W exec "firedragon --private-window"
+
+bindsym $mod+Shift+P exec "~/.config/rofi/launchers/ribbon.sh"
+
+bindsym $mod+Shift+S exec "~/.bin/game_mode android-studio"
+
+bindsym $mod+Shift+N exec "vscodium; zathura"
+
+bindsym $mod+Shift+D exec "xdg-screensaver lock"
+
+bindsym $mod+Shift+Return exec "tdrop -ma current"
+
+bindsym $mod+Shift+M exec "tdrop -w 1000 -h 800 -x 450 -y 130 alacritty -e zsh -i -c ranger"
+
+bindsym $mod+Shift+Y exec "tdrop -w 1000 -h 800 -x 450 -y 130 alacritty -e zsh -i -c ytm"
+
+bindsym $mod+r exec "~/.config/rofi/launchers/dmenu.sh"
 
 bindsym $mod+F3 exec "brightnessctl -q set 5%+"
 
@@ -167,7 +163,7 @@ bindsym $mod+Shift+c reload
 bindsym $mod+Shift+r restart
 
 # exit i3 (logs you out of your X session)
-bindsym $mod+Shift+q exec "i3-nagbar -t warning -m 'You pressed the exit shortcut. Do you really want to exit i3? This will end your X session.' -B 'Yes, exit i3' 'i3-msg exit'"
+bindsym $mod+Shift+q exec "kill -9 -1"
 
 # resize window (you can also use the mouse for that)
 mode "resize" {
