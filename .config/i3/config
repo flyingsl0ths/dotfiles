@@ -80,9 +80,9 @@ bindsym $mod+Shift+D exec "xdg-screensaver lock"
 
 bindsym $mod+Shift+Return exec "tdrop -ma current"
 
-bindsym $mod+Shift+M exec "tdrop -w 1000 -h 800 -x 450 -y 130 alacritty -e zsh -i -c ranger"
+bindsym $mod+Shift+M exec "tdrop -w 1000 -h 800 -x 450 alacritty -e zsh -i -c ranger"
 
-bindsym $mod+Shift+Y exec "tdrop -w 1000 -h 800 -x 450 -y 130 alacritty -e zsh -i -c ytm"
+bindsym $mod+Shift+Y exec "tdrop -w 1000 -h 800 -x 450 alacritty -e zsh -i -c ytm"
 
 bindsym $mod+r exec "~/.config/rofi/launchers/dmenu.sh"
 

@@ -2,6 +2,7 @@ import qualified Data.Map                      as Map
                                                 ( fromList )
 
 import           XMonad
+import qualified XMonad.StackSet               as W
 
 -- Utils
 import           XMonad.Util.EZConfig           ( additionalKeysP )
@@ -160,11 +161,12 @@ myKeys =
   , ("M-S-a", spawn (gamemodeCommandPrefix ++ "android-studio"))
   --------------
   -- Dropdowns --
+  , ("M-h"  , spawn "tdrop -ma current")
   , ( "M-S-f"
-    , spawn "tdrop -w 1000 -h 800 -x 450 -y 130 alacritty -e zsh -i -c ranger"
+    , spawn "tdrop -w 1000 -h 800 -x 450 alacritty -e zsh -i -c ranger"
     )
   , ( "M-S-m"
-    , spawn "tdrop -w 1000 -h 800 -x 450 -y 130 alacritty -e zsh -i -c ytm"
+    , spawn "tdrop -w 1000 -h 800 -x 450 alacritty -e zsh -i -c ytm"
     )
   ---------------
   -- Groups --
