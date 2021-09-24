@@ -5,7 +5,7 @@ set background=dark
 set guifont="JetBrainsMonoMedium Nerd Font" 11
 
 " Height of the command bar
-set cmdheight=1
+set cmdheight=2
 
 " width (in spaces) that a <tab> is displayed as
 set tabstop=4
@@ -96,6 +96,21 @@ syntax enable
 " Hides current mode in gutter
 set noshowmode
 
+set hidden
+
+set updatetime=300
+
+set shortmess+=c
+
+" Always show the signcolumn, otherwise it would shift the text each time
+" diagnostics appear/become resolved.
+if has("nvim-0.5.0") || has("patch-8.1.1564")
+  " Recently vim can merge signcolumn and number column into one
+  set signcolumn=number
+else
+  set signcolumn=yes
+endif
+
 let base16colorspace=256
 
 " Default to static completion for SQL
@@ -138,8 +153,8 @@ nnoremap <S-Tab> :bprevious<CR>
 nnoremap <leader>bb :buffers<cr>:b<space>
 
 nmap <F8> :TagbarToggle<CR>
-nmap <leader>fm :ALEFix<CR>
-nmap <leader>f :NERDTreeToggle<CR>
+nmap <leader>fm :Format<CR>
+nmap <leader>t :NERDTreeToggle<CR>
 nmap <leader>ft :NERDTreeFocus<CR>
 
 " Fast saving
@@ -172,7 +187,6 @@ call vundle#begin()
 " Vundle managed
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'itchyny/vim-gitbranch'
-Plugin 'dense-analysis/ale'
 Plugin 'itchyny/lightline.vim'
 Plugin 'maximbaz/lightline-ale'
 Plugin 'preservim/tagbar'
@@ -183,39 +197,12 @@ Plugin 'udalov/kotlin-vim'
 Plugin 'doums/darcula'
 Plugin 'chriskempson/base16-vim'
 Plugin 'Shougo/deol.nvim'
-Plugin 'chrisbra/Colorizer'
 Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'neoclide/coc.nvim'
 "
 
 " nerdtree git
 let g:NERDTreeGitStatusUseNerdFonts = 1
-"
-
-" ALE Settings
-let g:ale_fixers = { '*':
-			\'trim_whitespace',
-			\'sh' : 'shfmt',
-			\'haskell' : 'brittany',
-			\'c' : ['clang-format','clangtidy'],
-			\'cpp': ['clang-format','clangtidy'],
-			\'cmake' : 'cmakeformat',
-			\'java': 'clang-format',
-			\'markdown': 'prettier',
-			\'yaml': 'prettier',
-			\'html': 'prettier',
-			\'python': ['black', 'reorder-python-imports'],
-			\ 'ruby': 'rubocop',
-            \ 'sql': 'sqlfmt'}
-"
-
-" YCM Settings
-augroup MyYCMCustom
-  autocmd!
-  autocmd FileType c,cpp,python,java,javascript,typescript let b:ycm_hover = {
-    \ 'command': 'GetDoc',
-    \ 'syntax': &filetype
-    \ }
-augroup END
 "
 
 " Lightline Settings
@@ -229,17 +216,16 @@ let g:lightline = {
       \              ['lineinfo'],
       \              ['percent'],
       \              [ 'fileformat', 'fileencoding', 'filetype'],
-      \              [ 'linter_checking', 'linter_errors', 'linter_warnings', 'linter_infos', 'linter_ok' ] ]
+      \              ['cocstatus'] ]
       \ },
       \ 'component_function': {
       \ 'gitbranch': 'gitbranch#name',
-      \ 'linter_checking': 'lightline#ale#checking',
-      \ 'linter_infos': 'lightline#ale#infos',
-      \ 'linter_warnings': 'lightline#ale#warnings',
-      \ 'linter_errors': 'lightline#ale#errors',
-      \ 'linter_ok': 'lightline#ale#ok'
+      \ 'cocstatus' : 'coc#status'
       \ },
       \ }
+
+" Use autocmd to force lightline update.
+autocmd User CocStatusChange,CocDiagnosticChange call lightline#update()
 "
 
 let g:tagbar_type_haskell = {
@@ -303,12 +289,9 @@ let g:tagbar_type_kotlin = {
     \ }
 \ }
 
-
-let g:colorizer_auto_filetype='css,html,dosini,sh,conf,rasi'
-
 " ctrlp Settings
 " Key binding to run command
-let g:ctrlp_map = '<C-f>'
+let g:ctrlp_map = '<S-f>'
 
 " Used to specifiy root directory of all searches
 " by using the cwd of any file in the list
@@ -321,6 +304,123 @@ let g:ctrlp_switch_buffer = 'et'
 let g:ctrlp_user_command = ['.git', 'cd %s && git ls-files -co --exclude-standard']
 
 let g:ctrlp_custom_ignore = 'home/flyingsl0ths'
+"
+
+" COC settings
+" Use tab for trigger completion with characters ahead and navigate.
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+inoremap <expr><S-TAB> pumvisible() ? "\<C-p>" : "\<C-h>"
+
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~# '\s'
+endfunction
+
+" Use <c-space> to trigger completion.
+inoremap <silent><expr> <c-@> coc#refresh()
+
+
+" Make <CR> auto-select the first completion item and notify coc.nvim to
+" format on enter, <cr> could be remapped by other vim plugin
+inoremap <silent><expr> <cr> pumvisible() ? coc#_select_confirm()
+                              \: "\<C-g>u\<CR>\<c-r>=coc#on_enter()\<CR>"
+
+" Use `[g` and `]g` to navigate diagnostics
+" Use `:CocDiagnostics` to get all diagnostics of current buffer in location list.
+nmap <silent> [g <Plug>(coc-diagnostic-prev)
+nmap <silent> ]g <Plug>(coc-diagnostic-next)
+
+" GoTo code navigation.
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+
+" Use K to show documentation in preview window.
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  elseif (coc#rpc#ready())
+    call CocActionAsync('doHover')
+  else
+    execute '!' . &keywordprg . ' ' . expand('<cword>')
+  endif
+endfunction
+
+" Highlight the symbol and its references when holding the cursor.
+autocmd CursorHold * silent call CocActionAsync('highlight')
+
+" Symbol renaming.
+nmap <leader>rn <Plug>(coc-rename)
+
+" Formatting selected code.
+xmap <leader>f  <Plug>(coc-format-selected)
+nmap <leader>f  <Plug>(coc-format-selected)
+
+augroup mygroup
+  autocmd!
+  " Setup formatexpr specified filetype(s).
+  autocmd FileType haskell,python,cpp,c,java,kotlin,typescript,json setl formatexpr=CocAction('formatSelected')
+  " Update signature help on jump placeholder.
+  autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
+augroup end
+
+" Applying codeAction to the selected region.
+" Example: `<leader>aap` for current paragraph
+xmap <leader>a  <Plug>(coc-codeaction-selected)
+nmap <leader>a  <Plug>(coc-codeaction-selected)
+
+" Remap keys for applying codeAction to the current buffer.
+nmap <leader>ac  <Plug>(coc-codeaction)
+" Apply AutoFix to problem on the current line.
+nmap <leader>af  <Plug>(coc-fix-current)
+
+" Add `:Format` command to format current buffer.
+command! -nargs=0 Format :call CocAction('format')
+
+" Add `:Fold` command to fold current buffer.
+command! -nargs=? Fold :call     CocAction('fold', <f-args>)
+
+" Add `:OR` command for organize imports of the current buffer.
+command! -nargs=0 OR   :call     CocAction('runCommand', 'editor.action.organizeImport')
+
+" Remap <C-f> and <C-b> for scroll float windows/popups.
+if has('nvim-0.4.0') || has('patch-8.2.0750')
+  nnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  nnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+  inoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(1)\<cr>" : "\<Right>"
+  inoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? "\<c-r>=coc#float#scroll(0)\<cr>" : "\<Left>"
+  vnoremap <silent><nowait><expr> <C-f> coc#float#has_scroll() ? coc#float#scroll(1) : "\<C-f>"
+  vnoremap <silent><nowait><expr> <C-b> coc#float#has_scroll() ? coc#float#scroll(0) : "\<C-b>"
+endif
+
+" Use CTRL-S for selections ranges.
+" Requires 'textDocument/selectionRange' support of language server.
+nmap <silent> <C-r> <Plug>(coc-range-select)
+xmap <silent> <C-r> <Plug>(coc-range-select)
+
+" Mappings for CoCList
+" Show all diagnostics.
+nnoremap <silent><nowait> <space>a  :<C-u>CocList diagnostics<cr>
+" Manage extensions.
+nnoremap <silent><nowait> <space>e  :<C-u>CocList extensions<cr>
+" Show commands.
+nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
+" Find symbol of current document.
+nnoremap <silent><nowait> <space>o  :<C-u>CocList outline<cr>
+" Search workspace symbols.
+nnoremap <silent><nowait> <space>s  :<C-u>CocList -I symbols<cr>
+" Do default action for next item.
+nnoremap <silent><nowait> <space>j  :<C-u>CocNext<CR>
+" Do default action for previous item.
+nnoremap <silent><nowait> <space>k  :<C-u>CocPrev<CR>
+" Resume latest coc list.
+nnoremap <silent><nowait> <space>p  :<C-u>CocListResume<CR>
 "
 
 call vundle#end()            " required
