@@ -1,5 +1,5 @@
 " Key binding to run command
-let g:ctrlp_map = '<C-f>'
+let g:ctrlp_map = '<leader>f'
 
 " Used to specifiy root directory of all searches
 " by using the cwd of any file in the list
