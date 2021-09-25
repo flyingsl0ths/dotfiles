@@ -22,12 +22,10 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'udalov/kotlin-vim'
 Plugin 'neoclide/coc.nvim'
 Plugin 'xolox/vim-misc'
-Plugin 'xolox/vim-easytags'
+"Plugin 'xolox/vim-easytags'
 Plugin 'chriskempson/base16-vim'
 
 so ~/.vimscripts/vlightline-settings.vim
-
-so ~/.vimscripts/vctag-settings.vim
 
 so ~/.vimscripts/vctrlp-settings.vim
 

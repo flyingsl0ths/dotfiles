@@ -119,6 +119,8 @@ let g:omni_sql_default_compl_type = 'syntax'
 
 " Removes 'Error - SQLComplete: The debxt plugin must be loaded for dynamic SQL completion'
 let g:omni_sql_no_default_maps = 1
+
+set tags=tags;~
 """""""""""""""""""""
 
 """"" Plugin Settings 
