@@ -1,17 +1,9 @@
 import qualified Data.Map as Map
   ( fromList,
   )
-
-import           XMonad
-
-import qualified XMonad.StackSet               as W
-
--- Utils
-import XMonad.Util.EZConfig (additionalKeysP)
-import XMonad.Util.Ungrab (unGrab)
-
--- Hooks
-import XMonad.ManageHook (className)
+import XMonad
+import XMonad.Actions.GridSelect
+import XMonad.Actions.WithAll (killAll)
 import XMonad.Hooks.EwmhDesktops
   ( ewmh,
     fullscreenEventHook,
@@ -25,12 +17,6 @@ import XMonad.Hooks.ManageHelpers
     isDialog,
   )
 import XMonad.Hooks.SetWMName (setWMName)
-
--- Actions
-import XMonad.Actions.GridSelect
-import XMonad.Actions.WithAll (killAll)
-
--- Layouts
 import XMonad.Layout.Hidden
   ( hiddenWindows,
     hideWindow,
@@ -57,6 +43,10 @@ import XMonad.Layout.Tabbed
     urgentTextColor,
   )
 import XMonad.Layout.ThreeColumns (ThreeCol (ThreeColMid))
+import XMonad.ManageHook (className)
+import qualified XMonad.StackSet as W
+import XMonad.Util.EZConfig (additionalKeysP)
+import XMonad.Util.Ungrab (unGrab)
 
 myManageHook :: ManageHook
 
@@ -171,7 +161,6 @@ myKeys =
     ("M-S-a", spawn (gamemodeCommandPrefix ++ "android-studio")),
     --------------
     -- Dropdowns --
-    ("M-h", spawn "tdrop -ma current"),
     ( "M-S-f",
       spawn "tdrop -w 1000 -h 800 -x 450 alacritty -e zsh -i -c ranger"
     ),
