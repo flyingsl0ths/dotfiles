@@ -22,14 +22,16 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'udalov/kotlin-vim'
 Plugin 'neoclide/coc.nvim'
 Plugin 'xolox/vim-misc'
-"Plugin 'xolox/vim-easytags'
 Plugin 'chriskempson/base16-vim'
+Plugin 'tpope/vim-fugitive'
 
 so ~/.vimscripts/vlightline-settings.vim
 
 so ~/.vimscripts/vctrlp-settings.vim
 
 so ~/.vimscripts/vcoc-settings.vim
+
+so ~/.vimscripts/vtagbar-settings.vim
 
 call vundle#end()            " required
 filetype plugin indent on    " required
