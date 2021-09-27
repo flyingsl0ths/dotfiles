@@ -3,7 +3,9 @@ import qualified Data.Map as Map
   )
 import XMonad
 import XMonad.Actions.GridSelect
+import XMonad.Actions.MouseResize
 import XMonad.Actions.WithAll (killAll)
+import XMonad.Core (XConfig)
 import XMonad.Hooks.EwmhDesktops
   ( ewmh,
     fullscreenEventHook,
@@ -27,8 +29,10 @@ import XMonad.Layout.Spacing
   ( Border (Border),
     spacingRaw,
   )
+import XMonad.Layout.Spiral
 import XMonad.Layout.Tabbed
-  ( activeBorderColor,
+  ( Theme,
+    activeBorderColor,
     activeColor,
     activeTextColor,
     decoHeight,
@@ -43,22 +47,26 @@ import XMonad.Layout.Tabbed
     urgentTextColor,
   )
 import XMonad.Layout.ThreeColumns (ThreeCol (ThreeColMid))
+import XMonad.Layout.WindowArranger
 import XMonad.ManageHook (className)
 import qualified XMonad.StackSet as W
 import XMonad.Util.EZConfig (additionalKeysP)
 import XMonad.Util.Ungrab (unGrab)
 
-myManageHook :: ManageHook
-
+myFont :: String
 myFont = "xft:JetBrainsMono Nerd Font:size=10:antialias=true"
 
+myTerminal :: String
 myTerminal = "kitty"
 
 -- Used for commands that depend on binaries found in $PATH specified by .zshrc
+zshTerminalCommandPrefix :: String
 zshTerminalCommandPrefix = myTerminal ++ " zsh -i -c "
 
+gamemodeCommandPrefix :: String
 gamemodeCommandPrefix = "~/.local/bin/game_mode "
 
+codeEditors :: [String]
 codeEditors =
   [ zshTerminalCommandPrefix ++ "'vim'",
     gamemodeCommandPrefix ++ "android-studio",
@@ -68,8 +76,10 @@ codeEditors =
     "idea"
   ]
 
+myWorkspaces :: [String]
 myWorkspaces = ["I", "II", "III", "IV", "V", "VI"]
 
+myTabConfig :: Theme
 myTabConfig =
   def
     { activeColor = "#5e81ac",
@@ -79,33 +89,42 @@ myTabConfig =
       inactiveBorderColor = "#4c566a",
       urgentBorderColor = "#bf616a",
       activeTextColor = "#eceff4",
-      inactiveTextColor = "#2e3440",
+      inactiveTextColor = "#eceff4",
       urgentTextColor = "#eceff4",
       fontName = myFont,
       decoHeight = 15
     }
 
 myLayout =
-  hiddenWindows
-    ( avoidStruts
-        ( Full ||| tabbed shrinkText myTabConfig
-            ||| spacingRaw
-              True
-              (Border 0 10 10 10)
-              True
-              (Border 10 10 10 10)
-              True
-              (tiled ||| Mirror tiled ||| ThreeColMid nmaster delta ratio)
+  mouseResize $
+    windowArrange $
+      hiddenWindows
+        ( avoidStruts
+            ( spacingRaw
+                True
+                (Border 0 10 10 10)
+                True
+                (Border 10 10 10 10)
+                True
+                ( tiled
+                    ||| Mirror tiled
+                    ||| ThreeColMid nmaster delta ratio
+                    ||| spiralWithDir East CW (6 / 7)
+                )
+                ||| Full
+                ||| tabbed shrinkText myTabConfig
+            )
         )
-    )
   where
     tiled = Tall nmaster delta ratio
     nmaster = 1 -- Default number of windows in the master pane
     ratio = 1 / 2 -- Default proportion of screen occupied by master pane
     delta = 3 / 100 -- Percent of screen to increment by when resizing panes
 
+colorNormalBorder :: String
 colorNormalBorder = "#eceff4"
 
+colorFocusedBorder :: String
 colorFocusedBorder = "#5e81ac"
 
 myNavigation :: TwoD a (Maybe a)
@@ -129,6 +148,7 @@ myNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
     -- The navigation handler ignores unknown key symbols
     navDefaultHandler = const myNavigation
 
+gridSelectionConfig :: GSConfig Window
 gridSelectionConfig =
   def
     { gs_cellheight = 150,
@@ -138,6 +158,7 @@ gridSelectionConfig =
       gs_colorizer = fromClassName
     }
 
+editorGridSelectionConfig :: GSConfig String
 editorGridSelectionConfig =
   def
     { gs_cellheight = gs_cellheight gridSelectionConfig,
@@ -145,10 +166,11 @@ editorGridSelectionConfig =
       gs_font = gs_font gridSelectionConfig
     }
 
+myKeys :: [(String, X ())]
 myKeys =
   [ -- Programs --
     ("M-w", spawn "firedragon"),
-    ("M-p", spawn "firedragon --private-window"),
+    ("M-S-w", spawn "firedragon --private-window"),
     ("M-y", spawn "typora"),
     ("M-f", spawn "thunar"),
     ("M-g", spawn "gammy"),
@@ -156,15 +178,18 @@ myKeys =
     ("M-u", spawn "corectrl"),
     ("M-z", spawn "zathura"),
     ("M-m", spawn "pamac-manager"),
-    ("M-S-g", spawn (gamemodeCommandPrefix ++ "gimp")),
-    ("M-S-t", spawn "xfce4-taskmanager"),
-    ("M-S-a", spawn (gamemodeCommandPrefix ++ "android-studio")),
+    ("M-S-p", spawn (gamemodeCommandPrefix ++ "gimp")),
+    ("M-S-s", spawn (gamemodeCommandPrefix ++ "android-studio")),
     --------------
     -- Dropdowns --
+    ( "M-S-m",
+      spawn "tdrop -w 450 -h 450 -y 0 gnome-characters"
+    ),
     ( "M-S-f",
       spawn "tdrop -w 1000 -h 800 -x 450 alacritty -e zsh -i -c ranger"
     ),
-    ( "M-S-m",
+    ("M-S-t", spawn "tdrop -w 1920 -h 800 -y 0 alacritty -e htop"),
+    ( "M-S-y",
       spawn "tdrop -w 1000 -h 800 -x 450 alacritty -e zsh -i -c ytm"
     ),
     ---------------
@@ -173,11 +198,11 @@ myKeys =
     ------------
     -- Tools --
     ("M-<Return>", spawn myTerminal),
-    ("M-S-p", spawn "~/.config/rofi/launchers/ribbon.sh"),
+    ("M-S-a", spawn "~/.config/rofi/launchers/ribbon.sh"),
     ("M-r", spawn "~/.config/rofi/launchers/dmenu.sh"),
-    ("M-S-s", unGrab *> spawn "xfce4-screenshooter"),
-    ("M-S-l", spawn "xdg-screensaver lock"),
-    ("M-S-w", goToSelected gridSelectionConfig),
+    ("M-S-c", unGrab *> spawn "xfce4-screenshooter"),
+    ("M-c", spawn "xdg-screensaver lock"),
+    ("M-S-g", goToSelected gridSelectionConfig),
     ("M-S-e", spawnSelected editorGridSelectionConfig codeEditors),
     ("M-S-r", restart "xmonad" True),
     ("M-<F3>", spawn "brightnessctl -q s 5%+"),
@@ -189,17 +214,21 @@ myKeys =
     -- WM Actions --
     ("M-/", withFocused hideWindow),
     ("M-\\", popOldestHiddenWindow),
+    ("M-S-l", sendMessage FirstLayout),
     ("M-q", kill), -- Kill active window
-    ("M-S-k", killAll) -- Kill all windows on current workspace
+    ("M-x", killAll) -- Kill all windows on current workspace
     ----------------
   ]
 
+myStartUpHook :: X ()
 myStartUpHook = setWMName "LG3D" >> spawn "~/.xmonad/startup.sh"
 
+myManageHook :: ManageHook
 myManageHook =
   composeAll
     [ className =? "Gimp" --> doCenterFloat,
       className =? "Alacritty" --> doCenterFloat,
+      className =? "gammy" --> doCenterFloat,
       isDialog --> doCenterFloat
     ]
 
@@ -216,4 +245,9 @@ myConfig =
       manageHook = myManageHook
     }
 
-main = xmonad $ ewmh $ docks $ myConfig `additionalKeysP` myKeys
+main :: IO ()
+main =
+  xmonad $
+    ewmh $
+      docks $
+        myConfig `additionalKeysP` myKeys

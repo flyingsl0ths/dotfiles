@@ -178,7 +178,7 @@
 
     ### Misc/Advanced ###
     # dmenu path.
-    dmenu = /usr/bin/dmenu -p dunst:
+    dmenu = rofi -theme "~/.config/rofi/launchers/dmenu.rasi" -i -p Notification
 
     # Browser for opening urls in context menu.
     browser = /usr/bin/firedragon -new-tab
@@ -273,14 +273,14 @@
 [urgency_low]
     # IMPORTANT: colors have to be defined in quotation marks.
     # Otherwise the "#" and following would be interpreted as a comment.
-    background = "#2e3440"
+    background = "#3b4252"
     foreground = "#eceff4"
     timeout = 10
     # Icon for notifications with low urgency, uncomment to enable
     #icon = /path/to/icon
 
 [urgency_normal]
-    background = "#4c566a"
+    background = "#3b4252"
     foreground = "#eceff4"
     timeout = 10
     # Icon for notifications with normal urgency, uncomment to enable

@@ -10,10 +10,11 @@ gaps outer 20
 
 # popups
 for_window [window_role="pop-up"] floating enable
-
 for_window [window_role="task_dialog"] floating enable
 
 for_window [class="Alacritty"] floating enable
+for_window [class="gammy"] floating enable
+for_window [class="Org.gnome.Characters"] floating enable
 
 # class                 border  backgr. text    indicator child_border
 client.focused          #2e3440 #2e3440 #eceff4 #88c0d0   #88c0d0
@@ -23,7 +24,7 @@ client.urgent           #2e3440 #2e3440 #eceff4 #88c0d0   #88c0d0
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:JetBrainsMonoMedium Nerd Font 0
+font pango:JetBrainsMonoMedium Nerd Font 10
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
@@ -33,7 +34,7 @@ set $refresh_i3status killall -SIGUSR1 i3status
 
 bindsym $mod+F8 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
 bindsym $mod+F7 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym $mod+F6 exec --no-startup-id pactl set-sink-mute @DEFAULT_SINK@ toggle && $refresh_i3status
+bindsym $mod+F6 exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle && $refresh_i3status
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
@@ -52,7 +53,7 @@ bindsym $mod+f exec thunar
 
 bindsym $mod+y exec typora
 
-bindsym $mod+Shift+E exec gnome-characters
+bindsym $mod+Shift+E exec "tdrop -w 450 -h 450 -y 0 gnome-characters"
 
 bindsym $mod+Shift+Z exec zathura
 
@@ -60,25 +61,25 @@ bindsym $mod+Shift+V exec vscodium
 
 bindsym $mod+c exec xfce4-screenshooter
 
-bindsym $mod+Shift+T exec xfce4-taskmanager
+bindsym $mod+Shift+T exec "tdrop -w 1920 -h 800 -y 0 alacritty -e htop"
 
 bindsym $mod+p exec "pamac-manager"
 
 bindsym $mod+u exec "corectrl"
 
-bindsym $mod+g exec "~/.bin/game_mode gimp"
+bindsym $mod+g exec "~/.local/bin/game_mode gimp"
 
 bindsym $mod+Shift+W exec "firedragon --private-window"
 
 bindsym $mod+Shift+P exec "~/.config/rofi/launchers/ribbon.sh"
 
-bindsym $mod+Shift+S exec "~/.bin/game_mode android-studio"
+bindsym $mod+Shift+S exec "~/.local/bin/game_mode android-studio"
 
 bindsym $mod+Shift+N exec "vscodium; zathura"
 
 bindsym $mod+Shift+D exec "xdg-screensaver lock"
 
-bindsym $mod+Shift+Return exec "tdrop -ma current"
+bindsym $mod+Shift+Tab exec "tdrop -ma auto_hide"
 
 bindsym $mod+Shift+M exec "tdrop -w 1000 -h 800 -x 450 alacritty -e zsh -i -c ranger"
 
@@ -89,7 +90,6 @@ bindsym $mod+r exec "~/.config/rofi/launchers/dmenu.sh"
 bindsym $mod+F3 exec "brightnessctl -q set 5%+"
 
 bindsym $mod+F2 exec "brightnessctl -q set 5%-"
-#######
 
 # kill focused window
 bindsym $mod+q kill
