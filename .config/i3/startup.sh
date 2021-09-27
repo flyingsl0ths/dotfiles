@@ -1,10 +1,10 @@
-#!/bin/env bash
+#!/usr/bin/env bash
 
 ##### Programs #####
 
 lxpolkit &
 
-/usr/bin/xautolock -time 10 -locker $HOME/.local/bin/i3lock-fancy-rapid -detectsleep &
+/usr/bin/xautolock -time 10 -locker "$HOME"/.local/bin/i3lock-fancy-rapid -detectsleep &
 
 "$HOME"/.config/polybar/launch.sh "i3"
 
