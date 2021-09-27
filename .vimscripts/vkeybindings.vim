@@ -26,18 +26,8 @@ nnoremap <S-Tab> :bprevious<CR>
 
 nnoremap <leader>bb :buffers<cr>:b<space>
 
-nmap <F8> :TagbarToggle<CR>
-nmap <leader>fm :Format<CR>
-nmap <leader>t :NERDTreeToggle<CR>
-nmap <leader>ft :NERDTreeFocus<CR>
-
 " Fast saving
 nmap <C-s> :w!<CR>
-
-" :W sudo saves the file
-" (useful for handling the permission-denied error)
-command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
-nmap <S-w> :W<CR>
 
 map <S-t> :tabnew<CR>
 map <leader>x :tabclose<CR>
@@ -53,7 +43,25 @@ map <silent> <leader><cr> :noh<CR>
 " Opens a new tab with the current buffer's path
 map <leader>te :tabedit <C-r>=expand("%:p:h")<CR>/
 
+""" Custom Commands """
+
 " Copy/Paste to clipboard
 vnoremap <C-c> :w !xclip -i -sel c<CR>
 
 noremap <C-p> :r !xsel -o -b<CR>
+
+" :W sudo saves the file
+" (useful for handling the permission-denied error)
+command! W execute 'w !sudo tee % > /dev/null' <bar> edit!
+nmap <S-w> :W<CR>
+
+nmap <F8> :TagbarToggle<CR>
+
+nmap <leader>fm :Format<CR>
+
+nmap <leader>t :NERDTreeToggle<CR>
+
+nmap <leader>ft :NERDTreeFocus<CR>
+
+" Opens vim fugitive menu
+nmap <leader>g :G<CR>
