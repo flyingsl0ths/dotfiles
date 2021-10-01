@@ -14,7 +14,7 @@ xinput set-prop 12 316 1
 
 nm-applet &
 
-feh --bg-center "$HOME/Pictures/wallpaper/arch linux miku.png"
+feh --bg-center "$HOME/Pictures/wallpaper/matrix.png"
 
 gammy &
 
