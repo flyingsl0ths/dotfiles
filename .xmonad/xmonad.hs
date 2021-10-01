@@ -4,14 +4,29 @@ import qualified Data.Map as Mp
     union,
   )
 
-import System.Exit(exitSuccess)
-
 import LayoutUtils (rawSpacing')
+import SpawnUtils
+
+import System.Exit(exitSuccess)
 
 import XMonad
 
+import XMonad.Util.Scratchpad (scratchpadSpawnActionTerminal)
+
 import qualified XMonad.Actions.FlexibleResize as Flex
 import XMonad.Actions.GridSelect
+  ( GSConfig (..),
+    TwoD (..),
+    cancel,
+    colorRangeFromClassName,
+    goToSelected,
+    makeXEventhandler,
+    move,
+    select,
+    setPos,
+    shadowWithKeymap,
+    substringSearch,
+  )
 import XMonad.Actions.MouseGestures (Direction2D (..), mouseGesture)
 import XMonad.Actions.WithAll (killAll)
 
@@ -74,25 +89,18 @@ myFont = "xft:JetBrainsMono Nerd Font:size=10:antialias=true"
 myTerminal :: String
 myTerminal = "kitty"
 
--- Used for commands that depend on binaries found in $PATH specified by .zshrc
-zshTerminalCommandPrefix :: String
-zshTerminalCommandPrefix = myTerminal ++ " zsh -i -c "
-
-gamemodeCommandPrefix :: String
-gamemodeCommandPrefix = "~/.local/bin/game_mode "
-
-codeEditors :: [String]
+codeEditors :: [(String, String)]
 codeEditors =
-  [ zshTerminalCommandPrefix ++ "'vim'",
-    gamemodeCommandPrefix ++ "android-studio",
-    "vscodium",
-    "typora",
-    "drracket",
-    "idea"
+  [ ("Vim", zshTerminalCommand myTerminal "'vim'"),
+    ("Android Studio", gamemodeCommand "android-studio"),
+    ("VSCode", "vscodium"),
+    ("Typora", "typora"),
+    ("DrRacket", "drracket"),
+    ("IntelliJ", "idea")
   ]
 
 myWorkspaces :: [String]
-myWorkspaces = ["I", "II", "III", "IV", "V", "VI"]
+myWorkspaces = ["I", "II", "III", "IV", "V", "VI", "VII"]
 
 myTabConfig :: Theme
 myTabConfig =
@@ -185,22 +193,14 @@ myColorizer =
     -- #D8DEE9
     white = (0xD8, 0xDE, 0xE9)
 
-gridSelectionConfig :: GSConfig Window
-gridSelectionConfig =
+windowGridSelectionConfig :: GSConfig Window
+windowGridSelectionConfig =
   def
     { gs_cellheight = 150,
       gs_cellwidth = 150,
       gs_navigate = myGridNavigation,
       gs_font = myFont,
       gs_colorizer = myColorizer
-    }
-
-editorGridSelectionConfig :: GSConfig String
-editorGridSelectionConfig =
-  def
-    { gs_cellheight = gs_cellheight gridSelectionConfig,
-      gs_cellwidth = gs_cellwidth gridSelectionConfig,
-      gs_font = gs_font gridSelectionConfig
     }
 
 myKeys :: XConfig Layout -> Mp.Map (KeyMask, KeySym) (X ())
@@ -216,16 +216,16 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
       ((modMask, xK_c), spawn "corectrl"),
       ((modMask, xK_z), spawn "zathura"),
       ((modMask, xK_p), spawn "pamac-manager"),
-      ((modMask, xK_g), spawn (gamemodeCommandPrefix ++ "gimp")),
-      ((modMask, xK_a), spawn (gamemodeCommandPrefix ++ "android-studio")),
+      ((modMask, xK_g), spawn (gamemodeCommand "gimp")),
+      ((modMask, xK_a), spawn (gamemodeCommand "android-studio")),
       ((modMask .|. shiftMask, xK_t), spawn "xfce4-taskmanager")
     ]
       ++ [
            -----------------
-           --- Dropdowns ---
+           --- Scratchpads ---
            ((modMask .|. shiftMask, xK_m), spawn "tdrop -w 800 -h 525 -y 0 gnome-characters"),
-           ((modMask .|. shiftMask, xK_f), spawn "tdrop -w 1000 -h 800 -x 450 alacritty -e zsh -i -c ranger"),
-           ((modMask .|. shiftMask, xK_y), spawn "tdrop -w 1000 -h 800 -x 450 alacritty -e zsh -i -c ytm"),
+           ((modMask .|. shiftMask, xK_f), scratchpadSpawnActionTerminal "alacritty --class scratchpad -e zsh -i -c ranger"),
+           ((modMask .|. shiftMask, xK_y), scratchpadSpawnActionTerminal "alacritty --class scratchpad  -e zsh -i -c ytm"),
            -----------------
            ---- Groups -----
            ((modMask .|. controlMask, xK_c), spawn "vscodium; zathura"),
@@ -247,8 +247,8 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
          ]
       ++ [
            -- Addtional WM Actions --
-           ((modMask .|. controlMask, xK_g), goToSelected gridSelectionConfig),
-           ((modMask .|. shiftMask, xK_e), spawnSelected editorGridSelectionConfig codeEditors),
+           ((modMask .|. controlMask, xK_w), goToSelected windowGridSelectionConfig),
+           ((modMask .|. controlMask, xK_e), spawnSelected' codeEditors),
            ((modMask, xK_backslash), withFocused hideWindow),
            ((modMask .|. shiftMask, xK_backslash), popOldestHiddenWindow),
            -- Kill active window
@@ -318,11 +318,11 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
       ]
 
 -----------------
-
+--
 myMouse :: XConfig l -> [((KeyMask, Button), Window -> X ())]
 myMouse XConfig {XMonad.modMask = modMask} =
   [ -- Enables resizing a window from any corner
-    ((modMask, button3), \w -> focus w >> Flex.mouseResizeWindow w)
+    ((modMask .|. shiftMask, button1), \w -> focus w >> Flex.mouseResizeWindow w)
   ]
 
 newMouseBindings :: XConfig Layout -> Mp.Map (ButtonMask, Button) (Window -> X ())
@@ -336,7 +336,7 @@ myManageHook =
   composeAll
     [ className =? "Gimp" --> doFloat,
       className =? "Alacritty" --> doCenterFloat,
-      className =? "gammy" --> doFloat,
+      className =? "gammy" --> doCenterFloat,
       className =? "Org.gnome.Characters" --> doFloat,
       isDialog --> doFloat
     ]
