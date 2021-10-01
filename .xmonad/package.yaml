@@ -20,6 +20,7 @@ executables:
     - -threaded
     - -rtsopts
     - -with-rtsopts=-N
+    - -O2
     - -Werror
     dependencies:
     - my-xmonad

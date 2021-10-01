@@ -15,6 +15,7 @@ build-type:     Simple
 library
   exposed-modules:
       LayoutUtils
+      SpawnUtils
   other-modules:
       Paths_my_xmonad
   hs-source-dirs:
@@ -30,7 +31,7 @@ executable my-xmonad
   main-is: xmonad.hs
   other-modules:
       Paths_my_xmonad
-  ghc-options: -threaded -rtsopts -with-rtsopts=-N -Werror
+  ghc-options: -threaded -rtsopts -with-rtsopts=-N -O2 -Werror
   build-depends:
       base >=4.7 && <5
     , containers
