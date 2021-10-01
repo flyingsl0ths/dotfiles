@@ -42,6 +42,7 @@ alias ctags="ctags --append=yes"
 alias ugzp="gzip --uncompress"
 alias mtp="jmtpfs -o auto_unmount"
 alias paste="xclip -i -sel c"
+alias ps="pipes.sh"
 
 alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
