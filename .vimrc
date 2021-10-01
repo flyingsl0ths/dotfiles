@@ -12,6 +12,7 @@ so ~/.vimscripts/vale-settings.vim
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'itchyny/vim-gitbranch'
 Plugin 'itchyny/lightline.vim'
+Plugin 'maximbaz/lightline-ale'
 Plugin 'dense-analysis/ale'
 Plugin 'preservim/tagbar'
 Plugin 'preservim/nerdtree'

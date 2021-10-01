@@ -8,10 +8,18 @@ let g:lightline = {
       \              ['lineinfo'],
       \              ['percent'],
       \              [ 'fileformat', 'fileencoding', 'filetype'],
-      \              ['cocstatus'] ]
+      \              [ 'cocstatus', 
+      \                'linter_checking', 'linter_errors',
+      \                'linter_warnings', 'linter_infos',
+      \                'linter_ok' ] ]
       \ },
       \ 'component_function': {
       \ 'gitbranch': 'gitbranch#name',
+      \ 'linter_checking': 'lightline#ale#checking',
+      \ 'linter_infos': 'lightline#ale#infos',
+      \ 'linter_warnings': 'lightline#ale#warnings',
+      \ 'linter_errors': 'lightline#ale#errors',
+      \ 'linter_ok': 'lightline#ale#ok',
       \ 'cocstatus' : 'coc#status',
       \ },
       \ }
