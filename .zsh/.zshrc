@@ -2,7 +2,7 @@ export ZSH=$HOME/.oh-my-zsh
 
 export PATH=$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.local/share/gem/ruby/3.0.0/bin:$HOME/.cabal/bin
 
-ZSH_THEME="lambda"
+ZSH_THEME="norm"
 
 source $ZSH/oh-my-zsh.sh
 
