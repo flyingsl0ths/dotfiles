@@ -20,4 +20,6 @@ gammy &
 
 /usr/lib/xfce4/notifyd/xfce4-notifyd &
 
+libinput-libinput-gestures
+
 ###################
