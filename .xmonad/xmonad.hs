@@ -106,22 +106,6 @@ colorNormalBorder = "#4c566a"
 colorFocusedBorder :: String
 colorFocusedBorder = "#5e81ac"
 
-myTabConfig :: Theme
-myTabConfig =
-  def
-    { activeColor = "#5e81ac",
-      inactiveColor = "#4c566a",
-      urgentColor = "#bf616a",
-      activeBorderColor = "#5e81ac",
-      inactiveBorderColor = "#4c566a",
-      urgentBorderColor = "#bf616a",
-      activeTextColor = "#eceff4",
-      inactiveTextColor = "#eceff4",
-      urgentTextColor = "#eceff4",
-      fontName = myFont,
-      decoHeight = 15
-    }
-
 tiledLayout :: Tall a
 tiledLayout = Tall nmaster delta ratio
   where
@@ -161,6 +145,22 @@ spiralLayout = spiralWithDir cardinalDirection spiralDirection windowSizeRation
 
 tabbedLayout :: ModifiedLayout (Decoration TabbedDecoration DefaultShrinker) Simplest Window
 tabbedLayout = tabbed shrinkText myTabConfig
+  where
+    myTabConfig :: Theme
+    myTabConfig =
+      def
+        { activeColor = "#5e81ac",
+          inactiveColor = "#4c566a",
+          urgentColor = "#bf616a",
+          activeBorderColor = "#5e81ac",
+          inactiveBorderColor = "#4c566a",
+          urgentBorderColor = "#bf616a",
+          activeTextColor = "#eceff4",
+          inactiveTextColor = "#eceff4",
+          urgentTextColor = "#eceff4",
+          fontName = myFont,
+          decoHeight = 15
+        }
 
 myLayout =
   hiddenWindows $
@@ -180,41 +180,6 @@ myLayout =
             ||| spiralLayout
         )
 
-myGridNavigation :: TwoD a (Maybe a)
-myGridNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
-  where
-    navKeyMap =
-      M.fromList
-        [ ((0, xK_Escape), cancel),
-          ((0, xK_Return), select),
-          ((0, xK_slash), substringSearch myGridNavigation),
-          ((0, xK_Left), move (-1, 0) >> myGridNavigation),
-          ((0, xK_Right), move (1, 0) >> myGridNavigation),
-          ((0, xK_Down), move (0, 1) >> myGridNavigation),
-          ((0, xK_Up), move (0, -1) >> myGridNavigation),
-          ((0, xK_h), move (-1, 0) >> myGridNavigation),
-          ((0, xK_l), move (1, 0) >> myGridNavigation),
-          ((0, xK_j), move (0, 1) >> myGridNavigation),
-          ((0, xK_k), move (0, -1) >> myGridNavigation),
-          ((0, xK_space), setPos (0, 0) >> myGridNavigation)
-        ]
-    -- The navigation handler ignores unknown key symbols
-    navDefaultHandler = const myGridNavigation
-
-myColorizer :: Window -> Bool -> X (String, String)
-myColorizer =
-  colorRangeFromClassName
-    polar -- lowest inactive bg
-    frost -- highest inactive bg
-    polar -- active bg
-    snow -- inactive fg
-    snow -- active fg
-  where
-    -- Based off nord color palette
-    frost = (0x5E, 0x81, 0xAC)
-    polar = (0x2E, 0x34, 0x40)
-    snow = (0xD8, 0xDE, 0xE9)
-
 windowGridSelectionConfig :: GSConfig Window
 windowGridSelectionConfig =
   def
@@ -224,6 +189,41 @@ windowGridSelectionConfig =
       gs_font = myFont,
       gs_colorizer = myColorizer
     }
+  where
+    myColorizer :: Window -> Bool -> X (String, String)
+    myColorizer =
+      colorRangeFromClassName
+        polar -- lowest inactive bg
+        frost -- highest inactive bg
+        polar -- active bg
+        snow -- inactive fg
+        snow -- active fg
+      where
+        -- Based off nord color palette
+        frost = (0x5E, 0x81, 0xAC)
+        polar = (0x2E, 0x34, 0x40)
+        snow = (0xD8, 0xDE, 0xE9)
+
+    myGridNavigation :: TwoD a (Maybe a)
+    myGridNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
+      where
+        navKeyMap =
+          M.fromList
+            [ ((0, xK_Escape), cancel),
+              ((0, xK_Return), select),
+              ((0, xK_slash), substringSearch myGridNavigation),
+              ((0, xK_Left), move (-1, 0) >> myGridNavigation),
+              ((0, xK_Right), move (1, 0) >> myGridNavigation),
+              ((0, xK_Down), move (0, 1) >> myGridNavigation),
+              ((0, xK_Up), move (0, -1) >> myGridNavigation),
+              ((0, xK_h), move (-1, 0) >> myGridNavigation),
+              ((0, xK_l), move (1, 0) >> myGridNavigation),
+              ((0, xK_j), move (0, 1) >> myGridNavigation),
+              ((0, xK_k), move (0, -1) >> myGridNavigation),
+              ((0, xK_space), setPos (0, 0) >> myGridNavigation)
+            ]
+        -- The navigation handler ignores unknown key symbols
+        navDefaultHandler = const myGridNavigation
 
 myScratchPads :: NamedScratchpads
 myScratchPads =
