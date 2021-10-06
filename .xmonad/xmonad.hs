@@ -3,16 +3,11 @@ import qualified Data.Map as Mp
     fromList,
     union,
   )
-
+import Data.Word (Word8)
 import LayoutUtils (rawSpacing')
 import SpawnUtils
-
-import System.Exit(exitSuccess)
-
+import System.Exit (exitSuccess)
 import XMonad
-
-import XMonad.Util.Scratchpad (scratchpadSpawnActionTerminal)
-
 import qualified XMonad.Actions.FlexibleResize as Flex
 import XMonad.Actions.GridSelect
   ( GSConfig (..),
@@ -29,10 +24,7 @@ import XMonad.Actions.GridSelect
   )
 import XMonad.Actions.MouseGestures (Direction2D (..), mouseGesture)
 import XMonad.Actions.WithAll (killAll)
-
 import XMonad.Core (XConfig)
-
-import XMonad.ManageHook (className)
 import XMonad.Hooks.EwmhDesktops
   ( ewmh,
     fullscreenEventHook,
@@ -46,8 +38,8 @@ import XMonad.Hooks.ManageHelpers
     isDialog,
   )
 import XMonad.Hooks.SetWMName (setWMName)
-
 import XMonad.Layout.Accordion (Accordion (..))
+import XMonad.Layout.Decoration (Decoration, DefaultShrinker)
 import XMonad.Layout.Hidden
   ( hiddenWindows,
     hideWindow,
@@ -55,14 +47,21 @@ import XMonad.Layout.Hidden
   )
 import XMonad.Layout.LayoutModifier (ModifiedLayout (..))
 import XMonad.Layout.Renamed (Rename (Replace), renamed)
+import XMonad.Layout.Simplest (Simplest)
 import XMonad.Layout.Spacing
   ( Border (Border),
     Spacing,
     spacingRaw,
   )
 import XMonad.Layout.Spiral
+  ( Direction (East),
+    Rotation (CW),
+    SpiralWithDir,
+    spiralWithDir,
+  )
 import XMonad.Layout.Tabbed
-  ( Theme,
+  ( TabbedDecoration,
+    Theme,
     activeBorderColor,
     activeColor,
     activeTextColor,
@@ -78,9 +77,8 @@ import XMonad.Layout.Tabbed
     urgentTextColor,
   )
 import XMonad.Layout.ThreeColumns (ThreeCol (ThreeColMid))
-
+import XMonad.ManageHook (className)
 import qualified XMonad.StackSet as W
-
 import XMonad.Util.Ungrab (unGrab)
 
 myFont :: String
@@ -100,7 +98,13 @@ codeEditors =
   ]
 
 myWorkspaces :: [String]
-myWorkspaces = ["I", "II", "III", "IV", "V", "VI", "VII"]
+myWorkspaces = ["I", "II", "III", "IV", "V", "VI"]
+
+colorNormalBorder :: String
+colorNormalBorder = "#4c566a"
+
+colorFocusedBorder :: String
+colorFocusedBorder = "#5e81ac"
 
 myTabConfig :: Theme
 myTabConfig =
@@ -118,12 +122,8 @@ myTabConfig =
       decoHeight = 15
     }
 
-myLayout =
-  hiddenWindows $
-    avoidStruts $
-      Full
-        ||| tabbed shrinkText myTabConfig
-        ||| resizeableLayouts
+tiledLayout :: Tall a
+tiledLayout = Tall nmaster delta ratio
   where
     -- Default number of windows in the master pane
     nmaster = 1 :: Int
@@ -134,28 +134,51 @@ myLayout =
     -- Percent of screen to increment by when resizing panes
     delta = 3 / 100 :: Rational
 
-    tiled = Tall nmaster delta ratio
+tallAccordionLayout :: ModifiedLayout Rename Accordion a
+tallAccordionLayout = renamed [Replace "verticalAccordion"] Accordion
 
-    tallAccordion = renamed [Replace "verticalAccordion"] Accordion
+wideAccordionLayout :: ModifiedLayout Rename (Mirror Accordion) a
+wideAccordionLayout = renamed [Replace "horizontalAccordion"] $ Mirror Accordion
 
-    wideAccordion = renamed [Replace "horizontalAccordion"] $ Mirror Accordion
+threeColumnLayout :: ThreeCol a
+threeColumnLayout = ThreeColMid nmaster delta ratio
+  where
+    -- Default number of windows in the master pane
+    nmaster = 1 :: Int
 
+    -- Default proportion of screen occupied by master pane
+    ratio = 1 / 2 :: Rational
+
+    -- Percent of screen to increment by when resizing panes
+    delta = 3 / 100 :: Rational
+
+spiralLayout :: SpiralWithDir a
+spiralLayout = spiralWithDir cardinalDirection spiralDirection windowSizeRation
+  where
+    cardinalDirection = East :: Direction
+    spiralDirection = CW :: XMonad.Layout.Spiral.Rotation
+    windowSizeRation = (6 / 7) :: Rational
+
+tabbedLayout :: ModifiedLayout (Decoration TabbedDecoration DefaultShrinker) Simplest Window
+tabbedLayout = tabbed shrinkText myTabConfig
+
+myLayout =
+  hiddenWindows $
+    avoidStruts $
+      Full
+        ||| tabbedLayout
+        ||| resizeableLayouts
+  where
     resizeableLayouts =
       rawSpacing'
         10
-        ( tiled
-            ||| Mirror tiled
-            ||| tallAccordion
-            ||| wideAccordion
-            ||| ThreeColMid nmaster delta ratio
-            ||| spiralWithDir East CW (6 / 7)
+        ( tiledLayout
+            ||| Mirror tiledLayout
+            ||| tallAccordionLayout
+            ||| wideAccordionLayout
+            ||| threeColumnLayout
+            ||| spiralLayout
         )
-
-colorNormalBorder :: String
-colorNormalBorder = "#eceff4"
-
-colorFocusedBorder :: String
-colorFocusedBorder = "#5e81ac"
 
 myGridNavigation :: TwoD a (Maybe a)
 myGridNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
@@ -181,17 +204,16 @@ myGridNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHand
 myColorizer :: Window -> Bool -> X (String, String)
 myColorizer =
   colorRangeFromClassName
-    black -- lowest inactive bg
-    (0x5E, 0x81, 0xAC) -- highest inactive bg
-    black -- active bg
-    white -- inactive fg
-    white -- active fg
+    polar -- lowest inactive bg
+    frost -- highest inactive bg
+    polar -- active bg
+    snow -- inactive fg
+    snow -- active fg
   where
     -- Based off nord color palette
-    -- #2E3440
-    black = (0x2E, 0x34, 0x40)
-    -- #D8DEE9
-    white = (0xD8, 0xDE, 0xE9)
+    frost = (0x5E, 0x81, 0xAC) :: (Word8, Word8, Word8)
+    polar = (0x2E, 0x34, 0x40) :: (Word8, Word8, Word8)
+    snow = (0xD8, 0xDE, 0xE9) :: (Word8, Word8, Word8)
 
 windowGridSelectionConfig :: GSConfig Window
 windowGridSelectionConfig =
@@ -222,10 +244,11 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
     ]
       ++ [
            -----------------
-           --- Scratchpads ---
-           ((modMask .|. shiftMask, xK_m), spawn "tdrop -w 800 -h 525 -y 0 gnome-characters"),
-           ((modMask .|. shiftMask, xK_f), scratchpadSpawnActionTerminal "alacritty --class scratchpad -e zsh -i -c ranger"),
-           ((modMask .|. shiftMask, xK_y), scratchpadSpawnActionTerminal "alacritty --class scratchpad  -e zsh -i -c ytm"),
+           -- Dropdowns --
+           ((modMask .|. shiftMask, xK_e), spawn "tdrop -w 800 -h 525 -y 0 gnome-characters"),
+           ((modMask .|. shiftMask, xK_f), spawn "tdrop -w 1000 -h 800 -x 450 alacritty --class scratchpad -e zsh -i -c ranger"),
+           ((modMask .|. shiftMask, xK_y), spawn "tdrop -w 1000 -h 800 -x 450 alacritty --class scratchpad -e zsh -i -c ytm"),
+           ((modMask .|. shiftMask, xK_p), spawn "tdrop -w 1000 -h 800 -x 450 alacritty --class scratchpad -e zsh -c /home/flyingsl0ths/.local/bin/bpython"),
            -----------------
            ---- Groups -----
            ((modMask .|. controlMask, xK_c), spawn "vscodium; zathura"),
@@ -305,8 +328,7 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
         ((modMask .|. shiftMask, xK_q), io exitSuccess),
         -- %! Restart xmonad
         ( (modMask .|. shiftMask, xK_r),
-          spawn
-            "/home/flyingsl0ths/.local/bin/xmonad --recompile && /home/flyingsl0ths/.local/bin/xmonad --restart"
+          spawn "xmonad --recompile && xmonad --restart"
         )
       ]
       ++
@@ -315,6 +337,13 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
       [ ((m .|. modMask, k), windows $ f i)
         | (i, k) <- zip (XMonad.workspaces conf) [xK_1 .. xK_9],
           (f, m) <- [(W.greedyView, 0), (W.shift, shiftMask)]
+      ]
+      ++
+      -- mod-{[,],|} %! Switch to physical/Xinerama screens 1, 2, or 3
+      -- mod-shift-{[,],|} %! Move client to screen 1, 2, or 3
+      [ ((m .|. modMask, key), screenWorkspace sc >>= flip whenJust (windows . f))
+        | (key, sc) <- zip [xK_bracketleft, xK_bracketright, xK_bar] [0 ..],
+          (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
       ]
 
 -----------------
@@ -338,7 +367,7 @@ myManageHook =
       className =? "Alacritty" --> doCenterFloat,
       className =? "gammy" --> doCenterFloat,
       className =? "Org.gnome.Characters" --> doFloat,
-      isDialog --> doFloat
+      isDialog --> doCenterFloat
     ]
 
 myConfig =
@@ -349,7 +378,7 @@ myConfig =
       layoutHook = myLayout,
       normalBorderColor = colorNormalBorder,
       focusedBorderColor = colorFocusedBorder,
-      borderWidth = 0,
+      borderWidth = 3,
       keys = myKeys,
       mouseBindings = newMouseBindings,
       startupHook = myStartUpHook,
