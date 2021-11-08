@@ -7,7 +7,7 @@
 @import "../theme.rasi"
 
 * {
-    background-color:      @polar-1;
+    background-color:      @polar-2;
     border-color:          @polar-2;
     text-color:            @foreground;
     font:                  "JetBrainsMono Nerd Font 12";

@@ -1,3 +1,3 @@
-#!/usr/bin/env bash
+#!/bin/sh
 
 rofi -theme "$HOME/.config/rofi/launchers/dmenu.rasi" -show run
