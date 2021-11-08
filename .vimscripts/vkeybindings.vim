@@ -17,22 +17,30 @@ nnoremap <C-H> <C-w><C-h>
 tnoremap <ESC>   <C-\><C-n>
 
 " Remaps keys used to move buffers around
-nnoremap <C-Left>  <C-w>r
-nnoremap <C-Right> <C-w>r
-nnoremap <C-Up>    <C-w>H
-nnoremap <C-d>     <C-w>J
+noremap  <S-Left>  <C-w>r
+nnoremap <S-Right>  <C-w>r
+nnoremap <S-Up>  <C-w>H
+nnoremap <S-Down>  <C-w>J
+
 nnoremap <Tab> :bnext<CR>
 nnoremap <S-Tab> :bprevious<CR>
 
 nnoremap <leader>bb :buffers<cr>:b<space>
 
-" Fast saving
-nmap <C-s> :w!<CR>
+nnoremap <C-S-w> :w<CR>
 
 map <S-t> :tabnew<CR>
 map <leader>x :tabclose<CR>
 map <C-n> :tabn<CR>
 map <S-p> :tabp<CR>
+
+nnoremap <silent> <C-d> :vertical resize +5<CR>
+nnoremap <silent> <C-a> :vertical resize -5<CR>
+nnoremap <silent> <C-x> :res +5<CR>
+nnoremap <silent> <C-s> :res -5<CR>
+
+nnoremap <leader>\ :vsplit<space>
+nnoremap <leader>/ :split<space>
 
 " Toggle line numbers
 map <leader>n :set invnumber<CR>
@@ -41,7 +49,7 @@ map <leader>n :set invnumber<CR>
 map <silent> <leader><cr> :noh<CR>
 
 " Opens a new tab with the current buffer's path
-map <leader>te :tabedit <C-r>=expand("%:p:h")<CR>/
+map <leader>te :tabedit <C-r>=expand(I0"%:p:h")<CR>/
 
 """ Custom Commands """
 
