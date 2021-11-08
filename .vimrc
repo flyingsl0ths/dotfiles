@@ -6,9 +6,8 @@ so ~/.vimscripts/vkeybindings.vim
 set runtimepath+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 
-so ~/.vimscripts/vale-settings.vim
-
 " Vundle managed
+Plugin 'doums/darcula'
 Plugin 'VundleVim/Vundle.vim'
 Plugin 'itchyny/vim-gitbranch'
 Plugin 'itchyny/lightline.vim'
@@ -18,13 +17,15 @@ Plugin 'preservim/tagbar'
 Plugin 'preservim/nerdtree'
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'ryanoasis/vim-devicons'
-Plugin 'Shougo/deol.nvim'
 Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'udalov/kotlin-vim'
 Plugin 'neoclide/coc.nvim'
 Plugin 'xolox/vim-misc'
-Plugin 'chriskempson/base16-vim'
+"Plugin 'chriskempson/base16-vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'mhinz/vim-startify'
+
+so ~/.vimscripts/vale-settings.vim
 
 so ~/.vimscripts/vlightline-settings.vim
 
@@ -37,5 +38,11 @@ so ~/.vimscripts/vtagbar-settings.vim
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-set termguicolors
-colorscheme base16-nord
+colorscheme darcula
+
+autocmd VimEnter *
+            \   if !argc()
+            \ |   Startify
+            \ |   NERDTree
+            \ |   wincmd w
+            \ | endif
