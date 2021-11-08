@@ -18,21 +18,24 @@ env:
 # (changes require restart)
 window:
   dimensions:
-    columns: 120
-    lines: 35
-
+    columns: 90
+    lines: 30
   # Adds this many blank pixels of padding around the window
   # Units are physical pixels; this is not DPI aware.
   # (change requires restart)
   padding:
-    x: 5
-    y: 5
+    x: 6
+    y: 6
 
-  history: 10000
+  history: 1000
 
   save_to_clipboard: true
 
   live_config_reload: true
+
+  dynamic_padding: true
+  
+background_opacity: 0.7
 
 # When true, bold text is drawn using the bright variant of colors.
 draw_bold_text_with_bright_colors: true
@@ -43,7 +46,7 @@ font:
   normal:
     family: JetBrainsMonoMedium Nerd Font
     # Style can be specified to pick a specific face.
-    style: Regular
+    style: Medium
 
   # The bold font face
   bold:
@@ -64,50 +67,94 @@ font:
 
   glyphs: true
 
-# Colors (Dracula)
+
+cursor:
+  # Cursor style
+  style:
+    # Cursor shape
+    #
+    # Values for `shape`:
+    #   - ▇ Block
+    #   - _ Underline
+    #   - | Beam
+    shape: Block
+
+    # Cursor blinking state
+    #
+    # Values for `blinking`:
+    #   - Never: Prevent the cursor from ever blinking
+    #   - Off: Disable blinking by default
+    #   - On: Enable blinking by default
+    #   - Always: Force the cursor to always blink
+    blinking: On
+
+  # Vi mode cursor style
+  #
+  # If the vi mode cursor style is `None` or not specified, it will fall back to
+  # the style of the active value of the normal cursor.
+  #
+  # See `cursor.style` for available options.
+  vi_mode_style: Block
+
 colors:
-  # Default colors
   primary:
-    background: '#282a36'
-    foreground: '#f8f8f2'
-
-  # Normal colors
+    background: "0x282a36"
+    foreground: "0xf8f8f2"
+  cursor:
+    text: CellBackground
+    cursor: CellForeground
+  vi_mode_cursor:
+    text: CellBackground
+    cursor: CellForeground
+  search:
+    matches:
+      foreground: "0x44475a"
+      background: "0x50fa7b"
+    focused_match:
+      foreground: "0x44475a"
+      background: "0xffb86c"
+    bar:
+      background: "0x282a36"
+      foreground: "0xf8f8f2"
+  line_indicator:
+    foreground: None
+    background: None
+  selection:
+    text: CellForeground
+    background: "0x44475a"
   normal:
-    black:   '#000000'
-    red:     '#ff5555'
-    green:   '#50fa7b'
-    yellow:  '#f1fa8c'
-    blue:    '#caa9fa'
-    magenta: '#ff79c6'
-    cyan:    '#8be9fd'
-    white:   '#bfbfbf'
-
-  # Bright colors
+    black: "0x000000"
+    red: "0xff5555"
+    green: "0x50fa7b"
+    yellow: "0xf1fa8c"
+    blue: "0xbd93f9"
+    magenta: "0xff79c6"
+    cyan: "0x8be9fd"
+    white: "0xbfbfbf"
   bright:
-    black:   '#575b70'
-    red:     '#ff6e67'
-    green:   '#5af78e'
-    yellow:  '#f4f99d'
-    blue:    '#caa9fa'
-    magenta: '#ff92d0'
-    cyan:    '#9aedfe'
-    white:   '#e6e6e6'
-
+    black: "0x4d4d4d"
+    red: "0xff6e67"
+    green: "0x5af78e"
+    yellow: "0xf4f99d"
+    blue: "0xcaa9fa"
+    magenta: "0xff92d0"
+    cyan: "0x9aedfe"
+    white: "0xe6e6e6"
+  dim:
+    black: "0x14151b"
+    red: "0xff2222"
+    green: "0x1ef956"
+    yellow: "0xebf85b"
+    blue: "0x4d5b86"
+    magenta: "0xff46b0"
+    cyan: "0x59dffc"
+    white: "0xe6e6d1"
 
 key_bindings:
   - { key: V, mods: Control|Shift, action: Paste }
   - { key: C, mods: Control|Shift, action: Copy }
-  - { key: Key0,   mods: Control, action: ResetFontSize }
-  - { key: Minus,  mods: Control, action: DecreaseFontSize }
+  - { key: Key0, mods: Control, action: ResetFontSize }
+  - { key: Minus, mods: Control, action: DecreaseFontSize }
   - { key: Equals, mods: Control, action: IncreaseFontSize }
 
-# Shell
-#
-# You can set shell.program to the path of your favorite shell, e.g. /bin/fish.
-# Entries in shell.args are passed unmodified as arguments to the shell.
-#
-shell:
-  program: /bin/zsh
-#  args:
-#    - --login
-
+log_level: Off
