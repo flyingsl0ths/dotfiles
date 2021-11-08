@@ -7,20 +7,105 @@ import LayoutUtils (rawSpacing')
 import SpawnUtils (gamemodeCommand, makeNamedScratchPad, spawnSelected', zshTerminalCommand)
 import System.Exit (exitSuccess)
 import XMonad
-import qualified XMonad.Actions.FlexibleResize as Flex
-import XMonad.Actions.GridSelect
-  ( GSConfig (..),
-    TwoD (..),
-    cancel,
-    colorRangeFromClassName,
-    goToSelected,
-    makeXEventhandler,
-    move,
-    select,
-    setPos,
-    shadowWithKeymap,
-    substringSearch,
+  ( Button,
+    ButtonMask,
+    ChangeLayout (NextLayout),
+    Default (def),
+    Full (Full),
+    IncMasterN (IncMasterN),
+    KeyMask,
+    KeySym,
+    Layout,
+    ManageHook,
+    Mirror (..),
+    Resize (Expand, Shrink),
+    Tall (Tall),
+    Window,
+    X,
+    XConfig
+      ( XConfig,
+        borderWidth,
+        focusedBorderColor,
+        handleEventHook,
+        keys,
+        layoutHook,
+        manageHook,
+        modMask,
+        mouseBindings,
+        normalBorderColor,
+        startupHook,
+        terminal,
+        workspaces
+      ),
+    button1,
+    className,
+    composeAll,
+    controlMask,
+    doFloat,
+    focus,
+    io,
+    kill,
+    mod4Mask,
+    refresh,
+    screenWorkspace,
+    sendMessage,
+    setLayout,
+    shiftMask,
+    spawn,
+    whenJust,
+    windows,
+    withFocused,
+    xK_1,
+    xK_9,
+    xK_Down,
+    xK_Escape,
+    xK_F2,
+    xK_F3,
+    xK_F6,
+    xK_F7,
+    xK_F8,
+    xK_Left,
+    xK_Return,
+    xK_Right,
+    xK_Tab,
+    xK_Up,
+    xK_a,
+    xK_backslash,
+    xK_bar,
+    xK_bracketleft,
+    xK_bracketright,
+    xK_c,
+    xK_comma,
+    xK_e,
+    xK_f,
+    xK_g,
+    xK_h,
+    xK_j,
+    xK_k,
+    xK_l,
+    xK_m,
+    xK_n,
+    xK_p,
+    xK_period,
+    xK_q,
+    xK_r,
+    xK_s,
+    xK_slash,
+    xK_space,
+    xK_t,
+    xK_v,
+    xK_w,
+    xK_x,
+    xK_y,
+    xK_z,
+    xmonad,
+    (-->),
+    (.|.),
+    (<+>),
+    (=?),
+    (|||),
   )
+import qualified XMonad.Actions.FlexibleResize as Flex
 import XMonad.Actions.MouseGestures (Direction2D (..), mouseGesture)
 import XMonad.Actions.WithAll (killAll)
 import XMonad.Core (XConfig)
@@ -45,6 +130,7 @@ import XMonad.Layout.Hidden
     popOldestHiddenWindow,
   )
 import XMonad.Layout.LayoutModifier (ModifiedLayout (..))
+import XMonad.Layout.NoBorders (noBorders)
 import XMonad.Layout.Renamed (Rename (Replace), renamed)
 import XMonad.Layout.Simplest (Simplest)
 import XMonad.Layout.Spacing
@@ -58,53 +144,30 @@ import XMonad.Layout.Spiral
     SpiralWithDir,
     spiralWithDir,
   )
-import XMonad.Layout.Tabbed
-  ( TabbedDecoration,
-    Theme,
-    activeBorderColor,
-    activeColor,
-    activeTextColor,
-    decoHeight,
-    fontName,
-    inactiveBorderColor,
-    inactiveColor,
-    inactiveTextColor,
-    shrinkText,
-    tabbed,
-    urgentBorderColor,
-    urgentColor,
-    urgentTextColor,
-  )
 import XMonad.Layout.ThreeColumns (ThreeCol (ThreeColMid))
-import XMonad.ManageHook (className, (<+>))
+import XMonad.ManageHook (className, (<+>), (=?))
 import qualified XMonad.StackSet as W
 import XMonad.Util.NamedScratchpad (NamedScratchpad (NS), NamedScratchpads, customFloating, namedScratchpadAction, namedScratchpadManageHook)
+import XMonad.Util.SpawnOnce (spawnOnce)
 import XMonad.Util.Ungrab (unGrab)
 
 myFont :: String
 myFont = "xft:JetBrainsMono Nerd Font:size=10:antialias=true"
 
 myTerminal :: String
-myTerminal = "kitty"
+myTerminal = "alacritty"
 
-codeEditors :: [(String, String)]
-codeEditors =
-  [ ("Vim", zshTerminalCommand myTerminal "'vim'"),
-    ("Android Studio", gamemodeCommand "android-studio"),
-    ("VSCode", "vscodium"),
-    ("Typora", "typora"),
-    ("DrRacket", "drracket"),
-    ("IntelliJ", "idea")
+myScratchPads :: NamedScratchpads
+myScratchPads =
+  [ makeNamedScratchPad "terminal" "scratchpad" "alacritty --class scratchpad" floatingTerminalSize,
+    makeNamedScratchPad "terminalfm" "fmscratchpad" "alacritty --class fmscratchpad -e zsh -i -c ranger" floatingTerminalSize,
+    makeNamedScratchPad "yt-music" "ytmscratchpad" "alacritty --class ytmscratchpad -e ytfzf -m -t -l" floatingTerminalSize,
+    makeNamedScratchPad "bpy" "pyscratchpad" "alacritty --class pyscratchpad -e /home/flyingsl0ths/.local/bin/bpython" floatingTerminalSize,
+    makeNamedScratchPad "emoji-picker" "org.gnome.Characters" "gnome-characters" floatingWindowSize
   ]
-
-myWorkspaces :: [String]
-myWorkspaces = ["I", "II", "III", "IV", "V", "VI"]
-
-colorNormalBorder :: String
-colorNormalBorder = "#4c566a"
-
-colorFocusedBorder :: String
-colorFocusedBorder = "#5e81ac"
+  where
+    floatingTerminalSize = W.RationalRect (1 / 6) (1 / 6) (2 / 3) (2 / 3)
+    floatingWindowSize = W.RationalRect 0 0 (1 / 3) (1 / 2)
 
 tiledLayout :: Tall a
 tiledLayout = Tall nmaster delta ratio
@@ -143,30 +206,10 @@ spiralLayout = spiralWithDir cardinalDirection spiralDirection windowSizeRation
     spiralDirection = CW :: XMonad.Layout.Spiral.Rotation
     windowSizeRation = (6 / 7) :: Rational
 
-tabbedLayout :: ModifiedLayout (Decoration TabbedDecoration DefaultShrinker) Simplest Window
-tabbedLayout = tabbed shrinkText myTabConfig
-  where
-    myTabConfig :: Theme
-    myTabConfig =
-      def
-        { activeColor = "#5e81ac",
-          inactiveColor = "#4c566a",
-          urgentColor = "#bf616a",
-          activeBorderColor = "#5e81ac",
-          inactiveBorderColor = "#4c566a",
-          urgentBorderColor = "#bf616a",
-          activeTextColor = "#eceff4",
-          inactiveTextColor = "#eceff4",
-          urgentTextColor = "#eceff4",
-          fontName = myFont,
-          decoHeight = 15
-        }
-
 myLayout =
   hiddenWindows $
     avoidStruts $
-      Full
-        ||| tabbedLayout
+      noBorders Full
         ||| resizeableLayouts
   where
     resizeableLayouts =
@@ -180,88 +223,33 @@ myLayout =
             ||| spiralLayout
         )
 
-windowGridSelectionConfig :: GSConfig Window
-windowGridSelectionConfig =
-  def
-    { gs_cellheight = 150,
-      gs_cellwidth = 150,
-      gs_navigate = myGridNavigation,
-      gs_font = myFont,
-      gs_colorizer = myColorizer
-    }
-  where
-    myColorizer :: Window -> Bool -> X (String, String)
-    myColorizer =
-      colorRangeFromClassName
-        polar -- lowest inactive bg
-        frost -- highest inactive bg
-        polar -- active bg
-        snow -- inactive fg
-        snow -- active fg
-      where
-        -- Based off nord color palette
-        frost = (0x5E, 0x81, 0xAC)
-        polar = (0x2E, 0x34, 0x40)
-        snow = (0xD8, 0xDE, 0xE9)
-
-    myGridNavigation :: TwoD a (Maybe a)
-    myGridNavigation = makeXEventhandler $ shadowWithKeymap navKeyMap navDefaultHandler
-      where
-        navKeyMap =
-          M.fromList
-            [ ((0, xK_Escape), cancel),
-              ((0, xK_Return), select),
-              ((0, xK_slash), substringSearch myGridNavigation),
-              ((0, xK_Left), move (-1, 0) >> myGridNavigation),
-              ((0, xK_Right), move (1, 0) >> myGridNavigation),
-              ((0, xK_Down), move (0, 1) >> myGridNavigation),
-              ((0, xK_Up), move (0, -1) >> myGridNavigation),
-              ((0, xK_h), move (-1, 0) >> myGridNavigation),
-              ((0, xK_l), move (1, 0) >> myGridNavigation),
-              ((0, xK_j), move (0, 1) >> myGridNavigation),
-              ((0, xK_k), move (0, -1) >> myGridNavigation),
-              ((0, xK_space), setPos (0, 0) >> myGridNavigation)
-            ]
-        -- The navigation handler ignores unknown key symbols
-        navDefaultHandler = const myGridNavigation
-
-myScratchPads :: NamedScratchpads
-myScratchPads =
-  [ makeNamedScratchPad "terminal" "scratchpad" "alacritty --class scratchpad" overwrittenByConfig,
-    makeNamedScratchPad "terminalfm" "fmscratchpad" "alacritty --class fmscratchpad -e zsh -i -c ranger" overwrittenByConfig,
-    makeNamedScratchPad "yt-music" "ytmscratchpad" "alacritty --class ytmscratchpad -e ytfzf -m -t -l" overwrittenByConfig,
-    makeNamedScratchPad "bpy" "pyscratchpad" "alacritty --class ytmscratchpad -e /home/flyingsl0ths/.local/bin/bpython" overwrittenByConfig,
-    makeNamedScratchPad "emoji-picker" "Org.gnome.Characters" "gnome-characters" overwrittenByConfig
-  ]
-  where
-    overwrittenByConfig = W.RationalRect 0 0 0 0
-
 myKeys :: XConfig Layout -> M.Map (KeyMask, KeySym) (X ())
 myKeys conf@XConfig {XMonad.modMask = modMask} =
   M.fromList $
-    -- Program -----
-    [ ((modMask, xK_w), spawn "firedragon"),
-      ((modMask .|. shiftMask, xK_w), spawn "firedragon --private-window"),
-      ((modMask, xK_y), spawn "typora"),
-      ((modMask, xK_f), spawn "thunar"),
+    ---- Programs ----
+    [ ((modMask, xK_w), spawn "librewolf"),
+      ((modMask .|. shiftMask, xK_w), spawn "librewolf --private-window"),
       ((modMask .|. shiftMask, xK_g), spawn "gammy"),
+      ((modMask, xK_f), spawn "pcmanfm"),
       ((modMask, xK_v), spawn "vscodium"),
       ((modMask, xK_c), spawn "corectrl"),
       ((modMask, xK_z), spawn "zathura"),
-      ((modMask, xK_p), spawn "pamac-manager"),
+      ((modMask, xK_p), spawn "typora"),
+      ((modMask, xK_y), spawn (gamemodeCommand "yuzu")),
       ((modMask, xK_g), spawn (gamemodeCommand "gimp")),
       ((modMask, xK_a), spawn (gamemodeCommand "android-studio")),
+      ((modMask .|. shiftMask, xK_y), spawn (gamemodeCommand "yuzu")),
       ((modMask .|. shiftMask, xK_t), spawn "xfce4-taskmanager")
     ]
       ++ [
            -----------------
            -- Scratchpads --
            -----------------
-           ((modMask .|. shiftMask, xK_l), namedScratchpadAction myScratchPads "terminal"),
-           ((modMask .|. shiftMask, xK_f), namedScratchpadAction myScratchPads "terminalfm"),
-           ((modMask .|. shiftMask, xK_y), namedScratchpadAction myScratchPads "yt-music"),
-           ((modMask .|. shiftMask, xK_e), namedScratchpadAction myScratchPads "emoji-picker"),
-           ((modMask .|. shiftMask, xK_p), namedScratchpadAction myScratchPads "bpy"),
+           ((modMask .|. controlMask, xK_Return), namedScratchpadAction myScratchPads "terminal"),
+           ((modMask .|. controlMask, xK_f), namedScratchpadAction myScratchPads "terminalfm"),
+           ((modMask .|. controlMask, xK_y), namedScratchpadAction myScratchPads "yt-music"),
+           ((modMask .|. controlMask, xK_m), namedScratchpadAction myScratchPads "emoji-picker"),
+           ((modMask .|. controlMask, xK_p), namedScratchpadAction myScratchPads "bpy"),
            ---- Groups -----
            ((modMask .|. controlMask, xK_c), spawn "vscodium; zathura"),
            ((modMask .|. shiftMask, xK_c), spawn (myTerminal ++ " &") >> spawn "zathura")
@@ -270,40 +258,39 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
       ++ [
            -- Tools ---
            ((modMask .|. shiftMask, xK_a), spawn "~/.config/rofi/launchers/ribbon.sh"),
-           ((modMask, xK_r), spawn "~/.config/rofi/launchers/dmenu.sh"),
+           ((modMask, xK_r), spawn dmenu),
+           ((modMask, xK_e), spawn "~/.local/bin/editors"),
            ((modMask, xK_s), unGrab *> spawn "xfce4-screenshooter"),
            ((modMask .|. controlMask, xK_l), spawn "xdg-screensaver lock"),
            ((modMask, xK_F3), spawn "brightnessctl -q s 5%+"),
            ((modMask, xK_F2), spawn "brightnessctl -q s 5%-"),
            ((modMask, xK_F8), spawn "pamixer -i 5"),
            ((modMask, xK_F7), spawn "pamixer -d 5"),
-           ((modMask, xK_F6), spawn "pamixer -m")
+           ((modMask, xK_F6), spawn "pamixer -t")
            ------------
          ]
       ++ [
            -- Addtional WM Actions --
-           ((modMask .|. controlMask, xK_w), goToSelected windowGridSelectionConfig),
-           ((modMask .|. controlMask, xK_e), spawnSelected' codeEditors),
            ((modMask, xK_backslash), withFocused hideWindow),
            ((modMask .|. shiftMask, xK_backslash), popOldestHiddenWindow),
            -- Kill active window
            ((modMask, xK_q), kill),
            -- Kill all windows on current workspace
-           ((modMask, xK_x), killAll)
+           ((modMask .|. shiftMask, xK_x), killAll)
            --------------------------
          ]
       ++
       -- WM Actions ----
       [ ((modMask, xK_Return), spawn $ XMonad.terminal conf),
         -- %! Rotate through the available layout algorithms
-        ((modMask, xK_space), sendMessage NextLayout),
+        ((modMask, xK_Tab), sendMessage NextLayout),
         -- %!  Reset the layouts on the current workspace to default
         ((modMask .|. shiftMask, xK_space), setLayout $ XMonad.layoutHook conf),
         -- %! Resize viewed windows to the correct size
         ((modMask, xK_n), refresh),
         -- move focus up or down the window stack
         ---- %! Move focus to the next window
-        ((modMask, xK_Tab), windows W.focusDown),
+        ((modMask, xK_space), windows W.focusDown),
         -- %! Move focus to the previous window
         ((modMask .|. shiftMask, xK_Tab), windows W.focusUp),
         -- %! Move focus to the next window
@@ -357,31 +344,10 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
         | (key, sc) <- zip [xK_bracketleft, xK_bracketright, xK_bar] [0 ..],
           (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
       ]
-
------------------
---
-myMouse :: XConfig l -> [((KeyMask, Button), Window -> X ())]
-myMouse XConfig {XMonad.modMask = modMask} =
-  [ -- Enables resizing a window from any corner
-    ((modMask .|. shiftMask, button1), \w -> focus w >> Flex.mouseResizeWindow w)
-  ]
-
-newMouseBindings :: XConfig Layout -> M.Map (ButtonMask, Button) (Window -> X ())
-newMouseBindings xc = M.union (mouseBindings def xc) (M.fromList (myMouse xc))
-
-myStartUpHook :: X ()
-myStartUpHook = setWMName "LG3D" >> spawn "~/.xmonad/startup.sh"
-
-myManageHook :: ManageHook
-myManageHook =
-  composeAll
-    [ className =? "Gimp" --> doFloat,
-      className =? "Org.gnome.Characters" --> doFloat,
-      className =? "gammy" --> doCenterFloat,
-      className =? "Alacritty" --> doCenterFloat,
-      isDialog --> doCenterFloat
-    ]
-    <+> namedScratchpadManageHook myScratchPads
+  where
+    dmenu =
+      "dmenu_run -p 'λ' -m 0 -fn 'JetBrainsMonoMedium Nerd Font Mono:size=13' "
+        ++ "-nb '#44475a' -nf '#f8f8f2' -sb '#bd93f9' -sf '#f8f8f2'"
 
 myConfig =
   def
@@ -398,6 +364,47 @@ myConfig =
       handleEventHook = fullscreenEventHook,
       manageHook = myManageHook
     }
+  where
+    myWorkspaces :: [String]
+    myWorkspaces = ["I", "II", "III", "IV", "V", "VI"]
+
+    colorNormalBorder :: String
+    colorNormalBorder = "#44475a"
+
+    colorFocusedBorder :: String
+    colorFocusedBorder = "#bd93f9"
+
+    myMouse :: XConfig l -> [((KeyMask, Button), Window -> X ())]
+    myMouse XConfig {XMonad.modMask = modMask} =
+      [ -- Enables resizing a window from any corner
+        ((modMask .|. shiftMask, button1), \w -> focus w >> Flex.mouseResizeWindow w)
+      ]
+
+    newMouseBindings :: XConfig Layout -> M.Map (ButtonMask, Button) (Window -> X ())
+    newMouseBindings xc = M.union (mouseBindings def xc) (M.fromList (myMouse xc))
+
+    myStartUpHook :: X ()
+    myStartUpHook =
+      setWMName "LG3D"
+        >> spawnOnce "/usr/lib/xfce4/notifyd/xfce4-notifyd &"
+        >> spawnOnce "/usr/lib/xfce-polkit/xfce-polkit &"
+        >> spawnOnce "/usr/bin/xautolock -time 10 -locker ~/.local/bin/i3lock-fancy-rapid -detectsleep &"
+        >> spawnOnce "~/.config/polybar/launch.sh 'xmonad'"
+        >> spawnOnce "(nohup picom &)"
+        >> spawnOnce "xinput set-prop 12 316 1"
+        >> spawnOnce "gammy &"
+        >> spawnOnce "xwallpaper --output eDP --stretch ~/.local/share/wallhaven/arch\\ linux\\ cc.png"
+
+    myManageHook :: ManageHook
+    myManageHook =
+      composeAll
+        [ className =? "Gimp" --> doFloat,
+          className =? "screengrab" --> doFloat,
+          className =? "gammy" --> doCenterFloat,
+          className =? "jetbrains-studio" --> doCenterFloat,
+          isDialog --> doCenterFloat
+        ]
+        <+> namedScratchpadManageHook myScratchPads
 
 main :: IO ()
 main =
