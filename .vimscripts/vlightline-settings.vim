@@ -1,6 +1,7 @@
 set laststatus=2
+
 let g:lightline = {
-      \ 'colorscheme': 'nord',
+      \ 'colorscheme': 'darcula',
       \ 'active': {
       \   'left': [ [ 'mode', 'paste' ],
       \             [ 'readonly', 'filename', 'modified', 'gitbranch'] ],

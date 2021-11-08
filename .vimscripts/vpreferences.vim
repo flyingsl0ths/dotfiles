@@ -1,9 +1,15 @@
-""""""""" Vim Settings
+" Vim Settings
 set encoding=utf-8
 
 set background=dark
 
 set guifont="JetBrainsMonoMedium Nerd Font" 11
+
+"Minimal number of lines to scroll when the cursor gets off the screen 
+set scrolljump=5
+
+"Maximum column in which to search for syntax items
+set synmaxcol=130
 
 " Height of the command bar
 set cmdheight=2
@@ -22,14 +28,23 @@ set modelines=4
 " Entries showed in command history
 set history=20
 
-set completeopt-=preview
+" A comma separated list of options for Insert mode completion
+set completeopt="menu,preview"
 
 set backspace=indent,eol,start
+
+" Make vim use the system clipboard:
+set clipboard^=unnamed,unnamedplus
 
 " Disable audible bell
 set noerrorbells visualbell t_vb=
 
 set shell=/usr/bin/zsh
+
+" Minimal number of columns to use for the line number
+set numberwidth=4
+
+set wildignore+=*/tmp/*,*.so,*.swp,*.zip,*/vendor/*,*/\.git/*
 
 " Set to auto read when a file is changed from the outside
 set autoread
@@ -37,6 +52,7 @@ set autoread
 augroup FocusGained,BufEnter * checktime
 augroup END
 
+" a <Tab> in front of a line inserts blanks according to 'shiftwidth'.
 set smarttab
 
 " expand tabs to spaces (use :retab to redo entire file)
@@ -56,7 +72,7 @@ set number
 " Highlight search results
 set hlsearch
 
-set cursorline
+set nocursorline
 
 set nostartofline
 
@@ -120,7 +136,13 @@ let g:omni_sql_default_compl_type = 'syntax'
 " Removes 'Error - SQLComplete: The debxt plugin must be loaded for dynamic SQL completion'
 let g:omni_sql_no_default_maps = 1
 
+" Directories to look for tag files in
 set tags=tags;~
+
+" No redraw while executing macros, registers and other commands that have not been typed.
+set lazyredraw
+
+set termguicolors
 """""""""""""""""""""
 
 """"" Plugin Settings 
