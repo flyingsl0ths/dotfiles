@@ -1,10 +1,8 @@
 alias lua="lua5.4"
 
-alias ghc="stack ghc"
-alias ghci="stack ghci"
-
 alias py="python3"
 alias pip_install="pip3 install --user"
+alias bpy="bpython"
 
 alias sql_login="sudo mycli -u root"
 alias mariadb_srvc="sudo systemctl start mariadb"
@@ -12,8 +10,8 @@ alias st_mariadb_srvc="sudo systemctl stop mariadb"
 
 alias cmake-build="cmake --build"
 alias cmake-target="cmake --build . --target"
-alias compile-cpp="clang++ -g -Wall -Werror -std=c++17"
-alias compile-c="clang -g -Wall -Werror -std=c99 -pedantic -o main"
+alias compile-cpp="clang++ -std=c++17 -Wall -Werror"
+alias compile-c="clang -std=c99 -Wall -Werror -pedantic"
 alias cmake-c-config="cmake -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 alias cmake-cpp-config="cmake -G Ninja -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
 
@@ -24,7 +22,7 @@ alias ta="tmux a"
 alias tls="tmux ls"
 alias ts="tmux new -s"
 alias tk="tmux kill-session"
-alias tmux="TERM=screen-256color-bce tmux"
+#alias tmux="TERM=screen-256color-bce tmux"
 
 alias pf="paste_file"
 alias sp="scratchpad"
@@ -44,6 +42,10 @@ alias mtp="jmtpfs -o auto_unmount"
 alias paste="xclip -i -sel c"
 alias ps="pipes.sh"
 
+alias xmr="xmonad --recompile && xmonad --restart"
+
+alias mic="sudo make install && sudo make clean"
+
 alias zrc="vim ~/.zshrc"
 alias vrc="vim ~/.vimrc"
 alias vss="vim ~/.vimscripts"
@@ -61,3 +63,7 @@ alias df="df -h"
 alias mv="mv -i"
 alias mkdir="mkdir -p"
 alias kjb="kill -KILL"
+alias sxiv="sxiv -q"
+alias walls="xwallpaper --output eDP"
+alias wfo="nmcli radio wifi on"
+alias wff="nmcli radio wifi off"
