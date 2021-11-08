@@ -1,12 +1,12 @@
 export ZSH=$HOME/.oh-my-zsh
 
-export PATH=$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.emacs.d/bin
+export PATH=$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.cabal/bin
 
-PROMPT="%F{1}[%f%F{51}%n%f%F{11}@%f %F{5}%~%f%F{1}]%f%F{214}λ%f "
+PROMPT="%F{13}%f%F{14}%f%F{41}%f %F{214}λ%f %F{252}%~%f "
 
 source $ZSH/oh-my-zsh.sh
 
-# enablae vi mode
+# enable vi mode
 bindkey -v
 
 #
@@ -24,14 +24,17 @@ export READER=zathura
 export TERMINAL=kitty
 export VISUAL=vim
 export SUDO_EDITOR=vim
-export WALLPAPERS="$HOME/.local/share/wallhaven"
 
 # aliases
 [ -f ~/.zshaliases ] && source $HOME/.zshaliases
 
-SAVEHIST=1000  # Save most-recent 1000 lines
+# Save most-recent 1000 lines
+SAVEHIST=1000  
 
 source $ZSH/custom/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 [ -f /usr/bin/broot ] && source /home/flyingsl0ths/.config/broot/launcher/bash/br
+
+# ghcup-env
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" 
