@@ -2,7 +2,7 @@ module SpawnUtils (gamemodeCommand, zshTerminalCommand, spawnSelected', makeName
 
 import XMonad (X, def, spawn, whenJust)
 import XMonad.Actions.GridSelect (GSConfig (..), gridselect)
-import XMonad.ManageHook (title, (=?))
+import XMonad.ManageHook (appName, (=?))
 import XMonad.StackSet (RationalRect (..))
 import XMonad.Util.NamedScratchpad (NamedScratchpad (NS), customFloating, namedScratchpadAction, namedScratchpadManageHook)
 
@@ -33,5 +33,5 @@ makeNamedScratchPad scratchpadName windowClassName command windowDimensions =
   NS scratchpadName spawnScratchpad findScratchpad manageScratchpad
   where
     spawnScratchpad = command
-    findScratchpad = title =? windowClassName
+    findScratchpad = appName =? windowClassName
     manageScratchpad = customFloating windowDimensions
