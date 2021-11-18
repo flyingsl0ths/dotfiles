@@ -144,8 +144,3 @@ set lazyredraw
 
 set termguicolors
 """""""""""""""""""""
-
-""""" Plugin Settings 
-" nerdtree git
-let g:NERDTreeGitStatusUseNerdFonts = 1
-"""""""""""""""""""""
