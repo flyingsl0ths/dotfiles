@@ -34,7 +34,7 @@ SAVEHIST=1000
 source $ZSH/custom/plugins/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source $ZSH/custom/plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
-[ -f /usr/bin/broot ] && source /home/flyingsl0ths/.config/broot/launcher/bash/br
+[ -f /usr/bin/broot ] && source /home/flyingsloths/.config/broot/launcher/bash/br
 
 # ghcup-env
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" 
