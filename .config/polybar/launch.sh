@@ -20,7 +20,7 @@ launch_i3_bar() {
 }
 
 launch_xmonad_bar() {
-    echo "---" | tee -a /tmp/polybar-mainbar.log
+    echo "---" | tee -a /tmp/polybar-xmonad.log
     polybar --config=~/.config/polybar/config.ini xmonad-bar 2>&1 | tee -a /tmp/polybar-mainbar.log &
 }
 
