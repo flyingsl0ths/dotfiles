@@ -1,0 +1,7 @@
+[Desktop Entry]
+Encoding=UTF-8
+Name=XMonad
+Comment=Lightweight tiling window manager
+Exec=/home/flyingsl0ths/.xmonad/xmonad-x86_64-linux
+Icon=xmonad.png
+Type=XSession
