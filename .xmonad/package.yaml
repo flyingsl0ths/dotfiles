@@ -6,8 +6,8 @@ build-type: Simple
 
 dependencies:
   - base >= 4.7 && < 5
-  - xmonad >= 0.13
-  - xmonad-contrib >= 0.13
+  - xmonad >= 0.17
+  - xmonad-contrib >= 0.17
   - containers
 
 library:
@@ -21,6 +21,6 @@ executables:
       - -rtsopts
       - -with-rtsopts=-N
       - -Werror
-      - -O2
+      - -O3
     dependencies:
       - my-xmonad
