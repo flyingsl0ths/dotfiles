@@ -111,7 +111,6 @@ import XMonad.Actions.WithAll (killAll)
 import XMonad.Core (XConfig)
 import XMonad.Hooks.EwmhDesktops
   ( ewmh,
-    fullscreenEventHook,
   )
 import XMonad.Hooks.ManageDocks
   ( avoidStruts,
@@ -121,7 +120,6 @@ import XMonad.Hooks.ManageHelpers
   ( doCenterFloat,
     isDialog,
   )
-import XMonad.Hooks.SetWMName (setWMName)
 import XMonad.Layout.Accordion (Accordion (..))
 import XMonad.Layout.Decoration (Decoration, DefaultShrinker)
 import XMonad.Layout.Hidden
@@ -257,10 +255,12 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
          ]
       ++ [
            -- Tools ---
-           ((modMask .|. shiftMask, xK_a), spawn "~/.config/rofi/launchers/ribbon.sh"),
            ((modMask, xK_r), spawn dmenu),
            ((modMask, xK_e), spawn "~/.local/bin/editors"),
            ((modMask, xK_s), unGrab *> spawn "xfce4-screenshooter"),
+           ((modMask .|. shiftMask, xK_n), spawn "networkmanager_dmenu"),
+           ((modMask .|. shiftMask, xK_p), spawn "~/.config/rofi/applets/android/powermenu.sh"),
+           ((modMask .|. shiftMask, xK_a), spawn "~/.config/rofi/launchers/ribbon/launcher.sh"),
            ((modMask .|. controlMask, xK_l), spawn "xdg-screensaver lock"),
            ((modMask, xK_F3), spawn "brightnessctl -q s 5%+"),
            ((modMask, xK_F2), spawn "brightnessctl -q s 5%-"),
@@ -347,7 +347,7 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
   where
     dmenu =
       "dmenu_run -p 'λ' -m 0 -fn 'JetBrainsMonoMedium Nerd Font Mono:size=13' "
-        ++ "-nb '#44475a' -nf '#f8f8f2' -sb '#bd93f9' -sf '#f8f8f2'"
+        ++ "-nb '#2E3440' -nf '#D8DEE9' -sb '#81A1C1' -sf '#E5E9F0'"
 
 myConfig =
   def
@@ -361,7 +361,6 @@ myConfig =
       keys = myKeys,
       mouseBindings = newMouseBindings,
       startupHook = myStartUpHook,
-      handleEventHook = fullscreenEventHook,
       manageHook = myManageHook
     }
   where
@@ -369,10 +368,10 @@ myConfig =
     myWorkspaces = ["I", "II", "III", "IV", "V", "VI"]
 
     colorNormalBorder :: String
-    colorNormalBorder = "#44475a"
+    colorNormalBorder = "#2E3440"
 
     colorFocusedBorder :: String
-    colorFocusedBorder = "#bd93f9"
+    colorFocusedBorder = "#5E81AC"
 
     myMouse :: XConfig l -> [((KeyMask, Button), Window -> X ())]
     myMouse XConfig {XMonad.modMask = modMask} =
@@ -385,15 +384,15 @@ myConfig =
 
     myStartUpHook :: X ()
     myStartUpHook =
-      setWMName "LG3D"
-        >> spawnOnce "/usr/lib/xfce4/notifyd/xfce4-notifyd &"
+      spawnOnce "/usr/lib/xfce4/notifyd/xfce4-notifyd &"
         >> spawnOnce "/usr/lib/xfce-polkit/xfce-polkit &"
         >> spawnOnce "/usr/bin/xautolock -time 10 -locker ~/.local/bin/i3lock-fancy-rapid -detectsleep &"
         >> spawnOnce "~/.config/polybar/launch.sh 'xmonad'"
         >> spawnOnce "(nohup picom &)"
         >> spawnOnce "xinput set-prop 12 316 1"
         >> spawnOnce "gammy &"
-        >> spawnOnce "xwallpaper --output eDP --stretch ~/.local/share/wallhaven/arch\\ linux\\ cc.png"
+        >> spawnOnce "xwallpaper --output eDP --stretch ~/.local/share/wallpaper/oregairu.png"
+        >> spawnOnce "xsettingsd &"
 
     myManageHook :: ManageHook
     myManageHook =

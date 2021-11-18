@@ -1,6 +1,7 @@
 nmap <leader>af :ALEFix<CR>
-nmap <silent>[g :ALENextWrap<CR>
-nmap <silent>]g :ALEPreviousWrap<CR>
+nmap <silent>[a :ALENextWrap<CR>
+nmap <silent>]a :ALEPreviousWrap<CR>
+nnoremap <silent> <C-i>  :ALEInfo<CR>
 
 let g:ale_disable_lsp = 1
 

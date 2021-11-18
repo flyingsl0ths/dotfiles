@@ -13,9 +13,6 @@ nnoremap <C-K> <C-w><C-k>
 nnoremap <C-L> <C-w><C-l>
 nnoremap <C-H> <C-w><C-h>
 
-" Used to exit Deol terminal buffer
-tnoremap <ESC>   <C-\><C-n>
-
 " Remaps keys used to move buffers around
 noremap  <S-Left>  <C-w>r
 nnoremap <S-Right>  <C-w>r
@@ -31,7 +28,7 @@ nnoremap <C-S-w> :w<CR>
 
 map <S-t> :tabnew<CR>
 map <leader>x :tabclose<CR>
-map <C-n> :tabn<CR>
+map <C-t> :tabn<CR>
 map <S-p> :tabp<CR>
 
 nnoremap <silent> <C-d> :vertical resize +5<CR>
@@ -66,10 +63,6 @@ nmap <S-w> :W<CR>
 nmap <F8> :TagbarToggle<CR>
 
 nmap <leader>fm :Format<CR>
-
-nmap <leader>t :NERDTreeToggle<CR>
-
-nmap <leader>ft :NERDTreeFocus<CR>
 
 " Opens vim fugitive menu
 nmap <leader>g :G<CR>
