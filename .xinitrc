@@ -1,4 +1,3 @@
-# i3 is kept as default
 session=${1:-xmonad}
 
 case $session in

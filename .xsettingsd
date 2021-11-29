@@ -1,13 +1,11 @@
-## Copyright (C) 2020-2021 Aditya Shakya <adi1090x@gmail.com>
-## Everyone is permitted to copy and distribute copies of this file under GNU-GPL3
-
 Net/ThemeName "Nordic-darker-v40"
 Net/IconThemeName "ePapirus-Dark"
 Net/EnableEventSounds "0"
 Net/EnableInputFeedbackSounds "0"
-Gtk/CursorThemeName "Qogir-cursors"
+Gtk/CursorThemeName "BreezeX-Black"
+Xft/DPI "1"
 Xft/Hinting 1
 Xft/HintStyle "hintslight"
 Xft/Antialias 1
-Xft/RGBA "none"
+Xft/RGBA "rgb"
 

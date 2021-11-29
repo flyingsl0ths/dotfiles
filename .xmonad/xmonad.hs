@@ -160,7 +160,7 @@ myScratchPads =
   [ makeNamedScratchPad "terminal" "scratchpad" "alacritty --class scratchpad" floatingTerminalSize,
     makeNamedScratchPad "terminalfm" "fmscratchpad" "alacritty --class fmscratchpad -e zsh -i -c ranger" floatingTerminalSize,
     makeNamedScratchPad "yt-music" "ytmscratchpad" "alacritty --class ytmscratchpad -e ytfzf -m -t -l" floatingTerminalSize,
-    makeNamedScratchPad "bpy" "pyscratchpad" "alacritty --class pyscratchpad -e /home/flyingsl0ths/.local/bin/bpython" floatingTerminalSize,
+    makeNamedScratchPad "bpy" "pyscratchpad" "alacritty --class pyscratchpad -e /home/flyingsloths/.local/bin/bpython" floatingTerminalSize,
     makeNamedScratchPad "emoji-picker" "org.gnome.Characters" "gnome-characters" floatingWindowSize
   ]
   where
@@ -260,7 +260,8 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
            ((modMask, xK_s), unGrab *> spawn "xfce4-screenshooter"),
            ((modMask .|. shiftMask, xK_n), spawn "networkmanager_dmenu"),
            ((modMask .|. shiftMask, xK_p), spawn "~/.config/rofi/applets/android/powermenu.sh"),
-           ((modMask .|. shiftMask, xK_a), spawn "~/.config/rofi/launchers/ribbon/launcher.sh"),
+           ((modMask .|. shiftMask, xK_a), spawn "~/.config/rofi/launchers/ribbon/launcher.sh full_bottom"),
+           ((modMask .|. controlMask, xK_a), spawn "~/.config/rofi/launchers/ribbon/launcher.sh ribbon_bottom"),
            ((modMask .|. controlMask, xK_l), spawn "xdg-screensaver lock"),
            ((modMask, xK_F3), spawn "brightnessctl -q s 5%+"),
            ((modMask, xK_F2), spawn "brightnessctl -q s 5%-"),
@@ -324,7 +325,7 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
         ((modMask, xK_period), sendMessage (IncMasterN (-1))),
         -- quit, or restart
         -- %! Quit xmonad
-        ((modMask .|. shiftMask, xK_q), io exitSuccess),
+        ((modMask .|. shiftMask, xK_q), spawn "pkill -15 Xorg"),
         -- %! Restart xmonad
         ( (modMask .|. shiftMask, xK_r),
           spawn "xmonad --recompile && xmonad --restart"
@@ -389,10 +390,10 @@ myConfig =
         >> spawnOnce "/usr/bin/xautolock -time 10 -locker ~/.local/bin/i3lock-fancy-rapid -detectsleep &"
         >> spawnOnce "~/.config/polybar/launch.sh 'xmonad'"
         >> spawnOnce "(nohup picom &)"
-        >> spawnOnce "xinput set-prop 12 316 1"
-        >> spawnOnce "gammy &"
-        >> spawnOnce "xwallpaper --output eDP --stretch ~/.local/share/wallpaper/oregairu.png"
+        >> spawnOnce "xinput set-prop 12 311 1"
         >> spawnOnce "xsettingsd &"
+        >> spawnOnce "gammy &"
+        >> spawnOnce "xwallpaper --output eDP-1 --stretch ~/.local/share/wallpaper/oregairu.png"
 
     myManageHook :: ManageHook
     myManageHook =
@@ -400,7 +401,10 @@ myConfig =
         [ className =? "Gimp" --> doFloat,
           className =? "screengrab" --> doFloat,
           className =? "gammy" --> doCenterFloat,
+          -- Windows spawned by love2d engine
+          className =? "love" --> doCenterFloat,
           className =? "jetbrains-studio" --> doCenterFloat,
+          className =? "jetbrains-idea-ce" --> doCenterFloat,
           isDialog --> doCenterFloat
         ]
         <+> namedScratchpadManageHook myScratchPads

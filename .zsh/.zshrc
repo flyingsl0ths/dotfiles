@@ -18,12 +18,12 @@ zstyle ':autocomplete:*' min-input 3
 #
 
 #env vars
-export EDITOR=vim
+export EDITOR=nvim
 export PAGER=bat
 export READER=zathura
-export TERMINAL=kitty
-export VISUAL=vim
-export SUDO_EDITOR=vim
+export TERMINAL=alacritty
+export VISUAL=nvim
+export SUDO_EDITOR=nvim
 
 # aliases
 [ -f ~/.zshaliases ] && source $HOME/.zshaliases

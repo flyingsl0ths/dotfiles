@@ -24,7 +24,7 @@ nnoremap <S-Tab> :bprevious<CR>
 
 nnoremap <leader>bb :buffers<cr>:b<space>
 
-nnoremap <C-S-w> :w<CR>
+nnoremap <C-w> :w<CR>
 
 map <S-t> :tabnew<CR>
 map <leader>x :tabclose<CR>
@@ -47,6 +47,8 @@ map <silent> <leader><cr> :noh<CR>
 
 " Opens a new tab with the current buffer's path
 map <leader>te :tabedit <C-r>=expand(I0"%:p:h")<CR>/
+
+nnoremap <leader>tt :tabnew<space>
 
 """ Custom Commands """
 

@@ -29,12 +29,12 @@ set modelines=4
 set history=20
 
 " A comma separated list of options for Insert mode completion
-set completeopt="menu,preview"
+set completeopt="menu,menuone"
 
 set backspace=indent,eol,start
 
 " Make vim use the system clipboard:
-set clipboard^=unnamed,unnamedplus
+set clipboard=unnamedplus
 
 " Disable audible bell
 set noerrorbells visualbell t_vb=
@@ -83,8 +83,6 @@ set smartcase
 set title
 
 set ruler
-
-set ignorecase
 
 set incsearch
 
