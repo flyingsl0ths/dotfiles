@@ -1,25 +1,5 @@
 /*
  * Change the colorscheme for every menu simply by editing this file...
- * aadapta-nokto.rasi
- * adwaita.rasi
- * arc-dark.rasi
- * arc.rasi
- * armchair.rasi
- * colors.rasi
- * confirm.rasi
- * darkpink.rasi
- * dark.rasi
- * fresh.rasi
- * gruvbox.rasi
- * inside.rasi
- * material-dark
- * material-light
- * message.rasi
- * minimo.rasi
- * nordic.rasi
- * party.rasi
- * sirin.rasi
- *
  */
 
-@import "../styles/nordic.rasi"
+@import "../styles/catppuccin.rasi"

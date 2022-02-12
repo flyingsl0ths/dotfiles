@@ -1,11 +1,10 @@
-Net/ThemeName "Nordic-darker-v40"
-Net/IconThemeName "ePapirus-Dark"
+Net/ThemeName "Catppuccin-teal"
+Net/IconThemeName "Papirus-Dark"
 Net/EnableEventSounds "0"
 Net/EnableInputFeedbackSounds "0"
-Gtk/CursorThemeName "BreezeX-Black"
+Gtk/CursorThemeName "Paper"
 Xft/DPI "1"
 Xft/Hinting 1
 Xft/HintStyle "hintslight"
 Xft/Antialias 1
-Xft/RGBA "rgb"
-
+Xft/RGBA "none"

@@ -5,6 +5,7 @@ import qualified Data.Map as M
   )
 import LayoutUtils (rawSpacing')
 import SpawnUtils (gamemodeCommand, makeNamedScratchPad, spawnSelected', zshTerminalCommand)
+import System.Environment (getEnv)
 import System.Exit (exitSuccess)
 import XMonad
   ( Button,
@@ -105,6 +106,7 @@ import XMonad
     (=?),
     (|||),
   )
+import XMonad.Actions.CycleWS (nextScreen, nextWS, prevScreen, prevWS)
 import qualified XMonad.Actions.FlexibleResize as Flex
 import XMonad.Actions.MouseGestures (Direction2D (..), mouseGesture)
 import XMonad.Actions.WithAll (killAll)
@@ -153,14 +155,14 @@ myFont :: String
 myFont = "xft:JetBrainsMono Nerd Font:size=10:antialias=true"
 
 myTerminal :: String
-myTerminal = "alacritty"
+myTerminal = "kitty"
 
 myScratchPads :: NamedScratchpads
 myScratchPads =
-  [ makeNamedScratchPad "terminal" "scratchpad" "alacritty --class scratchpad" floatingTerminalSize,
-    makeNamedScratchPad "terminalfm" "fmscratchpad" "alacritty --class fmscratchpad -e zsh -i -c ranger" floatingTerminalSize,
-    makeNamedScratchPad "yt-music" "ytmscratchpad" "alacritty --class ytmscratchpad -e ytfzf -m -t -l" floatingTerminalSize,
-    makeNamedScratchPad "bpy" "pyscratchpad" "alacritty --class pyscratchpad -e /home/flyingsloths/.local/bin/bpython" floatingTerminalSize,
+  [ makeNamedScratchPad "terminal" "scratchpad" (myTerminal ++ " --class scratchpad") floatingTerminalSize,
+    makeNamedScratchPad "terminalfm" "fmscratchpad" (myTerminal ++ " --class fmscratchpad zsh -i -c ranger") floatingTerminalSize,
+    makeNamedScratchPad "yt-music" "ytmscratchpad" (myTerminal ++ " --class ytmscratchpad ytfzf -m -t -l") floatingTerminalSize,
+    makeNamedScratchPad "bpy" "pyscratchpad" (myTerminal ++ " --class pyscratchpad ~/.local/bin/bpython") floatingTerminalSize,
     makeNamedScratchPad "emoji-picker" "org.gnome.Characters" "gnome-characters" floatingWindowSize
   ]
   where
@@ -229,7 +231,7 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
       ((modMask .|. shiftMask, xK_w), spawn "librewolf --private-window"),
       ((modMask .|. shiftMask, xK_g), spawn "gammy"),
       ((modMask, xK_f), spawn "pcmanfm"),
-      ((modMask, xK_v), spawn "vscodium"),
+      ((modMask, xK_v), spawn $ zshTerminalCommand myTerminal "vscodium"),
       ((modMask, xK_c), spawn "corectrl"),
       ((modMask, xK_z), spawn "zathura"),
       ((modMask, xK_p), spawn "typora"),
@@ -256,7 +258,7 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
       ++ [
            -- Tools ---
            ((modMask, xK_r), spawn dmenu),
-           ((modMask, xK_e), spawn "~/.local/bin/editors"),
+           ((modMask, xK_e), spawn "~/.config/rofi/applets/android/editors.sh"),
            ((modMask, xK_s), unGrab *> spawn "xfce4-screenshooter"),
            ((modMask .|. shiftMask, xK_n), spawn "networkmanager_dmenu"),
            ((modMask .|. shiftMask, xK_p), spawn "~/.config/rofi/applets/android/powermenu.sh"),
@@ -274,6 +276,10 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
            -- Addtional WM Actions --
            ((modMask, xK_backslash), withFocused hideWindow),
            ((modMask .|. shiftMask, xK_backslash), popOldestHiddenWindow),
+           ((modMask, xK_Right), nextScreen),
+           ((modMask, xK_Left), prevScreen),
+           ((modMask .|. shiftMask, xK_Right), nextWS),
+           ((modMask .|. shiftMask, xK_Left), prevWS),
            -- Kill active window
            ((modMask, xK_q), kill),
            -- Kill all windows on current workspace
@@ -325,7 +331,7 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
         ((modMask, xK_period), sendMessage (IncMasterN (-1))),
         -- quit, or restart
         -- %! Quit xmonad
-        ((modMask .|. shiftMask, xK_q), spawn "pkill -15 Xorg"),
+        ((modMask .|. shiftMask, xK_q), io exitSuccess),
         -- %! Restart xmonad
         ( (modMask .|. shiftMask, xK_r),
           spawn "xmonad --recompile && xmonad --restart"
@@ -348,7 +354,7 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
   where
     dmenu =
       "dmenu_run -p 'λ' -m 0 -fn 'JetBrainsMonoMedium Nerd Font Mono:size=13' "
-        ++ "-nb '#2E3440' -nf '#D8DEE9' -sb '#81A1C1' -sf '#E5E9F0'"
+        ++ "-nb '#302D41' -nf '#D9E0EE' -sb '#96CDFB' -sf '#1E1E2E'"
 
 myConfig =
   def
@@ -369,10 +375,10 @@ myConfig =
     myWorkspaces = ["I", "II", "III", "IV", "V", "VI"]
 
     colorNormalBorder :: String
-    colorNormalBorder = "#2E3440"
+    colorNormalBorder = "#302D41"
 
     colorFocusedBorder :: String
-    colorFocusedBorder = "#5E81AC"
+    colorFocusedBorder = "#96CDFB"
 
     myMouse :: XConfig l -> [((KeyMask, Button), Window -> X ())]
     myMouse XConfig {XMonad.modMask = modMask} =
@@ -387,13 +393,14 @@ myConfig =
     myStartUpHook =
       spawnOnce "/usr/lib/xfce4/notifyd/xfce4-notifyd &"
         >> spawnOnce "/usr/lib/xfce-polkit/xfce-polkit &"
-        >> spawnOnce "/usr/bin/xautolock -time 10 -locker ~/.local/bin/i3lock-fancy-rapid -detectsleep &"
+        >> spawnOnce "/usr/bin/xautolock -time 10 -locker ~/.local/bin/i3lock_color -detectsleep &"
         >> spawnOnce "~/.config/polybar/launch.sh 'xmonad'"
         >> spawnOnce "(nohup picom &)"
         >> spawnOnce "xinput set-prop 12 311 1"
         >> spawnOnce "xsettingsd &"
-        >> spawnOnce "gammy &"
-        >> spawnOnce "xwallpaper --output eDP-1 --stretch ~/.local/share/wallpaper/oregairu.png"
+        >> spawnOnce "/usr/bin/gammy &"
+        >> spawnOnce "xwallpaper --output eDP --stretch ~/.local/share/wallpaper/wallpaper"
+        >> spawnOnce "xrdb ~/Xresources"
 
     myManageHook :: ManageHook
     myManageHook =
