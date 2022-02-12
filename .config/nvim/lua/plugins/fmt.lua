@@ -1,37 +1,102 @@
-require"format".setup {
+require('formatter').setup({
+  filetype = {
     lua = {
-        {
-            cmd = {
-                function(file)
-                    return string.format("lua-format -i %s", file)
-                end
-            }
+      -- lua-format
+      function()
+        return {
+          exe = "lua-format",
+          args = {
+            "--indent-width", 2, "-i",
+            vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+          },
+          stdin = false
         }
+      end
+    },
+
+    zsh = {
+      -- Shell Script Formatter
+      function() return {exe = "shfmt", args = {"-i", 2}, stdin = true} end
     },
 
     sh = {
-        {cmd = {function(file)
-            return string.format("shfmt -i 4 %s", file)
-        end}}
+      -- Shell Script Formatter
+      function() return {exe = "shfmt", args = {"-i", 2}, stdin = true} end
+    },
+
+    html = {
+      -- prettier
+      function()
+        return {
+          exe = "prettier",
+          args = {
+            "--stdin-filepath",
+            vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'
+          },
+          stdin = true
+        }
+      end
+    },
+
+    css = {
+      -- prettier
+      function()
+        return {
+          exe = "prettier",
+          args = {
+            "--stdin-filepath",
+            vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'
+          },
+          stdin = true
+        }
+      end
     },
 
     markdown = {
-        {cmd = {"prettier -w"}}, {
-            cmd = {"black"},
-            start_pattern = "^```python$",
-            end_pattern = "^```$",
-            target = "current"
+      -- prettier
+      function()
+        return {
+          exe = "prettier",
+          args = {
+            "--stdin-filepath",
+            vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'
+          },
+          stdin = true
         }
+      end
     },
 
-    html = {{cmd = {"prettier -w"}}},
+    yaml = {
+      -- prettier
+      function()
+        return {
+          exe = "prettier",
+          args = {
+            "--stdin-filepath",
+            vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'
+          },
+          stdin = true
+        }
+      end
+    },
 
-    css = {{cmd = {"prettier -w"}}}
-}
+    python = {
+      -- Configuration for psf/black
+      function()
+        return {
+          exe = "black",
+          -- this should be available on your $PATH
+          args = {'-'},
+          stdin = true
+        }
+      end
+    }
+  }
+})
 
-vim.cmd [[
-    augroup Format
-        autocmd!
-        autocmd BufWritePost * FormatWrite
-    augroup END
-]]
+vim.api.nvim_exec([[
+augroup FormatAutogroup
+  autocmd!
+  autocmd BufWritePost *.lua,*.sh,*.html,*.css,*.md,*.yaml,*.py FormatWrite
+augroup END
+]], true)

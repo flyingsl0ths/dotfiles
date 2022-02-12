@@ -1,6 +1,3 @@
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
-
 -- replace the default lsp diagnostic symbols
 local function lspSymbol(name, icon)
     vim.fn.sign_define("LspDiagnosticsSign" .. name,
@@ -19,4 +16,6 @@ vim.lsp.handlers["textDocument/signatureHelp"] =
     vim.lsp.with(vim.lsp.handlers.signature_help, {border = "single"})
 
 -- Individual Server Configs
-require'lspconfig'.racket_langserver.setup {}
+local lspconfig = require 'lspconfig'
+
+lspconfig.racket_langserver.setup {}

@@ -42,6 +42,7 @@ if present then
                 .new,
             qflist_previewer = require("telescope.previewers").vim_buffer_qflist
                 .new,
+
             -- Developer configurations: Not meant for general override
             buffer_previewer_maker = require("telescope.previewers").buffer_previewer_maker
         },
@@ -60,12 +61,14 @@ if present then
         }
     }
 
-    local extensions = {"fzf"}
+    local extensions = {"themes", "terms", "fzf"}
 
     if vim.fn.executable "ueberzug" == 1 then
-        table.insert(extensions, 'media_files')
+        table.insert(extensions, "media_files")
     end
 
-    local extensions_count = #extensions
-    for i = 1, extensions_count do telescope.load_extension(extensions[i]) end
+    for _, extnsion in ipairs(extensions) do
+        telescope.load_extension(extnsion)
+    end
+
 end

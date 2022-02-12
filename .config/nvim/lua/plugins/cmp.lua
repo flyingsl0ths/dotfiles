@@ -1,28 +1,32 @@
 -- Set completeopt to have a better completion experience
-vim.o.completeopt = "menuone,noselect"
+vim.g.completeopt = "menu,menuone,noselect,noinsert"
 
--- luasnip setup
-local luasnip = require 'luasnip'
+-- Don't show the dumb matching stuff.
+vim.opt.shortmess:append "c"
+
+require("luasnip/loaders/from_vscode").load()
 
 -- nvim-cmp setup
 local cmp = require 'cmp'
+local lspkind_icons = require("plugins.lspkind_icons")
+local luasnip = require('luasnip')
 
 cmp.setup {
-    snippet = {
-        expand = function(args) require('luasnip').lsp_expand(args.body) end
-    },
+    snippet = {expand = function(args) luasnip.lsp_expand(args.body) end},
 
     formatting = {
         format = function(entry, vim_item)
             -- load lspkind icons
-            vim_item.kind = string.format("%s %s", require(
-                                              "plugins.lspkind_icons").icons[vim_item.kind],
+            vim_item.kind = string.format("%s %s",
+                                          lspkind_icons.icons[vim_item.kind],
                                           vim_item.kind)
 
             vim_item.menu = ({
-                nvim_lsp = "[LSP]",
-                nvim_lua = "[Lua]",
-                buffer = "[BUF]"
+                nvim_lsp = "[lsp]",
+                path = "[path]",
+                buffer = "[buf]",
+                luasnip = "[luasnip]",
+                nvim_lua = "[api]"
             })[entry.source.name]
 
             return vim_item
@@ -34,10 +38,12 @@ cmp.setup {
         ['<C-n>'] = cmp.mapping.select_next_item(),
         ['<C-d>'] = cmp.mapping.scroll_docs(-4),
         ['<C-f>'] = cmp.mapping.scroll_docs(4),
-        ['<C-Space>'] = cmp.mapping.complete(),
+        ['<C-space>'] = cmp.mapping.complete(),
         ['<C-e>'] = cmp.mapping.close(),
         ['<CR>'] = cmp.mapping.confirm {
-            behavior = cmp.ConfirmBehavior.Replace,
+            -- Accept currently selected item. If none selected, `select` first item.
+            -- Set `select` to `false` to only confirm explicitly selected items.
+            behavior = cmp.ConfirmBehavior.Insert,
             select = true
         },
         ['<Tab>'] = function(fallback)
@@ -61,7 +67,9 @@ cmp.setup {
     },
 
     sources = {
-        {name = 'nvim_lsp'}, {name = 'luasnip'}, {name = "buffer"},
-        {name = "nvim_lua"}, {name = "path"}
-    }
+        {name = 'nvim_lsp'}, {name = "path"}, {name = "buffer"},
+        {name = 'luasnip'}, {name = "nvim_lua"}
+    },
+
+    experimental = {native_menu = true, ghost_text = true}
 }

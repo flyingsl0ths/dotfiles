@@ -3,56 +3,75 @@ local present, packer = pcall(require, "packer")
 if not present then return end
 
 packer.startup(function()
-    use "wbthomason/packer.nvim"
+  use "wbthomason/packer.nvim"
+  use "Nvchad/extensions"
 
-    use 'shaunsingh/nord.nvim'
-    use {'kyazdani42/nvim-tree.lua', requires = 'kyazdani42/nvim-web-devicons'}
-    use "glepnir/dashboard-nvim"
-    use {
-        'famiu/feline.nvim',
-        requires = {
-            {
-                'lewis6991/gitsigns.nvim',
-                config = function() require('gitsigns').setup() end
-            }
-        }
+  -- use "shaunsingh/nord.nvim"
+  -- use "norcalli/nvim-base16.lua"
+  use({"catppuccin/nvim", as = "catppuccin"})
+
+  use {
+    "kyazdani42/nvim-tree.lua",
+    "akinsho/bufferline.nvim",
+    requires = "kyazdani42/nvim-web-devicons"
+  }
+  use "glepnir/dashboard-nvim"
+  use {
+    "feline-nvim/feline.nvim",
+    requires = {
+      {
+        "lewis6991/gitsigns.nvim",
+        config = function() require("gitsigns").setup() end
+      }, {"kyazdani42/nvim-web-devicons"}
     }
+  }
 
-    use "neovim/nvim-lspconfig"
-    use "ray-x/lsp_signature.nvim"
-    use "williamboman/nvim-lsp-installer"
-    use {
-        'nvim-treesitter/nvim-treesitter',
-        run = ':TSUpdate',
-        config = function() require'nvim-tree'.setup {} end
+  use "neovim/nvim-lspconfig"
+  use "ray-x/lsp_signature.nvim"
+  use "williamboman/nvim-lsp-installer"
+  use {
+    "nvim-treesitter/nvim-treesitter",
+    run = ":TSUpdate",
+    config = function() require"nvim-tree".setup {} end
+  }
+
+  use {
+    "w0rp/ale",
+    ft = {"sh", "zsh"},
+    cmd = "ALEEnable",
+    config = "vim.cmd[[ALEEnable]]"
+  }
+
+  use "rafamadriz/friendly-snippets"
+  use "L3MON4D3/LuaSnip"
+  use "hrsh7th/nvim-cmp"
+  use "hrsh7th/cmp-nvim-lsp"
+  use {"hrsh7th/cmp-buffer", after = "cmp-nvim-lsp"}
+  use {"hrsh7th/cmp-path", after = "cmp-buffer"}
+  use "saadparwaiz1/cmp_luasnip"
+  use {"hrsh7th/cmp-nvim-lua", after = "cmp_luasnip"}
+
+  use {
+    "nvim-telescope/telescope.nvim",
+    requires = {
+      {"nvim-telescope/telescope-fzf-native.nvim", run = "make"},
+      {"nvim-lua/popup.nvim"}, {"nvim-lua/plenary.nvim"},
+      {"nvim-telescope/telescope-media-files.nvim"}
     }
+  }
 
-    use {
-        'w0rp/ale',
-        ft = {'sh', 'zsh', 'racket'},
-        cmd = 'ALEEnable',
-        config = 'vim.cmd[[ALEEnable]]'
-    }
+  use "mfussenegger/nvim-dap"
+  use 'mfussenegger/nvim-jdtls'
 
-    use {"rafamadriz/friendly-snippets", event = "InsertEnter"}
-    use 'L3MON4D3/LuaSnip'
-    use 'hrsh7th/nvim-cmp'
-    use 'hrsh7th/cmp-nvim-lsp'
-    use {"hrsh7th/cmp-buffer", after = "cmp-nvim-lsp"}
-    use {"hrsh7th/cmp-path", after = "cmp-buffer"}
-    use {"hrsh7th/cmp-nvim-lua", after = "cmp_luasnip"}
-    use 'saadparwaiz1/cmp_luasnip'
+  use "szw/vim-maximizer"
+  use "norcalli/nvim-colorizer.lua"
+  use {
+    'numToStr/Comment.nvim',
+    config = function() require('Comment').setup() end
+  }
 
-    use {
-        'nvim-telescope/telescope.nvim',
-        requires = {
-            {'nvim-telescope/telescope-fzf-native.nvim', run = 'make'},
-            {'nvim-lua/popup.nvim'}, {'nvim-lua/plenary.nvim'},
-            {'nvim-telescope/telescope-media-files.nvim'}
-        }
-    }
-
-    use 'norcalli/nvim-colorizer.lua'
-    use "terrortylor/nvim-comment"
-    use 'lukas-reineke/format.nvim'
+  use "mhartington/formatter.nvim"
+  -- use "ggandor/lightspeed.nvim"
+  use "andymass/vim-matchup"
+  use "lukas-reineke/indent-blankline.nvim"
 end)

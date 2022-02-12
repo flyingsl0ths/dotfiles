@@ -4,8 +4,9 @@ vim.g.mapleader = " "
 
 local enable_noremap = {noremap = true}
 local default_options = {noremap = true, silent = true}
+local silent = {silent = true}
 
--- Mode  Keymap Mapps to Options 
+-- Mode Keymap Maps-To Options --
 
 -- Reminders to avoid used arrow keys
 map("n", "<Left>", ":echo \"Use h\"<CR>", enable_noremap)
@@ -25,6 +26,7 @@ map("n", "<C-d>", ":vertical resize +5<CR>", default_options)
 map("n", "<C-a>", ":vertical resize -5<CR>", default_options)
 map("n", "<C-x>", ":res +5<CR>", default_options)
 map("n", "<C-s>", ":res -5<CR>", default_options)
+vim.g.maximizer_default_mapping_key = "<leader>mm"
 
 -- Buffer movement
 map("n", "<S-Left>", "<C-w>r", enable_noremap)
@@ -32,54 +34,67 @@ map("n", "<S-Right>", "<C-w>r", enable_noremap)
 map("n", "<S-Up>", "<C-w>H", enable_noremap)
 map("n", "<S-Down>", "<C-w>J", enable_noremap)
 
--- Buffer switching
-map("n", "<Tab>", ":bnext<CR>", enable_noremap)
-map("n", "<S-Tab>", ":bprevious<CR>", enable_noremap)
-
 -- Writing files
-map("n", "<C-w>", ":w<CR>", enable_noremap)
+map("n", "<C-p>", ":w<CR>", enable_noremap)
+map("n", "<S-w>", ":wa<CR>", default_options)
 
 -- Tab switching
 map("", "<C-t>", ":tabnew<space>", {})
-map("", "<leader>x", ":tabclose<CR>", {})
-map("", "<S-t>", ":tabn<CR>", {})
-map("", "<S-p>", ":tabp<CR>", {})
+map("", "<leader>x", ":tabclose<CR>", silent)
+map("", "<S-t>", ":tabn<CR>", silent)
+map("", "<S-p>", ":tabp<CR>", silent)
 
 -- Open splits prompt
-map("n", "<leader>-", ":vsplit<space>", enable_noremap)
-map("n", "<leader>|", ":split<space>", enable_noremap)
+map("n", "<leader>[", ":vsplit<space>", enable_noremap)
+map("n", "<leader>]", ":split<space>", enable_noremap)
 
 -- Clears highlighted searches
-map("", "<SPACE><CR>", ":noh<CR>", {})
+map("", "<leader><CR>", ":noh<CR>", silent)
 
 -- Toggle line numbers
 map("n", "<leader>n", ":set nu! <CR>", default_options)
+
+-- Toggle spellchecker
+map("", "<leader>s", ":setlocal spell!<CR>", silent)
+
+-- Copy/Paste
+map("v", "<C-q>", "\"+y<CR>", default_options)
+map("n", "<C-w>", "\"+p<CR>", default_options)
 
 -- Terminal commands
 -- escape terminal mode
 map("t", "jk", "<C-\\><C-n>", {})
 
+-- hide a term from within terminal mode
+map("t", "JK", "<C-\\><C-n> :lua require('core.utils').close_buffer() <CR>", {})
+
 -- pick a hidden terminal
 map("n", "<leader>W", ":Telescope terms <CR>", default_options)
 
--- Open terminals
 -- this opens on top of an existing vert/hori term
 map("n", "<leader>h",
     ":execute 15 .. 'new +terminal' | let b:term_type = 'hori' | startinsert <CR>",
     default_options)
+
 map("n", "<leader>v",
     ":execute 'vnew +terminal' | let b:term_type = 'vert' | startinsert <CR>",
     default_options)
+
 map("n", "<leader>w",
     ":execute 'terminal' | let b:term_type = 'wind' | startinsert <CR>",
     default_options)
 
+-- Buffer-Line
+map('n', '<TAB>', ':BufferLineCycleNext<CR>', default_options)
+map('n', '<S-TAB>', ':BufferLineCyclePrev<CR>', default_options)
+map('n', '<S-x>', ':bdelete<CR>', default_options)
+
 -- Dashboard bindings
 map("n", "<leader>d", ":Dashboard <CR>", default_options)
-map("n", "<leader>dj", ":DashboardJumpMarks <CR>", default_options)
-map("n", "<leader>dn", ":DashboardNewFile <CR>", default_options)
-map("n", "<leader>ds", ":SessionSave <CR>", default_options)
-map("n", "<leader>dl", ":SessionLoad <CR>", default_options)
+map("n", "<leader>djm", ":DashboardJumpMarks <CR>", default_options)
+map("n", "<leader>dnf", ":DashboardNewFile <CR>", default_options)
+map("n", "<leader>dss", ":SessionSave <CR>", default_options)
+map("n", "<leader>dsl", ":SessionLoad <CR>", default_options)
 
 -- Telescope bindings
 map("n", "<leader>t", ":Telescope<CR>", default_options)
@@ -92,12 +107,11 @@ map("n", "<leader>ht", ":Telescope help_tags <CR>", default_options)
 map("n", "<leader>lg", ":Telescope live_grep <CR>", default_options)
 map("n", "<leader>of", ":Telescope oldfiles <CR>", default_options)
 map("n", "<leader>bm", ":Telescope marks <CR>", default_options)
-map("n", "<leader>ld", ":Telescope lsp_document_diagnostics <CR>",
-    default_options)
+map("n", "<leader>md", ":Telescope media_files <CR>", default_options)
+map("n", "<leader>ld", ":Telescope diagnostics bufnr=0 <CR>", default_options)
+map("n", "<leader>ls", ":Telescope lsp_document_symbols <CR>", default_options)
+map("n", "<leader>cc", ":Telescope commands <CR>", default_options)
 
 -- NvimTree bindings
 map("n", "<C-e>", ":NvimTreeToggle<CR>", enable_noremap)
 map("n", "<C-f>", ":NvimTreeFocus <CR>", enable_noremap)
-
--- Nvim-Commment bindings
-map("n", "<leader>/", ":CommentToggle <CR>", enable_noremap)
