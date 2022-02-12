@@ -1,6 +1,6 @@
-so ~/.vimscripts/vpreferences.vim
+so ~/.vimscripts/preferences.vim
 
-so ~/.vimscripts/vkeybindings.vim
+so ~/.vimscripts/keybindings.vim
 
 " set the runtime path to include Vundle and initialize
 set runtimepath+=~/.vim/bundle/Vundle.vim
@@ -21,29 +21,30 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'udalov/kotlin-vim'
 Plugin 'neoclide/coc.nvim'
 Plugin 'xolox/vim-misc'
-Plugin 'chriskempson/base16-vim'
+Plugin 'arcticicestudio/nord-vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'mhinz/vim-startify'
 Plugin 'puremourning/vimspector'
+Plugin 'szw/vim-maximizer'
 
-so ~/.vimscripts/vale-settings.vim
+so ~/.vimscripts/ale-settings.vim
 
-so ~/.vimscripts/vlightline-settings.vim
+so ~/.vimscripts/lightline-settings.vim
 
-so ~/.vimscripts/vctrlp-settings.vim
+so ~/.vimscripts/ctrlp-settings.vim
 
-so ~/.vimscripts/vcoc-settings.vim
+so ~/.vimscripts/coc-settings.vim
 
-so ~/.vimscripts/vtagbar-settings.vim
+so ~/.vimscripts/tagbar-settings.vim
 
-so ~/.vimscripts/vnerdtree-settings.vim
+so ~/.vimscripts/nerdtree-settings.vim
 
-so ~/.vimscripts/vspector-settings.vim
+so ~/.vimscripts/vimspector-settings.vim
 
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-colorscheme base16-nord
+colorscheme nord
 
 autocmd VimEnter *
             \   if !argc()
