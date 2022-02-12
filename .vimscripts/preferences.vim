@@ -20,6 +20,8 @@ set tabstop=4
 " width (in spaces) used in each step of autoindent (aswell as << and >>)
 set shiftwidth=4
 
+set softtabstop=4
+
 " Enable mouse support
 set mouse=a
 
@@ -34,7 +36,7 @@ set completeopt="menu,menuone"
 set backspace=indent,eol,start
 
 " Make vim use the system clipboard:
-set clipboard=unnamedplus
+set clipboard+=unnamedplus
 
 " Disable audible bell
 set noerrorbells visualbell t_vb=
@@ -72,7 +74,7 @@ set number
 " Highlight search results
 set hlsearch
 
-set nocursorline
+set cursorline
 
 set nostartofline
 
@@ -141,4 +143,6 @@ set tags=tags;~
 set lazyredraw
 
 set termguicolors
+
+highlight Comment cterm=italic
 """""""""""""""""""""
