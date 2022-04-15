@@ -1,6 +1,7 @@
 so ~/.vimscripts/preferences.vim
 
 so ~/.vimscripts/keybindings.vim
+so ~/.vimscripts/catppuccin-vim/colors/catppuccin.vim
 
 " set the runtime path to include Vundle and initialize
 set runtimepath+=~/.vim/bundle/Vundle.vim
@@ -21,7 +22,7 @@ Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'udalov/kotlin-vim'
 Plugin 'neoclide/coc.nvim'
 Plugin 'xolox/vim-misc'
-Plugin 'arcticicestudio/nord-vim'
+" Plugin 'arcticicestudio/nord-vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'mhinz/vim-startify'
 Plugin 'puremourning/vimspector'
@@ -44,7 +45,7 @@ so ~/.vimscripts/vimspector-settings.vim
 call vundle#end()            " required
 filetype plugin indent on    " required
 
-colorscheme nord
+" colorscheme nord
 
 autocmd VimEnter *
             \   if !argc()
