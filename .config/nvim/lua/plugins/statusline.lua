@@ -55,7 +55,7 @@ if present then
         style = "bold"
       }
     end,
-    right_sep = "slant_right"
+    right_sep = "block"
   })
 
   table.insert(components.active[LEFT_SIDE], {
@@ -66,7 +66,7 @@ if present then
     hl = function()
       return {fg = colors.bg, bg = colors.blue, style = "italic"}
     end,
-    left_sep = "slant_left_2",
+    left_sep = "block",
     right_sep = "right_filled"
   })
 
@@ -176,7 +176,7 @@ if present then
   table.insert(components.inactive[LEFT_SIDE], components.active[LEFT_SIDE][2])
 
   statusline.setup {
-    colors = {bg = colors.bg, fg = colors.fg},
+    theme = {bg = colors.bg, fg = colors.fg},
     components = components,
     vi_mode_colors = vi_mode_colors,
     force_inactive = {

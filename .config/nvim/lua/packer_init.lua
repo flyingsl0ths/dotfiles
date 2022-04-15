@@ -5,16 +5,25 @@ if not present then return end
 packer.startup(function()
   use "wbthomason/packer.nvim"
   use "Nvchad/extensions"
+  use 'editorconfig/editorconfig-vim'
 
   -- use "shaunsingh/nord.nvim"
   -- use "norcalli/nvim-base16.lua"
   use({"catppuccin/nvim", as = "catppuccin"})
 
   use {
-    "kyazdani42/nvim-tree.lua",
-    "akinsho/bufferline.nvim",
-    requires = "kyazdani42/nvim-web-devicons"
+    'kyazdani42/nvim-tree.lua',
+    requires = {
+      'kyazdani42/nvim-web-devicons' -- optional, for file icon
+    }
   }
+
+  use {
+    'akinsho/bufferline.nvim',
+    tag = "*",
+    requires = 'kyazdani42/nvim-web-devicons'
+  }
+
   use "glepnir/dashboard-nvim"
   use {
     "feline-nvim/feline.nvim",
@@ -70,8 +79,15 @@ packer.startup(function()
     config = function() require('Comment').setup() end
   }
 
+  use {
+    "AmeerTaweel/todo.nvim",
+    requires = "nvim-lua/plenary.nvim",
+    config = function() require("todo").setup {} end
+  }
+
   use "mhartington/formatter.nvim"
   -- use "ggandor/lightspeed.nvim"
   use "andymass/vim-matchup"
   use "lukas-reineke/indent-blankline.nvim"
+  use "udalov/kotlin-vim"
 end)

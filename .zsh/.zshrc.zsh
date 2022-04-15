@@ -1,6 +1,6 @@
 export ZSH_PLUGINS=$HOME/.zsh-plugins
 
-export PATH=$PATH:$HOME/.bin:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.cargo/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.cargo/bin:$HOME/.local/share/gem/ruby/3.0.0/bin
 
 source $ZSH_PLUGINS/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 
@@ -40,3 +40,5 @@ function cc() python3 -c "from math import *; print($*);"
 
 # ghcup-env
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
+
+source /home/flyingsloths/.config/broot/launcher/bash/br

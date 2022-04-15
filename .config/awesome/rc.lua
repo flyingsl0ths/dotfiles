@@ -62,7 +62,7 @@ local home_dir = os.getenv("HOME")
 beautiful.init(home_dir .. "/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-terminal = "kitty"
+terminal = "st"
 editor = os.getenv("EDITOR") or "nano"
 editor_cmd = terminal .. " -e " .. editor
 
@@ -137,7 +137,7 @@ awful.screen.connect_for_each_screen(function(s)
 
   -- Create the wibox
   s.mywibox = awful.wibar({
-    position = "top",
+    position = "bottom",
     screen = s,
     width = 1800,
     shape = function(cr, width, height)
@@ -170,6 +170,12 @@ awful.screen.connect_for_each_screen(function(s)
   }
 end)
 -- }}}
+--
+
+local function make_keybinding(binding)
+  return awful.key(binding.modifiers, binding.key, binding.command,
+                   binding.description)
+end
 
 -- {{{ Key bindings
 globalkeys = gears.table.join(awful.key({modkey}, "s", hotkeys_popup.show_help,
@@ -287,11 +293,19 @@ end, {description = "run power menu prompt", group = "launcher"}),
   awful.spawn(string.format("%s/%s", home_dir, ".local/bin/game_mode yuzu"))
 end, {description = "Launch yuzu", group = "apps"}),
 
-                              awful.key({modkey}, "w", function()
+                              awful.key({modkey}, "f", function()
+  awful.spawn("/usr/bin/pcmanfm")
+end, {description = "Launch file manager", group = "apps"}),
 
-  awful.spawn("librewolf")
-
-end, {description = "launch web browser", group = "apps"}),
+                              awful.key({modkey, "Shift"}, "g", function()
+  awful.spawn("/usr/bin/gammy")
+end, {description = "Launch gammy", group = "apps"}), make_keybinding({
+  modifiers = {modkey},
+  key = "g",
+  command = function() awful.spawn("/usr/bin/gimp") end,
+  description = {description = "Launch gimp", group = "apps"}
+}), awful.key({modkey}, "w", function() awful.spawn("librewolf") end,
+              {description = "launch web browser", group = "apps"}),
 
                               awful.key({modkey, "Shift"}, "w", function()
   awful.spawn("librewolf --private-window")
@@ -299,29 +313,10 @@ end, {description = "launch web browser", group = "apps"}),
 end, {description = "launch private web browser", group = "apps"}),
 
                               awful.key({modkey, "Control"}, "Return",
-                                        function()
-  awful.spawn(terminal .. string.format(" --config=%s/%s", home_dir,
-                                        ".config/kitty/scratchpad.conf --class scratchpad"))
-
-end, {description = "launch terminal", group = "scratchpads"}),
-                              awful.key({modkey, "Control"}, "p", function()
-  awful.spawn(terminal .. string.format(" --config=%s/%s", home_dir,
-                                        ".config/kitty/scratchpad.conf --class pyscratchpad " ..
-                                            string.format(
-                                                "%s/.local/bin/bpython",
-                                                home_dir)))
-
-end, {description = "launch python", group = "scratchpads"}),
-                              awful.key({modkey, "Control"}, "y", function()
-  awful.spawn(terminal .. string.format(" --config=%s/%s", home_dir,
-                                        ".config/kitty/scratchpad.conf --class ytmscratchpad ytfzf -m -t -l"))
-
-end, {description = "launch youtube music", group = "scratchpads"}),
-                              awful.key({modkey, "Control"}, "f", function()
-  awful.spawn(terminal .. string.format(" --config=%s/%s", home_dir,
-                                        ".config/kitty/scratchpad.conf --class fmscratchpad ranger"))
-
-end, {description = "launch terminal file manager", group = "scratchpads"}),
+                                        function() awful.spawn(terminal) end, {
+  description = "launch terminal",
+  group = "apps"
+}),
 
                               awful.key({modkey}, "F3", function()
   awful.spawn("brightnessctl set 5%+")

@@ -111,7 +111,7 @@ map("n", "<leader>md", ":Telescope media_files <CR>", default_options)
 map("n", "<leader>ld", ":Telescope diagnostics bufnr=0 <CR>", default_options)
 map("n", "<leader>ls", ":Telescope lsp_document_symbols <CR>", default_options)
 map("n", "<leader>cc", ":Telescope commands <CR>", default_options)
+map("n", "<leader>tt", ":TODOTelescope <CR>", default_options)
 
 -- NvimTree bindings
-map("n", "<C-e>", ":NvimTreeToggle<CR>", enable_noremap)
-map("n", "<C-f>", ":NvimTreeFocus <CR>", enable_noremap)
+map("n", "<C-f>", ":NvimTreeToggle<CR>", enable_noremap)

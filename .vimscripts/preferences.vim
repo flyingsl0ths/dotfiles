@@ -71,6 +71,8 @@ set gdefault
 
 set number
 
+set relativenumber
+
 " Highlight search results
 set hlsearch
 

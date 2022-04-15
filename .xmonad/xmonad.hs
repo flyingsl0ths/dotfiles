@@ -4,7 +4,12 @@ import qualified Data.Map as M
     union,
   )
 import LayoutUtils (rawSpacing')
-import SpawnUtils (gamemodeCommand, makeNamedScratchPad, spawnSelected', zshTerminalCommand)
+import SpawnUtils
+  ( gamemodeCommand,
+    makeNamedScratchPad,
+    spawnSelected',
+    zshTerminalCommand,
+  )
 import System.Environment (getEnv)
 import System.Exit (exitSuccess)
 import XMonad
@@ -147,7 +152,13 @@ import XMonad.Layout.Spiral
 import XMonad.Layout.ThreeColumns (ThreeCol (ThreeColMid))
 import XMonad.ManageHook (className, (<+>), (=?))
 import qualified XMonad.StackSet as W
-import XMonad.Util.NamedScratchpad (NamedScratchpad (NS), NamedScratchpads, customFloating, namedScratchpadAction, namedScratchpadManageHook)
+import XMonad.Util.NamedScratchpad
+  ( NamedScratchpad (NS),
+    NamedScratchpads,
+    customFloating,
+    namedScratchpadAction,
+    namedScratchpadManageHook,
+  )
 import XMonad.Util.SpawnOnce (spawnOnce)
 import XMonad.Util.Ungrab (unGrab)
 
@@ -155,14 +166,33 @@ myFont :: String
 myFont = "xft:JetBrainsMono Nerd Font:size=10:antialias=true"
 
 myTerminal :: String
-myTerminal = "kitty"
+myTerminal = "st"
+
+terminalGeometry :: String
+terminalGeometry = "-g=90x30"
 
 myScratchPads :: NamedScratchpads
 myScratchPads =
-  [ makeNamedScratchPad "terminal" "scratchpad" (myTerminal ++ " --class scratchpad") floatingTerminalSize,
-    makeNamedScratchPad "terminalfm" "fmscratchpad" (myTerminal ++ " --class fmscratchpad zsh -i -c ranger") floatingTerminalSize,
-    makeNamedScratchPad "yt-music" "ytmscratchpad" (myTerminal ++ " --class ytmscratchpad ytfzf -m -t -l") floatingTerminalSize,
-    makeNamedScratchPad "bpy" "pyscratchpad" (myTerminal ++ " --class pyscratchpad ~/.local/bin/bpython") floatingTerminalSize,
+  [ makeNamedScratchPad
+      "terminal"
+      "scratchpad"
+      (myTerminal ++ " -c scratchpad " ++ terminalGeometry)
+      floatingTerminalSize,
+    makeNamedScratchPad
+      "terminalfm"
+      "fmscratchpad"
+      (myTerminal ++ " -c fmscratchpad " ++ terminalGeometry ++ " zsh -i -c ranger")
+      floatingTerminalSize,
+    makeNamedScratchPad
+      "yt-music"
+      "ytmscratchpad"
+      (myTerminal ++ " -c ytmscratchpad " ++ terminalGeometry ++ " ytfzf -m -t -l")
+      floatingTerminalSize,
+    makeNamedScratchPad
+      "bpy"
+      "pyscratchpad"
+      (myTerminal ++ " -c pyscratchpad " ++ terminalGeometry ++ " ~/.local/bin/bpython")
+      floatingTerminalSize,
     makeNamedScratchPad "emoji-picker" "org.gnome.Characters" "gnome-characters" floatingWindowSize
   ]
   where
@@ -412,6 +442,12 @@ myConfig =
           className =? "love" --> doCenterFloat,
           className =? "jetbrains-studio" --> doCenterFloat,
           className =? "jetbrains-idea-ce" --> doCenterFloat,
+          className =? "jetbrains-idea-ce" --> doCenterFloat,
+          className =? "scratchpad" --> doCenterFloat,
+          className =? "ytmscratchpad" --> doCenterFloat,
+          className =? "pyscratchpad" --> doCenterFloat,
+          className =? "fmscratchpad" --> doCenterFloat,
+          className =? "emoji-picker" --> doCenterFloat,
           isDialog --> doCenterFloat
         ]
         <+> namedScratchpadManageHook myScratchPads

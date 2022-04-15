@@ -13,13 +13,6 @@ if present then
 
       css = {icon = "", color = "#5E81AC", cterm_color = "67", name = "css"},
 
-      js = {
-        icon = "",
-        color = "#EBCB8B",
-        cterm_color = "222",
-        name = "javascript"
-      },
-
       md = {
         icon = "",
         color = "#D8DEE9",

@@ -13,17 +13,20 @@ alias cmake-build="cmake --build"
 alias cmake-target="cmake --build . --target"
 alias compile-cpp="clang++ -std=c++17 -Wall -Werror -Wextra -Wsign-conversion"
 alias compile-c="clang -std=c99 -Wall -Werror -Wextra -Wsign-conversion -pedantic"
-alias cmake-c-config="cmake -G Ninja -DCMAKE_C_COMPILER=clang -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
-alias cmake-cpp-config="cmake -G Ninja -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_EXPORT_COMPILE_COMMANDS=1"
+alias cmake-c-config="cmake -G Ninja -DCMAKE_C_COMPILER=clang"
+alias cmake-cpp-config="cmake -G Ninja -DCMAKE_CXX_COMPILER=clang++"
+alias ctv="ctest -VV"
 
 alias nd="node"
 
 alias gdl="gradle"
 
+alias cgo="cargo"
+
 alias yt="ytfzf -t -l"
 alias ytm="ytfzf -m -t -l"
 
-alias ta="tmux a"
+alias ta="tmux a -t"
 alias tls="tmux ls"
 alias ts="tmux new -s"
 alias tk="tmux kill-session"

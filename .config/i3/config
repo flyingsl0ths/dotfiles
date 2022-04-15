@@ -38,7 +38,7 @@ include "$HOME/.config/i3/startup.conf"
 
 include "$HOME/.config/i3/programs.conf"
 
-include "$HOME/.config/i3/scratchpads.conf"
+# include "$HOME/.config/i3/scratchpads.conf"
 
 # kill focused window
 bindsym $mod+q kill
