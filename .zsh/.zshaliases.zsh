@@ -20,8 +20,11 @@ alias ctv="ctest -VV"
 alias nd="node"
 
 alias gdl="gradle"
+alias gdw="./gradlew -q"
 
 alias cgo="cargo"
+
+alias cbl="cabal"
 
 alias yt="ytfzf -t -l"
 alias ytm="ytfzf -m -t -l"
@@ -31,7 +34,8 @@ alias tls="tmux ls"
 alias ts="tmux new -s"
 alias tk="tmux kill-session"
 #alias tmux="TERM=screen-256color-bce tmux"
-
+#
+alias ld="cd -"
 alias ls='exa --icons -1'
 alias la='exa --icons -1 --all'
 alias ll='exa --icons -1 -l'
@@ -85,4 +89,4 @@ alias krln="uname -rs"
 alias h="history"
 alias hs="history | rg"
 alias hsi="history | rg -s"
-alias ss="rxfetch"
+alias gp="git pull"

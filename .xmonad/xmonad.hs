@@ -259,7 +259,6 @@ myKeys conf@XConfig {XMonad.modMask = modMask} =
     ---- Programs ----
     [ ((modMask, xK_w), spawn "librewolf"),
       ((modMask .|. shiftMask, xK_w), spawn "librewolf --private-window"),
-      ((modMask .|. shiftMask, xK_g), spawn "gammy"),
       ((modMask, xK_f), spawn "pcmanfm"),
       ((modMask, xK_v), spawn $ zshTerminalCommand myTerminal "vscodium"),
       ((modMask, xK_c), spawn "corectrl"),
@@ -421,16 +420,17 @@ myConfig =
 
     myStartUpHook :: X ()
     myStartUpHook =
-      spawnOnce "/usr/lib/xfce4/notifyd/xfce4-notifyd &"
+      spawnOnce "kill -KILL $(pgrep kwallet)"
+        >> spawnOnce "/usr/lib/xfce4/notifyd/xfce4-notifyd &"
         >> spawnOnce "/usr/lib/xfce-polkit/xfce-polkit &"
         >> spawnOnce "/usr/bin/xautolock -time 10 -locker ~/.local/bin/i3lock_color -detectsleep &"
         >> spawnOnce "~/.config/polybar/launch.sh 'xmonad'"
         >> spawnOnce "(nohup picom &)"
         >> spawnOnce "xinput set-prop 12 311 1"
         >> spawnOnce "xsettingsd &"
-        >> spawnOnce "/usr/bin/gammy &"
+        >> spawnOnce "/usr/bin/gammy"
         >> spawnOnce "xwallpaper --output eDP --stretch ~/.local/share/wallpaper/wallpaper"
-        >> spawnOnce "xrdb ~/Xresources"
+        >> spawnOnce "/usr/bin/xrdb merge ~/Xresources"
 
     myManageHook :: ManageHook
     myManageHook =

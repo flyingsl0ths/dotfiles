@@ -57,7 +57,7 @@ nmap <leader>fmt  <Plug>(coc-format-selected)
 augroup mygroup
   autocmd!
   " Setup formatexpr specified filetype(s).
-  autocmd FileType bash,scheme,haskell,python,cpp,c,java,kotlin,typescript,json setl formatexpr=CocAction('formatSelected')
+  autocmd FileType bash,scheme,haskell,python,cpp,c,lua,java,kotlin,typescript,json setl formatexpr=CocAction('formatSelected')
   " Update signature help on jump placeholder.
   autocmd User CocJumpPlaceholder call CocActionAsync('showSignatureHelp')
 augroup end
@@ -99,13 +99,9 @@ nnoremap <silent><nowait> <space>w  :<C-u>CocList extensions<cr>
 " Show commands.
 nnoremap <silent><nowait> <space>c  :<C-u>CocList commands<cr>
 " Find symbol of current document.
-nnoremap <silent><nowait> <C-i> :<C-u>CocList outline<cr>
+nnoremap <silent><nowait> <S-o> :<C-u>CocList outline<cr>
 " Search workspace symbols.
-nnoremap <silent><nowait> <C-l>  :<C-u>CocList -I symbols<cr>
-" Do default action for next item.
-nnoremap <silent><nowait> <C-j>  :<C-u>CocNext<CR>
-" Do default action for previous item.
-nnoremap <silent><nowait> <C-k>  :<C-u>CocPrev<CR>
+nnoremap <silent><nowait> <S-s>  :<C-u>CocList -I symbols<cr>
 " Resume latest coc list.
 nnoremap <silent><nowait> <C-h>  :<C-u>CocListResume<CR>
 "

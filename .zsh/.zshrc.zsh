@@ -2,8 +2,6 @@ export ZSH_PLUGINS=$HOME/.zsh-plugins
 
 export PATH=$PATH:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.cargo/bin:$HOME/.local/share/gem/ruby/3.0.0/bin
 
-source $ZSH_PLUGINS/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-
 eval "$(luarocks path --bin)"
 
 PROMPT="%F{13}%f%F{14}%f%F{41}%f %F{214}  %f%F{252}%~%f "
@@ -20,7 +18,7 @@ zstyle ':autocomplete:*' min-input 2
 export EDITOR=nvim
 export PAGER=bat
 export READER=zathura
-export TERMINAL=alacritty
+export TERMINAL=st
 export VISUAL=nvim
 export SUDO_EDITOR=nvim
 
@@ -32,6 +30,7 @@ setopt appendhistory
 # aliases
 [ -f ~/.zshaliases ] && source $HOME/.zshaliases
 
+source $ZSH_PLUGINS/zsh-autocomplete/zsh-autocomplete.plugin.zsh
 source $ZSH_PLUGINS/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
 
 function cc() python3 -c "from math import *; print($*);"

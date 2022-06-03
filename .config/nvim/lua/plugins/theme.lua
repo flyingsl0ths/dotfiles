@@ -9,7 +9,7 @@
 -- require('nord').set()
 local catppuccin = require("catppuccin")
 
-catppuccin.setup({transparent_background = true})
+catppuccin.setup({ transparent_background = false })
 vim.cmd [[colorscheme catppuccin]]
 
 -- local base16 = require 'base16'

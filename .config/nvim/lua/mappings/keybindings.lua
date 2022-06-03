@@ -2,9 +2,9 @@ local map = vim.api.nvim_set_keymap
 
 vim.g.mapleader = " "
 
-local enable_noremap = {noremap = true}
-local default_options = {noremap = true, silent = true}
-local silent = {silent = true}
+local enable_noremap = { noremap = true }
+local default_options = { noremap = true, silent = true }
+local silent = { silent = true }
 
 -- Mode Keymap Maps-To Options --
 
@@ -73,16 +73,16 @@ map("n", "<leader>W", ":Telescope terms <CR>", default_options)
 
 -- this opens on top of an existing vert/hori term
 map("n", "<leader>h",
-    ":execute 15 .. 'new +terminal' | let b:term_type = 'hori' | startinsert <CR>",
-    default_options)
+	":execute 15 .. 'new +terminal' | let b:term_type = 'hori' | startinsert <CR>",
+	default_options)
 
 map("n", "<leader>v",
-    ":execute 'vnew +terminal' | let b:term_type = 'vert' | startinsert <CR>",
-    default_options)
+	":execute 'vnew +terminal' | let b:term_type = 'vert' | startinsert <CR>",
+	default_options)
 
 map("n", "<leader>w",
-    ":execute 'terminal' | let b:term_type = 'wind' | startinsert <CR>",
-    default_options)
+	":execute 'terminal' | let b:term_type = 'wind' | startinsert <CR>",
+	default_options)
 
 -- Buffer-Line
 map('n', '<TAB>', ':BufferLineCycleNext<CR>', default_options)
@@ -115,3 +115,6 @@ map("n", "<leader>tt", ":TODOTelescope <CR>", default_options)
 
 -- NvimTree bindings
 map("n", "<C-f>", ":NvimTreeToggle<CR>", enable_noremap)
+
+map("n", "<leader>af", ":ALEFix<CR>", default_options)
+map("n", "<leader>t", ":SymbolsOutline<CR>", default_options)

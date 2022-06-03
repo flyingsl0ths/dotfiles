@@ -2,7 +2,7 @@ Net/ThemeName "Catppuccin-teal"
 Net/IconThemeName "Papirus-Dark"
 Net/EnableEventSounds "0"
 Net/EnableInputFeedbackSounds "0"
-Gtk/CursorThemeName "capitaine-cursors"
+Gtk/CursorThemeName "breeze_cursors"
 Xft/DPI "1"
 Xft/Hinting 1
 Xft/HintStyle "hintslight"
