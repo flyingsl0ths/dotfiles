@@ -1,0 +1,33 @@
+#! /bin/sh
+
+pgrep -x sxhkd > /dev/null || sxhkd &
+
+dunst &
+xautolock -time 10 -locker "$HOME/.local/bin/i3lock_color" -detectsleep &
+picom -b --animations --animation-window-mass 0.5 --animation-for-open-window zoom --animation-stiffness 350
+"$HOME/.config/polybar/launch.sh" bspwm
+xwallpaper --output eDP --stretch "$HOME/.local/share/wallpaper/wallpaper"
+redshift -P -O 2000K
+xrdb merge "$HOME/Xresources"
+
+bspc monitor -d 1 2 3 4 5
+
+bspc config border_width         0
+bspc config window_gap          14
+
+bspc config split_ratio          0.52
+bspc config borderless_monocle   true
+bspc config gapless_monocle      true
+
+bspc rule -a Kupfer.py focus=on
+bspc rule -a Screenkey manage=off
+bspc rule -a Gimp state=floating
+bspc rule -a gammy state=floating
+bspc rule -a Peek state=floating
+bspc rule -a Kazam state=floating
+bspc rule -a mpv state=floating
+bspc rule -a Cheese state=floating 
+bspc rule -a scratchpad state=floating
+bspc rule -a pyscratchpad state=floating
+bspc rule -a fmscratchpad state=floating
+bspc rule -a ytmusicscratchpad state=floating

@@ -1,0 +1,169 @@
+#
+# wm independent hotkeys
+#
+
+# terminal emulator
+super + Return
+	st
+
+# program launcher
+super + r 
+    dmenu_run -p 'λ' -m 0 
+
+super + f
+    pcmanfm
+
+super + shift + t
+    xfce4-taskmanager
+
+super + shift + n
+    networkmanager_dmenu
+
+super + F3
+    brightnessctl -q set 5%+
+
+super + F2
+    brightnessctl -q set 5%-
+
+super + shift + p
+    /home/flyingsloths/.config/rofi/launchers/ribbon/launcher.sh ribbon_bottom
+
+super + w
+    librewolf
+
+super + shift + w
+    librewolf --private-window
+
+super + control + Return
+    st -c scratchpad
+
+super + control + f
+    st -c fmscratchpad zsh -i -c ranger
+
+super + control + y
+    st -c ytmusicscratchpad ytfzf -m -t -l
+
+super + control + p
+    st -c pyscratchpad ~/.local/bin/bpython
+
+super + control + e
+    ~/.config/rofi/applets/android/editors.sh
+
+super + F8
+    pamixer -i 5
+
+super + F7
+    pamixer -d 5
+
+super + F6
+    pamixer -t
+
+# make sxhkd reload its configuration files:
+super + control + x
+	pkill -USR1 -x sxhkd
+
+#
+# bspwm hotkeys
+#
+
+# quit/restart bspwm
+super + shift + {q,r}
+	bspc {quit,wm -r}
+
+# close and kill
+super + q
+	bspc node -{c,k}
+
+# alternate between the tiled and monocle layout
+super + m
+	bspc desktop -l next
+
+# send the newest marked node to the newest preselected node
+super + y
+	bspc node newest.marked.local -n newest.!automatic.local
+
+# swap the current node and the biggest window
+super + g
+	bspc node -s biggest.window
+
+#
+# state/flags
+#
+
+# set the window state
+super + {t, shift + s, s, shift + f}
+	bspc node -t {tiled,pseudo_tiled,floating,fullscreen}
+
+# set the node flags
+super + ctrl + {m,x,y,z}
+	bspc node -g {marked,locked,sticky,private}
+
+#
+# focus/swap
+#
+
+# focus the node in the given direction
+super + {_,shift + }{h,j,k,l}
+	bspc node -{f,s} {west,south,north,east}
+
+# focus the node for the given path jump
+super + {p,b,comma,period}
+	bspc node -f @{parent,brother,first,second}
+
+# focus the next/previous window in the current desktop
+super + {_,shift + }d
+	bspc node -f {next,prev}.local.!hidden.window
+
+# focus the next/previous desktop in the current monitor
+super + bracket{left,right}
+	bspc desktop -f {prev,next}.local
+
+# focus the last node/desktop
+super + {grave,Tab}
+	bspc {node,desktop} -f last
+
+# focus the older or newer node in the focus history
+super + {o,i}
+	bspc wm -h off; \
+	bspc node {older,newer} -f; \
+	bspc wm -h on
+
+# focus or send to the given desktop
+super + {_,shift + }{1-6,0}
+	bspc {desktop -f,node -d} '^{1-6,7}'
+
+#
+# preselect
+#
+
+# preselect the direction
+super + ctrl + {h,j,k,l}
+	bspc node -p {west,south,north,east}
+
+# preselect the ratio
+super + ctrl + {1-9}
+	bspc node -o 0.{1-9}
+
+# cancel the preselection for the focused node
+super + ctrl + space
+	bspc node -p cancel
+
+# cancel the preselection for the focused desktop
+super + ctrl + shift + space
+	bspc query -N -d | xargs -I id -n 1 bspc node id -p cancel
+
+#
+# move/resize
+#
+
+# expand a window by moving one of its side outward
+super + alt + {h,j,k,l}
+	bspc node -z {left -20 0,bottom 0 20,top 0 -20,right 20 0}
+
+# contract a window by moving one of its side inward
+super + control + shift + {a,s,d,f}
+	bspc node -z {right -20 0,top 0 20,bottom 0 -20,left 20 0}
+
+# move a floating window
+super + {Left,Down,Up,Right}
+	bspc node -v {-25 0,0 25,0 -25,25 0}
