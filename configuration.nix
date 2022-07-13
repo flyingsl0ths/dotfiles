@@ -2,9 +2,12 @@
 
 {
   imports =
-    [ # Include the results of the hardware scan.
+    [
+      # Include the results of the hardware scan.
       ./hardware-configuration.nix
     ];
+
+  #nixpkgs.config.allowUnfree = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -16,10 +19,10 @@
 
   networking.extraHosts =
     let
-       myHostFile = pkgs.fetchurl {
-       url = "https://block.energized.pro/basic/formats/hosts.txt";
-       sha256 = "sha256-sPM2XLs2CrLRN8YW54r6Bvzu1PtI/YVIkxlo9Qx2r9w=";
-       };
+      myHostFile = pkgs.fetchurl {
+        url = "https://block.energized.pro/basic/formats/hosts.txt";
+        sha256 = "sha256-sPM2XLs2CrLRN8YW54r6Bvzu1PtI/YVIkxlo9Qx2r9w=";
+      };
     in
     '' ${builtins.readFile myHostFile} '';
 
@@ -27,16 +30,45 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "America/Mexico_City";
+  time.timeZone = "";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";
 
   nixpkgs.overlays = [
     (final: prev: {
-      dwm = prev.dwm.overrideAttrs (old: { src = /home/flyingsloths/Documents/code/dwm-fork ;});
-      st =  prev.st.overrideAttrs (old: { buildInputs = old.buildInputs ++ [ pkgs.harfbuzz.dev ]; src = /home/flyingsloths/Documents/code/st-fork ;});
-      picom = prev.picom.overrideAttrs (old: { src = /home/flyingsloths/Documents/code/picom ;});
+      dwm = prev.dwm.overrideAttrs (old: {
+        src = pkgs.fetchgit {
+          url = "https://github.com/flyingsl0ths/dwm-fork.git";
+          rev = "3e4a5a4f8e181c312132d80880072a8357a9d16e";
+          sha256 = "sha256-SI8LMmurS0LPJzfwn/hz3+1iwsKgd4zkwLvuF2rickY=";
+        };
+      });
+
+      st = prev.st.overrideAttrs (old: {
+        buildInputs = old.buildInputs ++ [ pkgs.harfbuzz.dev ];
+        src = pkgs.fetchgit {
+          url = "https://github.com/flyingsl0ths/st-fork.git";
+          rev = "6f874d56315eb58ed3197a3f75726d7648982317";
+          sha256 = "sha256-ffRk89JE08rGzhNW9MF9DGdrE6oJ8cshdNhBi7xXpUw=";
+        };
+      });
+
+      dmenu = prev.dmenu.overrideAttrs (old: {
+        src = pkgs.fetchgit {
+          url = "https://github.com/flyingsl0ths/dmenu-fork.git";
+          rev = "8470bdbf7861b765441069129f0a350f01430786";
+          sha256 = "sha256-4j0pPrly07YEEcTtB2+ZoSxVf93TTr76F43d5a/rEP4=";
+        };
+      });
+
+      picom = prev.picom.overrideAttrs (old: {
+        src = pkgs.fetchgit {
+          url = "https://github.com/pijulius/picom.git";
+          rev = "982bb43e5d4116f1a37a0bde01c9bda0b88705b9";
+          sha256 = "sha256-YiuLScDV9UfgI1MiYRtjgRkJ0VuA1TExATA2nJSJMhM=";
+        };
+      });
     })
   ];
 
@@ -50,8 +82,11 @@
   services.gnome.core-utilities.enable = false;
 
   # Enable the i3 window manager
-  services.xserver.windowManager.i3.package = pkgs.i3-gaps; 
-  services.xserver.windowManager.i3.enable = true;
+  services.xserver.windowManager.i3 =
+    {
+      enable = true;
+      package = pkgs.i3-gaps;
+    };
 
   services.xserver.windowManager.awesome.enable = true;
 
@@ -68,7 +103,11 @@
   # Enable CUPS to print documents.
   services.printing.enable = false;
 
+  environment.variables.AMD_VULKAN_ICD = "RADV";
   hardware.opengl.enable = true;
+  hardware.opengl.setLdLibraryPath = true;
+  hardware.opengl.driSupport = true;
+  hardware.opengl.driSupport32Bit = true;
 
   hardware.opengl.extraPackages = with pkgs; [
     rocm-opencl-icd
@@ -76,21 +115,16 @@
     amdvlk
   ];
 
-  environment.variables.AMD_VULKAN_ICD = "RADV";
-
-  hardware.opengl.driSupport = true;
-
-  # For 32 bit applications
-  hardware.opengl.driSupport32Bit = true;
-
   # For 32 bit applications 
   hardware.opengl.extraPackages32 = with pkgs; [
     driversi686Linux.amdvlk
+    pkgsi686Linux.libva
   ];
 
   # Enable sound with pipewire.
   sound.enable = true;
   hardware.pulseaudio.enable = false;
+  hardware.pulseaudio.support32Bit = true;
   security.rtkit.enable = true;
   security.polkit.enable = true;
   services.pipewire = {
@@ -116,110 +150,124 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
+  users.users.flyingsloths.packages = with pkgs;
+    [
+      vulkan-tools
+    ];
+
   programs.bash.enableCompletion = true;
-  programs.zsh.enable = true;
   users.users.flyingsloths.shell = pkgs.zsh;
 
-  nixpkgs.config.allowUnfree = true;
+  qt5.enable = true;
+  qt5.platformTheme = "gtk2";
+  qt5.style = "gtk2";
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
     # Tools
-    wget
-    lazygit
-    broot
-    xwallpaper
-    pamixer
-    brightnessctl
-    sxhkd
-    ytfzf
-    unzip
-    fd
-    ripgrep
-    exa
     bat
-    ryzenadj
-    picom
-    wine64
-    mono
-    dunst
-    polybarFull
-    xsettingsd
-    redshift
-    xautolock
-    fzf
-    ueberzug
-    xclip
-    bottles
+    brightnessctl
+    broot
     direnv
+    dunst
+    exa
+    fd
+    fzf
+    lazygit
+    pamixer
+    picom
+    polybarFull
+    redshift
+    ripgrep
+    ryzenadj
+    sxhkd
+    ueberzug
+    unzip
+    wget
+    wineWowPackages.stable
+    xautolock
+    xclip
+    xsettingsd
+    xwallpaper
+    ytfzf
 
     # Theming-related
-    capitaine-cursors
-    papirus-icon-theme
-    catppuccin-gtk
-    material-design-icons
     font-awesome_5
+    material-design-icons
+    qt5ct
 
     # Development
-    st
-    tmux
+    #android-studio
+    cabal-install
+    clang-tools_14
+    cmake
+    cmake-language-server
+    git
+    gnumake
+    gradle
+    haskell.compiler.ghc8107
+    haskell-language-server
     helix
-    ranger
-    nodejs
-    lldb
-    rustup
-    rust-analyzer
-    lua5_4
+    hlint
     jdk
     kotlin
     kotlin-language-server
-    gradle
-    sumneko-lua-language-server
-    clang_14
-    clang-tools_14
-    cmake
-    ninja
-    haskell.compiler.ghc8107
-    haskell-language-server
-    hlint
-    haskellPackages.brittany
-    haskellPackages.hls-brittany-plugin
-    cabal-install
-    stack
-    python310
-    python310Packages.pip
-    vscodium-fhs
-    vim
+    lldb_14
+    llvmPackages_14.clang
+    llvmPackages_14.libcxxStdenv
+    lua5_4
     neovim
-    git
-    gnumake
+    ninja
+    nixpkgs-fmt
+    nodejs
+    nodePackages.bash-language-server
+    nodePackages.npm-check-updates
+    nodePackages.typescript
+    python310
+    python310Packages.black
+    python310Packages.bpython
+    python310Packages.mypy
+    python310Packages.pip
+    python310Packages.pytest
+    ranger
+    rust-analyzer
+    rustup
+    shellcheck
+    shfmt
+    st
+    stack
+    sumneko-lua-language-server
+    tmux
+    vim
 
     # Apps
-    librewolf
     brave
-    marktext
-    pcmanfm
-    lxappearance
-    yuzu-mainline
     dmenu
-    rofi-wayland
-    i3lock-color
-    emojipick
-    networkmanager_dmenu
-    zathura
-    xfce.xfce4-taskmanager
-    freshfetch
-    mpv
-    nsxiv
-    gnome.gnome-tweaks
-    lxde.lxrandr
-    mate.mate-polkit
-    networkmanagerapplet
-    mgba
-    eww-wayland
-    melonDS
     dolphin-emu
+    emojipick
+    eww-wayland
+    freshfetch
+    gimp
+    gnome.gnome-tweaks
+    i3lock-color
+    librewolf
+    lxappearance
+    lxde.lxrandr
+    marktext
+    mate.mate-polkit
+    melonDS
+    mgba
+    mpv
+    networkmanagerapplet
+    networkmanager_dmenu
+    noto-fonts-extra
+    nsxiv
+    pcmanfm
+    rofi-wayland
+    xfce.xfce4-taskmanager
+    yuzu-mainline
+    zathura
   ];
 
   fonts.fonts = with pkgs; [
