@@ -10,9 +10,6 @@ dependencies:
   - xmonad-contrib >= 0.17
   - containers
 
-library:
-  source-dirs: src
-
 executables:
   my-xmonad:
     main: xmonad.hs
@@ -22,5 +19,3 @@ executables:
       - -with-rtsopts=-N
       - -Werror
       - -O3
-    dependencies:
-      - my-xmonad

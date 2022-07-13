@@ -1,6 +1,6 @@
 cabal-version: 1.12
 
--- This file has been generated from package.yaml by hpack version 0.34.4.
+-- This file has been generated from package.yaml by hpack version 0.34.7.
 --
 -- see: https://github.com/sol/hpack
 
@@ -12,21 +12,6 @@ license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
 
-library
-  exposed-modules:
-      LayoutUtils
-      SpawnUtils
-  other-modules:
-      Paths_my_xmonad
-  hs-source-dirs:
-      src
-  build-depends:
-      base >=4.7 && <5
-    , containers
-    , xmonad >=0.17
-    , xmonad-contrib >=0.17
-  default-language: Haskell2010
-
 executable my-xmonad
   main-is: xmonad.hs
   other-modules:
@@ -35,7 +20,6 @@ executable my-xmonad
   build-depends:
       base >=4.7 && <5
     , containers
-    , my-xmonad
     , xmonad >=0.17
     , xmonad-contrib >=0.17
   default-language: Haskell2010
