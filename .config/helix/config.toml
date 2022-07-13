@@ -1,0 +1,28 @@
+theme = "catppuccin"
+
+[editor]
+line-number = "relative"
+mouse = true
+true-color = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.file-picker]
+hidden = false
+
+[keys.normal]
+"C-f" = ":format"
+"C-p" = ":write"
+"C-q" = ":q"
+"S-q" = ":wq"
+"C-r" = ":config-reload"
+"C-h" = "jump_view_left"
+"C-l" = "jump_view_right"
+"C-j" = "jump_view_down"
+"C-k" = "jump_view_up"
+"C-o" = ":config-open"
+"C-e" = ":vsplit-new"
+"C-r" = ":hsplit-new"
