@@ -32,3 +32,9 @@
 ! Whites
 *color7: #C3BAC6
 *color15: #D9E0EE
+
+*dmenu.font: "JetBrainsMono Medium Nerd Font Mono:size=13:antialias=true"
+*dmenu.background: #1E1E2E
+*dmenu.foreground: #D9E0EE
+*dmenu.selbackground: #96CDFB
+*dmenu.selforeground: #1E1E2E
