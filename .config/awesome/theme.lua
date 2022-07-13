@@ -24,8 +24,8 @@ local theme = {
 	layout_tile = icon_directory .. "tile.png",
 	layout_spiral = icon_directory .. "spiral.png",
 	layout_dwindle = icon_directory .. "dwindle.png",
-	wallpaper = "/home/flyingsloths/.local/share/wallpaper/wallpaper",
-	icon_theme = "/usr/share/icons/ePapirus-Dark"
+	wallpaper = "~/.local/share/wallpaper/wallpaper",
+	-- icon_theme = "/usr/share/icons/ePapirus-Dark"
 }
 
 return theme

@@ -22,12 +22,6 @@ local hotkeys_popup = require("awful.hotkeys_popup")
 -- when client with a matching name is opened:
 require("awful.hotkeys_popup.keys")
 
--- Custom Widgets
-require "volume"
-require "clock"
-require "netspeeds"
-require "ram"
-
 -- {{{ Error handling
 -- Check if awesome encountered an error during startup and fell back to
 -- another config (This code will only ever execute for the fallback config)
@@ -146,7 +140,7 @@ awful.screen.connect_for_each_screen(function(s)
 
     -- Create the wibox
     s.mywibox = awful.wibar({
-        position = "bottom",
+        position = "top",
         screen = s,
         width = 1800,
         shape = function(cr, width, height)
@@ -164,15 +158,15 @@ awful.screen.connect_for_each_screen(function(s)
 
         {
             -- middle widgets
-            date_widget(),
+            (require "clock")(),
             layout = wibox.layout.manual
         },
 
         { -- Right widgets
             wibox.widget.systray(),
-            netspeeds_widget(),
-            ram_widget,
-            volume_widget,
+            (require "netspeeds")(),
+            (require "ram")(),
+            (require "volume")(),
             wibox.widget { markup = " ", widget = wibox.widget.textbox() },
             s.mylayoutbox,
             layout = wibox.layout.fixed.horizontal
@@ -353,7 +347,9 @@ globalkeys = gears.table.join(
     utils.make_keybinding({
         modifiers = { modkey, "Control" },
         key = "m",
-        command = function() awful.layout.set(awful.layout.max) end,
+        command = function()
+            awful.layout.set(awful.layout.suit.max)
+        end,
         description = { description = "Sets the \"max\" layout", group = "layout" }
     }),
 
@@ -374,11 +370,7 @@ globalkeys = gears.table.join(
         modifiers = { modkey },
         key = "r",
         command = function()
-            awful.spawn(string.format([[dmenu_run -p 'λ' -m 0 
-                    -fn '%s:size=13:antilias=true' 
-                    -nb '%s' -nf '%s' -sb '%s' -sf '%s']], theme.font,
-                theme.bg_normal, theme.fg_normal, theme.bg_focus,
-                theme.bg_normal))
+            awful.spawn("dmenu_run -p 'λ' -m 0")
         end,
         description = { description = "Run cmd prompt", group = "launcher" }
     }),
@@ -397,7 +389,7 @@ globalkeys = gears.table.join(
         modifiers = { modkey, "Shift" },
         key = "t",
         command = function()
-            awful.spawn("/usr/bin/xfce4-taskmanager")
+            awful.spawn("xfce4-taskmanager")
         end,
         description = { description = "task manager", group = "apps" }
     }),
@@ -435,7 +427,7 @@ globalkeys = gears.table.join(
         modifiers = { modkey },
         key = "f",
         command = function()
-            awful.spawn("/usr/bin/pcmanfm")
+            awful.spawn("pcmanfm")
         end,
         description = { description = "File manager", group = "apps" }
     }),
@@ -444,7 +436,7 @@ globalkeys = gears.table.join(
         modifiers = { modkey, "Shift" },
         key = "g",
         command = function()
-            awful.spawn("/usr/bin/gammy")
+            awful.spawn("gammy")
         end,
         description = { description = "Gammy", group = "apps" }
     }),
@@ -452,7 +444,7 @@ globalkeys = gears.table.join(
     utils.make_keybinding({
         modifiers = { modkey },
         key = "g",
-        command = function() awful.spawn("/usr/bin/gimp") end,
+        command = function() awful.spawn("gimp") end,
         description = { description = "Gimp", group = "apps" }
     }),
 
@@ -508,9 +500,24 @@ globalkeys = gears.table.join(
     utils.make_keybinding({
         modifiers = { modkey, "Shift" },
         key = "n",
-        command = function() awful.spawn("/usr/bin/networkmanager_dmenu") end,
+        command = function() awful.spawn("networkmanager_dmenu") end,
         description = { description = "Open network panel", group = "utils" }
+    }),
+
+    utils.make_keybinding({
+        modifiers = { modkey, "Control" },
+        key = "s",
+        command = function() awful.spawn(terminal .. " -c scratchpad") end,
+        description = { description = "Open a dropdown terminal", group = "scratchpads" }
+    }),
+
+    utils.make_keybinding({
+        modifiers = { modkey, "Control" },
+        key = "y",
+        command = function() awful.spawn(terminal .. " -c ytmscratchpad ytfzf -t -m -l") end,
+        description = { description = "Open a youtube musiz dropdown terminal", group = "scratchpads" }
     })
+
 )
 
 clientkeys = gears.table.join(
@@ -645,8 +652,14 @@ awful.rules.rules = {
         properties = { titlebars_enabled = false }
     }, {
         rule_any = {
-            instance = { "scratchpad", "pyscratchpad", "ytmscratchpad", "fmscratchpad" },
-            class = { "gammy", "jetbrains-studio", "jetbrains-idea-ce" }
+            class = { "scratchpad", "pyscratchpad",
+                "ytmscratchpad", "fmscratchpad",
+            },
+
+            instance = {
+                "gammy", "jetbrains-studio",
+                "jetbrains-idea-ce"
+            }
         },
         properties = { floating = true }
     }
@@ -686,15 +699,12 @@ end)
 -- }}}
 
 local autostart = {
-    "(nohup picom --config $HOME/.config/awesome/picom.conf &)",
-    "/usr/lib/xfce4/notifyd/xfce4-notifyd &",
-    "/usr/lib/xfce-polkit/xfce-polkit &",
-    "/usr/bin/xautolock -time 10 -locker $HOME/.local/bin/i3lock_color -detectsleep &",
-    "xinput set-prop 12 311 1",
-    "(nohup /usr/bin/xsettingsd &)",
-    "/usr/bin/xrdb merge $HOME/Xresources",
-    "kill -KILL $(pgrep kwallet)",
-    "/usr/bin/gammy",
+    "picom -b --animations --animation-window-mass 0.5 " ..
+        "--animation-for-open-window zoom --animation-stiffness 350 " ..
+        "--config $HOME/.config/awesome/picom.conf",
+    "xautolock -time 10 -locker $HOME/.local/bin/i3lock_color -detectsleep &",
+    "redshift -P -O 2500K",
+    "xrdb merge $HOME/Xresources",
 }
 
 for _, cmd in ipairs(autostart) do
