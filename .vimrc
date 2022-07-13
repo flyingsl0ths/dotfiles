@@ -47,7 +47,7 @@ call vundle#end()            " required
 filetype plugin indent on    " required
 
 " colorscheme nord
-colorscheme catppuccin_frappe
+colorscheme catppuccin_macchiato
 
 autocmd VimEnter *
             \   if !argc()
