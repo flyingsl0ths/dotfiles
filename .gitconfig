@@ -7,9 +7,11 @@
 	ah = checkout master
 	ci = commit -v
 	co = checkout
+    cl = clone
 	br = branch
 	graph = log --all --graph --decorate --oneline
 	last = log -1 HEAD
+    pl = pull
 	nci = diff --staged
 	rmk = rm --cached
 	rmkf = rm --cached -f
