@@ -81,7 +81,7 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 
 lspconfig.emmet_ls.setup {
 	capabilities = capabilities,
-	cmd = { 'emmet-ls', '--stdio' },
+
 	filetypes = {
 		'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript',
 		'typescriptreact', 'haml', 'xml', 'xsl', 'pug', 'slim', 'sass',
@@ -116,6 +116,8 @@ local servers = {
 	"cssls",
 	"groovyls",
 	"hls",
+	"html",
+	"cssls",
 	"jdtls",
 	"jsonls",
 	"kotlin_language_server",
@@ -129,9 +131,32 @@ local servers = {
 local function configure_hls(opts)
 	opts.settings = {
 		haskell = {
-			formattingProvider = "brittany",
+			formattingProvider = "fourmolu",
+			plugin = {
+				hlint = {
+					diagnosticsOn = true
+				}
+			}
 		}
 	}
+end
+
+local function configure_rust_lsp(opts)
+	opts.settings = {
+		["rust-analyzer"] = {
+			assist = {
+				importGranularity = "module",
+				importPrefix = "self",
+			},
+			cargo = {
+				loadOutDirsFromCheck = true
+			},
+			procMacro = {
+				enable = true
+			},
+		}
+	}
+
 end
 
 for _, lsp in pairs(servers) do
@@ -143,6 +168,8 @@ for _, lsp in pairs(servers) do
 
 	if server.name == "hls" then
 		configure_hls(opts)
+	elseif server.name == "rust_analyzer" then
+		configure_rust_lsp(opts)
 
 	elseif server.name == "jdtls" then
 		opts.cmd = {

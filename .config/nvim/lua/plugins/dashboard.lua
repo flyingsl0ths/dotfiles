@@ -1,44 +1,59 @@
-local vim_globals = vim.g
+local db = require('dashboard')
 
-vim_globals.dashboard_disable_at_vimenter = 0
-vim_globals.dashboard_disable_statusline = 1
-vim_globals.dashboard_default_executive = "telescope"
-vim_globals.dashboard_custom_header = {
-	'⠀⠀⠀⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀ ',
-	'⠀⠀⠀⠛⠛⢻⣿⣿⡀⠀⠀⠀⠀⠀⠀',
-	'⠀⠀⠀⠀⠀⢀⣿⣿⣷⠀⠀⠀⠀⠀⠀',
-	'⠀⠀⠀⠀⢀⣾⣿⣿⣿⣇⠀⠀⠀⠀⠀',
-	'⠀⠀⠀⢠⣿⣿⡟⢹⣿⣿⡆⠀⠀⠀⠀',
-	'⠀⠀⣰⣿⣿⠏⠀⠀⢻⣿⣿⡄⠀⠀⠀',
-	'⠀⣴⣿⡿⠃⠀⠀⠀⠈⢿⣿⣷⣤⣤⡆',
-	'⠾⠿⠿⠁⠀⠀⠀⠀⠀⠘⣿⣿⡿⠿⠛'
+db.custom_header = {
+	"               ",
+	"               ",
+	"               ",
+	"⠀⠀⠀⣶⣶⣶⣶⡆⠀⠀⠀⠀⠀⠀ ",
+	"⠀⠀⠀⠛⠛⢻⣿⣿⡀⠀⠀⠀⠀⠀⠀",
+	"⠀⠀⠀⠀⠀⢀⣿⣿⣷⠀⠀⠀⠀⠀⠀",
+	"⠀⠀⠀⠀⢀⣾⣿⣿⣿⣇⠀⠀⠀⠀⠀",
+	"⠀⠀⠀⢠⣿⣿⡟⢹⣿⣿⡆⠀⠀⠀⠀",
+	"⠀⠀⣰⣿⣿⠏⠀⠀⢻⣿⣿⡄⠀⠀⠀",
+	"⠀⣴⣿⡿⠃⠀⠀⠀⠈⢿⣿⣷⣤⣤⡆",
+	"⠾⠿⠿⠁⠀⠀⠀⠀⠀⠘⣿⣿⡿⠿⠛",
+	"               ",
+	"               ",
+	"               "
 }
 
-vim_globals.dashboard_custom_section = {
-	a = {
-		description = { "  Find File                  SPC ff" },
-		command = "Telescope find_files"
+db.custom_center = {
+	{
+		icon = '  ',
+		desc = "Find File                          ",
+		action = "Telescope find_files",
+		shortcut = "SPC ff"
 	},
-	b = {
-		description = { "  Recents                    SPC of" },
-		command = "Telescope oldfiles"
+	{
+		icon = '  ',
+		desc = "Recents                            ",
+		command = "Telescope oldfiles",
+		shortcut = "SPC of"
 	},
-	c = {
-		description = { "  Grep                       SPC lg" },
-		command = "Telescope live_grep"
+	{
+		icon = ' ',
+		desc = " Grep                               ",
+		command = "Telescope live_grep",
+		shortcut = "SPC lg"
 	},
-	d = {
-		description = { "洛 New File                   SPC dnf" },
-		command = "DashboardNewFile"
+	{
+		icon = '洛 ',
+		desc = "New File                           ",
+		command = "DashboardNewFile",
+		shortcut = "SPC dnf"
 	},
-	e = {
-		description = { "  Bookmarks                  SPC djm" },
-		command = "Telescope marks"
+	{
+		icon = '  ',
+		desc = "Bookmarks                          ",
+		command = "Telescope marks",
+		shortcut = "SPC djm"
 	},
-	f = {
-		description = { "  Load Last Session          SPC dsl" },
-		command = "SessionLoad"
-	}
+	{
+		icon = '  ',
+		desc = "Load Last Session                  ",
+		command = "SessionLoad",
+		shortcut = "SPC dsl"
+	},
 }
 
-vim_globals.dashboard_custom_footer = { "" }
+db.custom_footer = { "" }

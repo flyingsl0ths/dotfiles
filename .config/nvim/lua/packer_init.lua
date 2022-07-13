@@ -22,7 +22,7 @@ packer.startup(function()
 		requires = 'kyazdani42/nvim-web-devicons'
 	}
 
-	use "glepnir/dashboard-nvim"
+
 	use {
 		'feline-nvim/feline.nvim',
 		requires = {
@@ -33,6 +33,7 @@ packer.startup(function()
 		}
 	}
 
+	use "glepnir/dashboard-nvim"
 	use "neovim/nvim-lspconfig"
 	use "ray-x/lsp_signature.nvim"
 	use {
@@ -53,13 +54,18 @@ packer.startup(function()
 	use {
 		"nvim-telescope/telescope.nvim",
 		requires = {
-			{ "nvim-telescope/telescope-fzf-native.nvim", run = "make" },
 			{ "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" },
-			{ "nvim-telescope/telescope-media-files.nvim" }
+			{ "nvim-telescope/telescope-media-files.nvim" },
 		}
 	}
 
-	use 'mfussenegger/nvim-jdtls'
+	use "mfussenegger/nvim-dap"
+	use "rcarriga/nvim-dap-ui"
+
+	use "nvim-telescope/telescope-dap.nvim"
+	use "mfussenegger/nvim-dap-python"
+	use "jbyuki/one-small-step-for-vimkind"
+
 	use "szw/vim-maximizer"
 	use "norcalli/nvim-colorizer.lua"
 	use {
@@ -67,15 +73,20 @@ packer.startup(function()
 		config = function() require('Comment').setup() end
 	}
 
-	use {
-		"AmeerTaweel/todo.nvim",
-		requires = "nvim-lua/plenary.nvim",
-		config = function() require("todo").setup {} end
-	}
+       use {
+         "folke/todo-comments.nvim",
+         requires = "nvim-lua/plenary.nvim",
+         config = function()
+           require("todo-comments").setup {}
+         end
+       }
 
 	use "mhartington/formatter.nvim"
 	-- use "ggandor/lightspeed.nvim"
 	use "andymass/vim-matchup"
-	use "lukas-reineke/indent-blankline.nvim"
+	-- use "lukas-reineke/indent-blankline.nvim"
 	use "udalov/kotlin-vim"
+	use "LnL7/vim-nix"
+
+	use "elkowar/yuck.vim"
 end)

@@ -61,7 +61,7 @@ if present then
 		}
 	}
 
-	local extensions = { "themes", "terms", "fzf" }
+	local extensions = { "themes", "terms", "dap" }
 
 	if vim.fn.executable "ueberzug" == 1 then
 		table.insert(extensions, "media_files")

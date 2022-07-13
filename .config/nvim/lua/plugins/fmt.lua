@@ -38,6 +38,20 @@ require('formatter').setup({
 			end
 		},
 
+		scss = {
+			-- prettier
+			function()
+				return {
+					exe = "prettier",
+					args = {
+						"--stdin-filepath",
+						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'
+					},
+					stdin = true
+				}
+			end
+		},
+
 		css = {
 			-- prettier
 			function()
@@ -90,6 +104,15 @@ require('formatter').setup({
 					stdin = true
 				}
 			end
+		},
+
+		nix = {
+			function()
+				return {
+					exe = "nixpkgs-fmt",
+					stdin = true,
+				}
+			end
 		}
 	}
 })
@@ -97,6 +120,6 @@ require('formatter').setup({
 vim.api.nvim_exec([[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.lua,*.sh,*.html,*.xhtml,*.css,*.md,*.yaml,*.py FormatWrite
+  autocmd BufWritePost *.lua,*.sh,*.html,*.xhtml,*.css,*scss,*.md,*.yaml,*.py,*.nix FormatWrite
 augroup END
 ]], true)
