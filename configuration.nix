@@ -7,7 +7,7 @@
       ./hardware-configuration.nix
     ];
 
-  #nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = true;
 
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
@@ -20,8 +20,8 @@
   networking.extraHosts =
     let
       myHostFile = pkgs.fetchurl {
-        url = "https://block.energized.pro/basic/formats/hosts.txt";
-        sha256 = "sha256-sPM2XLs2CrLRN8YW54r6Bvzu1PtI/YVIkxlo9Qx2r9w=";
+        url = "https://block.energized.pro/ultimate/formats/hosts.txt";
+        sha256 = "sha256-RH1p0E/0DDnFHdXrhM7rsQJXHZzG9QyMoCylBdjJYSI=";
       };
     in
     '' ${builtins.readFile myHostFile} '';
@@ -30,14 +30,14 @@
   networking.networkmanager.enable = true;
 
   # Set your time zone.
-  time.timeZone = "";
+  time.timeZone = "America/...";
 
   # Select internationalisation properties.
   i18n.defaultLocale = "en_US.utf8";
 
   nixpkgs.overlays = [
-    (final: prev: {
-      dwm = prev.dwm.overrideAttrs (old: {
+    (self: super: {
+      dwm = super.dwm.overrideAttrs (old: {
         src = pkgs.fetchgit {
           url = "https://github.com/flyingsl0ths/dwm-fork.git";
           rev = "3e4a5a4f8e181c312132d80880072a8357a9d16e";
@@ -45,7 +45,7 @@
         };
       });
 
-      st = prev.st.overrideAttrs (old: {
+      st = super.st.overrideAttrs (old: {
         buildInputs = old.buildInputs ++ [ pkgs.harfbuzz.dev ];
         src = pkgs.fetchgit {
           url = "https://github.com/flyingsl0ths/st-fork.git";
@@ -54,7 +54,7 @@
         };
       });
 
-      dmenu = prev.dmenu.overrideAttrs (old: {
+      dmenu = super.dmenu.overrideAttrs (old: {
         src = pkgs.fetchgit {
           url = "https://github.com/flyingsl0ths/dmenu-fork.git";
           rev = "8470bdbf7861b765441069129f0a350f01430786";
@@ -62,12 +62,16 @@
         };
       });
 
-      picom = prev.picom.overrideAttrs (old: {
+      picom = super.picom.overrideAttrs (old: {
         src = pkgs.fetchgit {
           url = "https://github.com/pijulius/picom.git";
           rev = "982bb43e5d4116f1a37a0bde01c9bda0b88705b9";
           sha256 = "sha256-YiuLScDV9UfgI1MiYRtjgRkJ0VuA1TExATA2nJSJMhM=";
         };
+      });
+
+      vim_configurable = super.vim_configurable.overrideAttrs (old: {
+        python = pkgs.python310;
       });
     })
   ];
@@ -112,12 +116,10 @@
   hardware.opengl.extraPackages = with pkgs; [
     rocm-opencl-icd
     rocm-opencl-runtime
-    amdvlk
   ];
 
   # For 32 bit applications 
   hardware.opengl.extraPackages32 = with pkgs; [
-    driversi686Linux.amdvlk
     pkgsi686Linux.libva
   ];
 
@@ -174,6 +176,7 @@
     exa
     fd
     fzf
+    gamemode
     lazygit
     pamixer
     picom
@@ -182,7 +185,7 @@
     ripgrep
     ryzenadj
     sxhkd
-    ueberzug
+    tldr
     unzip
     wget
     wineWowPackages.stable
@@ -194,11 +197,14 @@
 
     # Theming-related
     font-awesome_5
+    gnomeExtensions.blur-my-shell
+    gnomeExtensions.gesture-improvements
+    gnomeExtensions.user-themes
     material-design-icons
     qt5ct
 
     # Development
-    #android-studio
+    android-studio
     cabal-install
     clang-tools_14
     cmake
@@ -208,15 +214,22 @@
     gradle
     haskell.compiler.ghc8107
     haskell-language-server
+    haskellPackages.cabal-fmt
+    haskellPackages.fourmolu
+    haskellPackages.hlint
     helix
-    hlint
+    heroku
     jdk
+    jdt-language-server
     kotlin
     kotlin-language-server
     lldb_14
     llvmPackages_14.clang
     llvmPackages_14.libcxxStdenv
+    llvmPackages_14.llvm
+    love
     lua5_4
+    luarocks
     neovim
     ninja
     nixpkgs-fmt
@@ -224,12 +237,14 @@
     nodePackages.bash-language-server
     nodePackages.npm-check-updates
     nodePackages.typescript
+    pkg-config
     python310
     python310Packages.black
     python310Packages.bpython
     python310Packages.mypy
     python310Packages.pip
     python310Packages.pytest
+    python310Packages.virtualenv
     ranger
     rust-analyzer
     rustup
@@ -238,8 +253,9 @@
     st
     stack
     sumneko-lua-language-server
+    taplo-lsp
     tmux
-    vim
+    vim_configurable
 
     # Apps
     brave

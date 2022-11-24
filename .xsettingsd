@@ -1,8 +1,8 @@
-Net/ThemeName "Catppuccin-teal"
+Net/ThemeName "Materia-dark-compact"
 Net/IconThemeName "Papirus-Dark"
 Net/EnableEventSounds "0"
 Net/EnableInputFeedbackSounds "0"
-Gtk/CursorThemeName "breeze_cursors"
+Gtk/CursorThemeName "macOS-BigSur"
 Xft/DPI "1"
 Xft/Hinting 1
 Xft/HintStyle "hintslight"

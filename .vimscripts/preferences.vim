@@ -41,7 +41,7 @@ set clipboard+=unnamedplus
 " Disable audible bell
 set noerrorbells visualbell t_vb=
 
-set shell=/usr/bin/zsh
+set shell=zsh
 
 " Minimal number of columns to use for the line number
 set numberwidth=4
