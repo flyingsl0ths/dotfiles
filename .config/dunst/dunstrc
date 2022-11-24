@@ -7,8 +7,8 @@
     separator_height = 2
     padding = 8
     horizontal_padding = 8
-    frame_color = "#96CDFB"
-    separator_color = frame
+    frame_color = "#8CAAEE"
+    separator_color= frame
     sort = yes
     idle_threshold = 120
     
@@ -28,7 +28,7 @@
     icon_position = left
     max_icon_size = 32
     # Paths to default icons.
-    #icon_path = /usr/share/icons/Papirus-Dark/16x16/status/:/usr/share/icons/Papirus-Dark/16x16/devices/
+    icon_path = /usr/share/icons/Papirus-Dark/16x16/status/:/usr/share/icons/Papirus-Dark/16x16/devices/
     
     sticky_history = yes
     history_length = 20
@@ -47,17 +47,15 @@
     mouse_right_click = close_all
     width = 400
 
-# IMPORTANT: colors have to be defined in quotation marks.
-# Otherwise the "#" and following would be interpreted as a comment.
 [urgency_low]
-    background = "#1E1E2E"
-    foreground = "#D9E0EE"
-    
-    [urgency_normal]
-    background = "#1E1E2E"
-    foreground = "#D9E0EE"
-    
-    [urgency_critical]
-    background = "#1E1E2E"
-    foreground = "#D9E0EE"
-    frame_color = "#F8BD96"
+background = "#303446"
+foreground = "#C6D0F5"
+
+[urgency_normal]
+background = "#303446"
+foreground = "#C6D0F5"
+
+[urgency_critical]
+background = "#303446"
+foreground = "#C6D0F5"
+frame_color = "#EF9F76"
