@@ -1,6 +1,8 @@
 # master key
 set $mod Mod4
 
+set $terminal alacritty
+
 # window style
 default_border none
 default_floating_border none
@@ -16,17 +18,13 @@ client.urgent           #6E6C7E #6E6C7E  #D9E0EE  #96CDFB   #96CDFB
 
 # Font for window titles. Will also be used by the bar unless a different font
 # is used in the bar {} block below.
-font pango:JetBrainsMonoMedium Nerd Font 10
+font pango:JetBrainsMono Nerd Font, Medium 10
 
 # xss-lock grabs a logind suspend inhibit lock and will use i3lock to lock the
 # screen before suspend. Use loginctl lock-session to lock your screen.
 exec --no-startup-id xss-lock --transfer-sleep-lock -- i3lock --nofork
 
 set $refresh_i3status killall -SIGUSR1 i3status
-
-bindsym $mod+F8 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ +5% && $refresh_i3status
-bindsym $mod+F7 exec --no-startup-id pactl set-sink-volume @DEFAULT_SINK@ -5% && $refresh_i3status
-bindsym $mod+F6 exec --no-startup-id pactl set-sink-mute   @DEFAULT_SINK@ toggle && $refresh_i3status
 
 # Use Mouse+$mod to drag floating windows to their wanted position
 floating_modifier $mod
