@@ -5,7 +5,6 @@ if not present then return end
 packer.startup(function()
 	use "wbthomason/packer.nvim"
 	use "Nvchad/extensions"
-	use "gpanders/editorconfig.nvim"
 
 	use({ "catppuccin/nvim", as = "catppuccin" })
 
@@ -41,7 +40,6 @@ packer.startup(function()
 		run = ":TSUpdate",
 	}
 
-	use "simrat39/symbols-outline.nvim"
 	use "rafamadriz/friendly-snippets"
 	use "L3MON4D3/LuaSnip"
 	use "hrsh7th/nvim-cmp"
@@ -54,10 +52,13 @@ packer.startup(function()
 	use {
 		"nvim-telescope/telescope.nvim",
 		requires = {
-			{ "nvim-lua/popup.nvim" }, { "nvim-lua/plenary.nvim" },
+			{ "nvim-lua/popup.nvim" },
+			{ "nvim-lua/plenary.nvim" },
 			{ "nvim-telescope/telescope-media-files.nvim" },
+			{ "nvim-telescope/telescope-live-grep-args.nvim" },
 		}
 	}
+	use "udalov/kotlin-vim"
 
 	use "mfussenegger/nvim-dap"
 	use "rcarriga/nvim-dap-ui"
@@ -73,19 +74,21 @@ packer.startup(function()
 		config = function() require('Comment').setup() end
 	}
 
-       use {
-         "folke/todo-comments.nvim",
-         requires = "nvim-lua/plenary.nvim",
-         config = function()
-           require("todo-comments").setup {}
-         end
-       }
+	use {
+		"folke/todo-comments.nvim",
+		requires = "nvim-lua/plenary.nvim",
+		config = function()
+			require("todo-comments").setup {}
+		end
+	}
 
+	use "gpanders/editorconfig.nvim"
 	use "mhartington/formatter.nvim"
-	-- use "ggandor/lightspeed.nvim"
+	use "ggandor/lightspeed.nvim"
 	use "andymass/vim-matchup"
 	-- use "lukas-reineke/indent-blankline.nvim"
-	use "udalov/kotlin-vim"
+	-- use "luc-tielen/telescope_hoogle"
+	use 'fedepujol/move.nvim'
 	use "LnL7/vim-nix"
 
 	use "elkowar/yuck.vim"

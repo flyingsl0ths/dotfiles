@@ -15,6 +15,19 @@ map("n", "<Right>", ":echo \"Use l\"<CR>", enable_noremap)
 map("n", "<Up>", ":echo \"Use k\"<CR>", enable_noremap)
 map("n", "<Down>", ":echo \"Use j\"<CR>", enable_noremap)
 
+-- Move.nvim
+-- Normal-mode commands
+vim.keymap.set('n', '<A-j>', ':MoveLine(1)<CR>', default_options)
+vim.keymap.set('n', '<A-k>', ':MoveLine(-1)<CR>', default_options)
+vim.keymap.set('n', '<A-h>', ':MoveHChar(-1)<CR>', default_options)
+vim.keymap.set('n', '<A-l>', ':MoveHChar(1)<CR>', default_options)
+
+-- Visual-mode commands
+vim.keymap.set('v', '<A-j>', ':MoveBlock(1)<CR>', default_options)
+vim.keymap.set('v', '<A-k>', ':MoveBlock(-1)<CR>', default_options)
+vim.keymap.set('v', '<A-h>', ':MoveHBlock(-1)<CR>', default_options)
+vim.keymap.set('v', '<A-l>', ':MoveHBlock(1)<CR>', default_options)
+
 -- Pane switching
 map("n", "<C-J>", "<C-w><C-j>", enable_noremap)
 map("n", "<C-K>", "<C-w><C-k>", enable_noremap)
@@ -87,7 +100,7 @@ map("n", "<leader>w",
 	default_options)
 
 -- Buffer-Line
-map('n', '<TAB>', ':BufferLineCycleNext<CR>', default_options)
+map('n', '<leader><TAB>', ':BufferLineCycleNext<CR>', default_options)
 map('n', '<S-TAB>', ':BufferLineCyclePrev<CR>', default_options)
 map('n', '<S-x>', ':bdelete<CR>', default_options)
 
@@ -103,6 +116,7 @@ map("n", "<leader>t", ":Telescope<CR>", default_options)
 map("n", "<leader>bb", ":Telescope buffers <CR>", default_options)
 map("n", "<leader>ff", ":Telescope find_files <CR>", default_options)
 map("n", "<leader>fh", ":Telescope find_files hidden=true <CR>", default_options)
+map("n", "<leader>fw", ":lua require('telescope').extensions.live_grep_args.live_grep_args()<CR>", default_options)
 map("n", "<leader>gc", ":Telescope git_commits <CR>", default_options)
 map("n", "<leader>st", ":Telescope git_status <CR>", default_options)
 map("n", "<leader>ht", ":Telescope help_tags <CR>", default_options)
@@ -112,6 +126,7 @@ map("n", "<leader>bm", ":Telescope marks <CR>", default_options)
 map("n", "<leader>md", ":Telescope media_files <CR>", default_options)
 map("n", "<leader>ld", ":Telescope diagnostics <CR>", default_options)
 map("n", "<leader>ls", ":Telescope lsp_document_symbols <CR>", default_options)
+map("n", "<leader>es", ":EslintFixAll <CR>", default_options)
 map("n", "<leader>cc", ":Telescope commands <CR>", default_options)
 map("n", "<leader>td", ":TodoTelescope <CR>", default_options)
 map("n", "<leader>kk", ":Telescope keymaps <CR>", default_options)
@@ -124,7 +139,8 @@ map("n", "<F11>", ":lua require('dap').step_into()<CR>", default_options)
 map("n", "<F12>", ":lua require('dap').step_out()<CR>", default_options)
 map("n", "<leader>b", ":lua require('dap').toggle_breakpoint()<CR>", default_options)
 map("n", "<leader>B", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", default_options)
-map("n", "<leader>lp", ":lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>", default_options)
+map("n", "<leader>lp", ":lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>",
+	default_options)
 map("n", "<leader>tt", ":lua require('dap').terminate()<CR>", default_options)
 
 map("n", "<leader>du", ":lua require('dapui').toggle()<CR>", default_options)

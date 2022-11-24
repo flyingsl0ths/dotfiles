@@ -1,96 +1,54 @@
+local prettier =
+{
+	function()
+		return {
+			exe = "prettier",
+			args = {
+				"--stdin-filepath",
+				vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+			}, stdin = true
+		}
+	end
+}
+
+local shfmt = {
+	-- Shell Script Formatter
+	function() return { exe = "shfmt", args = { "-i", 2 }, stdin = true } end
+}
+
 require('formatter').setup({
 	filetype = {
-		zsh = {
+		zsh = shfmt,
+
+		sh = shfmt,
+
+		html = prettier,
+
+		xhtml = prettier,
+
+		scss = prettier,
+
+		css = prettier,
+
+		markdown = prettier,
+
+		json = prettier,
+
+		javascriptreact = prettier,
+
+		typescriptreact = prettier,
+
+		yaml = prettier,
+
+		javascript = prettier,
+
+		typescript = prettier,
+
+		cabal = {
 			-- Shell Script Formatter
-			function() return { exe = "shfmt", args = { "-i", 2 }, stdin = true } end
-		},
-
-		sh = {
-			-- Shell Script Formatter
-			function() return { exe = "shfmt", args = { "-i", 2 }, stdin = true } end
-		},
-
-		html = {
-			-- prettier
-			function()
-				return {
-					exe = "prettier",
-					args = {
-						"--stdin-filepath",
-						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'
-					},
-					stdin = true
-				}
-			end
-		},
-
-		xhtml = {
-			-- prettier
-			function()
-				return {
-					exe = "prettier",
-					args = {
-						"--stdin-filepath",
-						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'
-					},
-					stdin = true
-				}
-			end
-		},
-
-		scss = {
-			-- prettier
-			function()
-				return {
-					exe = "prettier",
-					args = {
-						"--stdin-filepath",
-						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'
-					},
-					stdin = true
-				}
-			end
-		},
-
-		css = {
-			-- prettier
-			function()
-				return {
-					exe = "prettier",
-					args = {
-						"--stdin-filepath",
-						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'
-					},
-					stdin = true
-				}
-			end
-		},
-
-		markdown = {
-			-- prettier
-			function()
-				return {
-					exe = "prettier",
-					args = {
-						"--stdin-filepath",
-						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'
-					},
-					stdin = true
-				}
-			end
-		},
-
-		yaml = {
-			-- prettier
-			function()
-				return {
-					exe = "prettier",
-					args = {
-						"--stdin-filepath",
-						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0)), '--single-quote'
-					},
-					stdin = true
-				}
+			function() return { exe = "cabal-fmt", args = {
+					vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+				}, stdin = true }
 			end
 		},
 
@@ -100,8 +58,10 @@ require('formatter').setup({
 				return {
 					exe = "black",
 					-- this should be available on your $PATH
-					args = { '-' },
-					stdin = true
+					args = {
+						"--stdin-filename",
+						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+					},
 				}
 			end
 		},
@@ -113,13 +73,13 @@ require('formatter').setup({
 					stdin = true,
 				}
 			end
-		}
+		},
 	}
 })
 
 vim.api.nvim_exec([[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.lua,*.sh,*.html,*.xhtml,*.css,*scss,*.md,*.yaml,*.py,*.nix FormatWrite
+  autocmd BufWritePost *.lua,*.sh,*.html,*.xhtml,*.css,*scss,*.md,*.yaml,*.js,*.ts,*.jsx,*.tsx,*.json,*.py,*.nix,*.cabal FormatWrite
 augroup END
 ]], true)

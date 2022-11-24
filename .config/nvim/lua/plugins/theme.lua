@@ -9,7 +9,8 @@
 -- require('nord').set()
 local catppuccin = require("catppuccin")
 
-catppuccin.setup({ transparent_background = false })
+vim.g.catppuccin_flavour = "frappe" -- latte, frappe, macchiato, mocha
+catppuccin.setup({ transparent_background = true })
 vim.cmd [[colorscheme catppuccin]]
 
 -- local base16 = require 'base16'

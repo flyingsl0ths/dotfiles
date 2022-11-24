@@ -46,3 +46,7 @@ vim.cmd "set clipboard+=unnamedplus"
 vim.cmd "set path+=**"
 vim.cmd "set noswapfile"
 vim.g.python3_host_prog ="/usr/bin/python3"
+vim.g.PreserveNoEOL = true
+vim.g.markdown_fenced_languages = {
+  "ts=typescript"
+}
