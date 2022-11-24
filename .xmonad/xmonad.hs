@@ -235,40 +235,33 @@ myFont :: String
 myFont = "xft:JetBrainsMono Nerd Font:size=10:antialias=true"
 
 myTerminal :: String
-myTerminal = "st"
-
-terminalGeometry :: String
-terminalGeometry = "-g=90x30"
+myTerminal = "alacritty"
 
 myScratchPads :: NamedScratchpads
 myScratchPads =
     [ makeNamedScratchPad
         "terminal"
         "scratchpad"
-        (myTerminal ++ " -c scratchpad " ++ terminalGeometry)
+        (myTerminal ++ " --class scratchpad ")
         floatingTerminalSize
     , makeNamedScratchPad
         "terminalfm"
         "fmscratchpad"
         ( myTerminal
-            ++ " -c fmscratchpad "
-            ++ terminalGeometry
-            ++ " zsh -i -c ranger"
+            ++ " --class fmscratchpad -e lf"
         )
         floatingTerminalSize
     , makeNamedScratchPad
         "yt-music"
         "ytmscratchpad"
-        ( myTerminal ++ " -c ytmscratchpad " ++ terminalGeometry ++ " ytfzf -m -t -l"
+        ( myTerminal ++ " --class ytmscratchpad -e ytfzf -m -t -l"
         )
         floatingTerminalSize
     , makeNamedScratchPad
         "bpy"
         "pyscratchpad"
         ( myTerminal
-            ++ " -c pyscratchpad "
-            ++ terminalGeometry
-            ++ " ~/.local/bin/bpython"
+            ++ " --class pyscratchpad -e ~/.local/bin/bpython"
         )
         floatingTerminalSize
     , makeNamedScratchPad
@@ -339,7 +332,7 @@ myKeys conf@XConfig{XMonad.modMask = modMask} =
         [ ((modMask, xK_w), spawn "librewolf")
         , ((modMask .|. shiftMask, xK_w), spawn "librewolf --private-window")
         , ((modMask, xK_f), spawn "pcmanfm")
-        , ((modMask, xK_v), spawn $ zshTerminalCommand myTerminal "vscodium")
+        , ((modMask, xK_v), spawn $ zshTerminalCommand myTerminal "codium")
         , ((modMask, xK_c), spawn "corectrl")
         , ((modMask, xK_z), spawn "zathura")
         , ((modMask, xK_p), spawn "typora")
@@ -374,7 +367,7 @@ myKeys conf@XConfig{XMonad.modMask = modMask} =
                    , namedScratchpadAction myScratchPads "bpy"
                    )
                , ---- Groups -----
-                 ((modMask .|. controlMask, xK_c), spawn "vscodium; zathura")
+                 ((modMask .|. controlMask, xK_c), spawn "codium; zathura")
                ,
                    ( (modMask .|. shiftMask, xK_c)
                    , spawn (myTerminal ++ " &") >> spawn "zathura"
@@ -383,7 +376,7 @@ myKeys conf@XConfig{XMonad.modMask = modMask} =
                ]
             ++ [
                  -- Tools ---
-                 ((modMask, xK_r), spawn dmenu)
+                 ((modMask, xK_r), spawn "dmenu_run -p 'λ' -m 0")
                , ((modMask, xK_e), spawn "~/.config/rofi/applets/android/editors.sh")
                , ((modMask, xK_s), unGrab *> spawn "xfce4-screenshooter")
                , ((modMask .|. shiftMask, xK_n), spawn "networkmanager_dmenu")
@@ -470,7 +463,7 @@ myKeys conf@XConfig{XMonad.modMask = modMask} =
             , -- %! Restart xmonad
 
                 ( (modMask .|. shiftMask, xK_r)
-                , spawn "xmonad --recompile && xmonad --restart"
+                , spawn "xmonad --restart"
                 )
             ]
             ++
@@ -489,9 +482,6 @@ myKeys conf@XConfig{XMonad.modMask = modMask} =
             | (key, sc) <- zip [xK_bracketleft, xK_bracketright, xK_bar] [0 ..]
             , (f, m) <- [(W.view, 0), (W.shift, shiftMask)]
             ]
-  where
-    dmenu =
-        "dmenu_run -p 'λ' -m 0 -fn 'JetBrainsMonoMedium Nerd Font Mono:size=13:antialias=true'"
 
 myConfig =
     def
@@ -501,7 +491,7 @@ myConfig =
         , layoutHook = myLayout
         , normalBorderColor = colorNormalBorder
         , focusedBorderColor = colorFocusedBorder
-        , borderWidth = 3
+        , borderWidth = 0
         , keys = myKeys
         , mouseBindings = newMouseBindings
         , startupHook = myStartUpHook
@@ -534,15 +524,17 @@ myConfig =
     myStartUpHook :: X ()
     myStartUpHook =
         spawnOnce "dunst &"
-            >> spawnOnce "redshift -P -O 2000K"
+            >> spawnOnce
+                "picom -b"
+            >> spawnOnce "xsettingsd &"
+            >> spawnOnce "gammy &"
+            >> spawnOnce "xrdb merge ~/Xresources"
+            >> spawnOnce
+                "xwallpaper --output eDP --stretch ~/.local/share/wallpaper/wallpaper"
             >> spawnOnce
                 "xautolock -time 10 -locker ~/.local/bin/i3lock_color -detectsleep &"
             >> spawnOnce "~/.config/polybar/launch.sh 'xmonad'"
-            >> spawnOnce
-                "picom -b --animations --animation-window-mass 0.5 --animation-for-open-window zoom --animation-stiffness 350"
-            >> spawnOnce
-                "xwallpaper --output eDP --stretch ~/.local/share/wallpaper/wallpaper"
-            >> spawnOnce "xrdb merge ~/Xresources"
+            >> spawnOnce "lxqt-policykit-agent &"
 
     myManageHook :: ManageHook
     myManageHook =
