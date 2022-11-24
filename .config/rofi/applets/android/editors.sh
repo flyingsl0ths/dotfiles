@@ -1,12 +1,11 @@
 #!/usr/bin/env bash
 
 dir="$HOME/.config/rofi/applets/android"
-rofi_command="rofi -theme $dir/five.rasi"
+rofi_command="rofi -theme $dir/four.rasi"
 
 # Options
 vscode=""
 intellij=""
-drracket="λ"
 android_studio=""
 markdown_editor=""
 
@@ -16,7 +15,7 @@ msg() {
 }
 
 # Variable passed to rofi
-options="$vscode\n$intellij\n$drracket\n$android_studio\n$markdown_editor"
+options="$vscode\n$intellij\n$android_studio\n$markdown_editor"
 
 chosen="$(echo -e "$options" | $rofi_command -p "Most Used" -dmenu -selected-row 0)"
 
@@ -31,14 +30,12 @@ locate_vscode() {
 case $chosen in
 "$vscode") locate_vscode ;;
 "$intellij")
-  "/usr/local/bin/idea" &
+  "idea" &
   ;;
-"$drracket") "/usr/bin/drracket" & ;;
-
 "$android_studio")
-  "/usr/local/bin/android-studio" &
+  "android-studio" &
   ;;
 "$markdown_editor")
-  "/usr/bin/marktext" &
+  "marktext" &
   ;;
 esac

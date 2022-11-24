@@ -11,11 +11,11 @@ rofi_command="rofi -theme $dir/five.rasi"
 uptime=$(uptime -p | sed -e 's/up //g')
 
 # Options
-shutdown=""
+shutdown=""
 reboot=""
 lock=""
 suspend=""
-logout=""
+logout=""
 
 # Confirmation
 confirm_exit() {
