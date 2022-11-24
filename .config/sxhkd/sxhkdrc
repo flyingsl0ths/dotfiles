@@ -16,8 +16,8 @@ super + f
 super + shift + t
     xfce4-taskmanager
 
-super + shift + n
-    networkmanager_dmenu
+super + shift + v
+    codium
 
 super + F3
     brightnessctl -q set 5%+
@@ -26,7 +26,7 @@ super + F2
     brightnessctl -q set 5%-
 
 super + shift + p
-    /home/flyingsloths/.config/rofi/launchers/ribbon/launcher.sh ribbon_bottom
+    ~/.config/rofi/launchers/ribbon/launcher.sh ribbon_bottom
 
 super + w
     librewolf
@@ -44,7 +44,7 @@ super + control + y
     st -c ytmusicscratchpad ytfzf -m -t -l
 
 super + control + p
-    st -c pyscratchpad ~/.local/bin/bpython
+    st -c pyscratchpad bpython
 
 super + control + e
     ~/.config/rofi/applets/android/editors.sh
