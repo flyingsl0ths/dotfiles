@@ -10,10 +10,12 @@ with lib; {
       esbenp.prettier-vscode
       foxundermoon.shell-format
       haskell.haskell
+      jkillian.custom-local-formatters
       jnoortheen.nix-ide
       justusadam.language-haskell
       llvm-vs-code-extensions.vscode-clangd
       mads-hartmann.bash-ide-vscode
+      matklad.rust-analyzer
       ms-python.python
       pkief.material-icon-theme
       pkief.material-product-icons
@@ -47,8 +49,8 @@ with lib; {
       {
         name = "cmake-tools";
         publisher = "ms-vscode";
-        sha256 = "sha256-ixs1YOxXWNkhFFW5luJxqzgKcs4ZbkxlECnjWNeYFk8=";
-        version = "1.12.12";
+        sha256 = "sha256-lJm/unw6zIHPONEvM+WzTIeFMn+3lJG+0/ghkh1JU9E=";
+        version = "1.13.8";
       }
 
       {
@@ -75,15 +77,15 @@ with lib; {
       {
         name = "vscode-java-debug";
         publisher = "vscjava";
-        sha256 = "sha256-o/8L1AZ6yz5EOYWa7RIFcuTeTItWmiV/nSPOLjsIoqo=";
-        version = "0.42.2022062902";
+        sha256 = "sha256-HjcafkFTUOD6NlPRJeQxm4UWSAwlpNrU7lRJw8PRPQ4=";
+        version = "0.44.2022092202";
       }
 
       {
         name = "lua";
         publisher = "sumneko";
-        sha256 = "sha256-jqZKD2MQW17an6JzZST5Dbxn1wbkkS/XHgWg78ylWvU=";
-        version = "3.4.2";
+        sha256 = "sha256-Unzs9rX/0MlQprSvScdBCCFMeLCaGzWsMbcFqSKY2XY=";
+        version = "3.5.6";
       }
 
       {
@@ -101,13 +103,6 @@ with lib; {
       }
 
       {
-        name = "rust";
-        publisher = "rust-lang";
-        sha256 = "sha256-Y33agSNMVmaVCQdYd5mzwjiK5JTZTtzTkmSGTQrSNg0=";
-        version = "0.7.8";
-      }
-
-      {
         name = "sass-indented";
         publisher = "Syler";
         sha256 = "sha256-i1z9WTwCuKrfU4AhdoSvGEunkk8gdStsod8jHTEnoFY=";
@@ -117,8 +112,8 @@ with lib; {
       {
         name = "catppuccin-vsc";
         publisher = "Catppuccin";
-        sha256 = "sha256-4M8y8dc8BpH1yhabYJsHDT9uDWeqYjnvPBgLS+lTa5I=";
-        version = "1.0.6";
+        sha256 = "sha256-cJQCd1/U3wWS+LGqHGjla9VDGrX4SzOM+/hXZOu3r3Q=";
+        version = "2.1.1";
       }
     ];
   };

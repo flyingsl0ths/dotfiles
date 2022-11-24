@@ -4,29 +4,28 @@ with lib; {
     enable = true;
 
     enableSyntaxHighlighting = true;
+    enableCompletion = true;
+    enableAutosuggestions = true;
 
     initExtra =
       let
         npmGlobalDir = "$HOME/.npm-global/bin";
       in
       ''
+        export ANDROID_HOME=$HOME/Android/Sdk
+        export ANDROID_SDK_ROOT=$HOME/Android/Sdk
         export PATH=$PATH:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.cargo/bin:${npmGlobalDir}
+        export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
         export NIX_PATH=$HOME/.nix-defexpr/channels:/nix/var/nix/profiles/per-user/root/channels''${NIX_PATH:+:$NIX_PATH}
-
-        PROMPT="%F{13}%f%F{14}%f%F{41}%f %F{214}  %f%F{252}%~%f "
-
+        PROMPT="%F{244}%f%F{74}%f%F{111}%f %F{153} %f %F{7}%~%f "
         eval "$(direnv hook zsh)"
-
         setopt autocd
         # enable vi mode
         bindkey -v
-
-        zstyle ':autocomplete:tab:*' widget-style menu-select
+        # zstyle ':autocomplete:tab:*' widget-style menu-select
         zstyle ':autocomplete:*' min-input 2
-
         function cc() python3 -c "from math import *; print($*);"
-
-        pokemon-colorscripts -r --no-title
+        # pokemon-colorscripts -r --no-title
       '';
 
 
@@ -35,10 +34,11 @@ with lib; {
       pip_install = "pip3 install --user";
       bpy = "bpython";
       cc = "noglob cc";
+      cypress = "Cypress";
 
-      sql_login = "sudo mycli -u root";
-      mariadb_srvc = "sudo systemctl start mariadb";
-      st_mariadb_srvc = "sudo systemctl stop mariadb";
+      sql_login = "doas mycli -u root";
+      mariadb_srvc = "doas systemctl start mariadb";
+      st_mariadb_srvc = "doas systemctl stop mariadb";
 
       cmb = "cmake --build";
       cmtg = "cmake --target";
@@ -92,7 +92,7 @@ with lib; {
       ps = "pipes.sh";
 
       xmr = "xmonad --recompile && xmonad --restart";
-      mic = "sudo make install && sudo make clean";
+      mic = "doas make install && doas make clean";
 
       vrc = "v ~/.vimrc";
       vss = "v ~/.vimscripts";
@@ -104,7 +104,7 @@ with lib; {
       q = "exit";
       of = "xdg-open";
       clr = "clear";
-      please = "sudo";
+      please = "doas";
       rm = "rm -r";
       df = "df -h";
       mv = "mv -i";
@@ -120,10 +120,10 @@ with lib; {
       gp = "git pull";
 
       # NixOs Specific
-      dcfgs = "sudo nix-env --delete-generations old --profile /nix/var/nix/profiles/system";
-      ugrb = "sudo /nix/var/nix/profiles/system/bin/switch-to-configuration switch";
-      ucfg = "sudo nixos-rebuild switch";
-      ocfg = "sudo nvim /etc/nixos/configuration.nix";
+      dcfgs = "doas nix-env --delete-generations old --profile /nix/var/nix/profiles/system";
+      ugrb = "doas /nix/var/nix/profiles/system/bin/switch-to-configuration switch";
+      ucfg = "doas nixos-rebuild switch";
+      ocfg = "doas nvim /etc/nixos/configuration.nix";
       nxs = "nix-shell";
       hms = "home-manager switch";
     };
@@ -134,13 +134,13 @@ with lib; {
       path = ''${builtins.getEnv "HOME"}/.zsh_history'';
     };
 
-    plugins = [
-      {
-        name = "zsh-autocomplete";
-        src = pkgs.zsh-autocomplete;
-        file = "share/zsh-autocomplete/zsh-autocomplete.plugin.zsh";
-      }
-    ];
+    # plugins = [
+    #   {
+    #     name = "zsh-autocomplete";
+    #     src = pkgs.zsh-autocomplete;
+    #     file = "share/zsh-autocomplete/zsh-autocomplete.plugin.zsh";
+    #   }
+    # ];
 
   };
 }
