@@ -2,6 +2,10 @@ local wibox = require("wibox")
 
 local function update_volume()
 	local fd = io.popen("pamixer --get-volume-human")
+	if not fd then
+		return ""
+	end
+
 	local volume = fd:read("*all")
 	fd:close()
 
@@ -14,7 +18,7 @@ return setmetatable({}, { __call = function()
 	local volume_widget = wibox.widget {
 		markup = update_volume(),
 		widget = wibox.widget.textbox,
-		font = "JetBrainsMonoMedium Nerd Font"
+		font = "JetBrainsMono Nerd Font, Medium"
 	}
 
 	local volume_stat_timer = timer({ timeout = 0.5 })

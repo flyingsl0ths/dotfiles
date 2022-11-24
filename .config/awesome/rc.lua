@@ -1,7 +1,7 @@
 -- If LuaRocks is installed, make sure that packages installed through it are
 -- found (e.g. lgi). If LuaRocks is not installed, do nothing.
 pcall(require, "luarocks.loader")
-local theme = require("theme")
+require("theme")
 
 -- Standard awesome library
 local gears = require("gears")
@@ -57,7 +57,7 @@ local home_dir = os.getenv("HOME")
 beautiful.init(home_dir .. "/.config/awesome/theme.lua")
 
 -- This is used later as the default terminal and editor to run.
-local terminal = "st"
+local terminal = "alacritty"
 
 -- Default modkey.
 -- Usually, Mod4 is the key with a logo between Control and Alt.
@@ -165,7 +165,6 @@ awful.screen.connect_for_each_screen(function(s)
         { -- Right widgets
             wibox.widget.systray(),
             (require "netspeeds")(),
-            (require "ram")(),
             (require "volume")(),
             wibox.widget { markup = " ", widget = wibox.widget.textbox() },
             s.mylayoutbox,
@@ -506,18 +505,31 @@ globalkeys = gears.table.join(
 
     utils.make_keybinding({
         modifiers = { modkey, "Control" },
-        key = "s",
-        command = function() awful.spawn(terminal .. " -c scratchpad") end,
-        description = { description = "Open a dropdown terminal", group = "scratchpads" }
+        key = "Return",
+        command = function() awful.spawn(terminal .. " --class scratchpad") end,
+        description = { description = "Open a dropdown terminal", group = "launcher" }
+    }),
+
+    utils.make_keybinding({
+        modifiers = { modkey, "Shift" },
+        key = "p",
+        command = function() awful.spawn(terminal .. " --class pyscratchpad -e " .. home_dir .. "/.local/bin/bpython") end,
+        description = { description = "Open a python scratchpad", group = "launcher" }
     }),
 
     utils.make_keybinding({
         modifiers = { modkey, "Control" },
         key = "y",
-        command = function() awful.spawn(terminal .. " -c ytmscratchpad ytfzf -t -m -l") end,
-        description = { description = "Open a youtube musiz dropdown terminal", group = "scratchpads" }
-    })
+        command = function() awful.spawn(terminal .. " --class ytmscratchpad -e ytfzf -t -m -l") end,
+        description = { description = "Open youtube music", group = "scratchpads" }
+    }),
 
+    utils.make_keybinding({
+        modifiers = { modkey, "Control" },
+        key = "f",
+        command = function() awful.spawn(terminal .. " --class fmscratchpad -e ranger") end,
+        description = { description = "Open the terminal file manager", group = "scratchpads" }
+    })
 )
 
 clientkeys = gears.table.join(
@@ -653,7 +665,7 @@ awful.rules.rules = {
     }, {
         rule_any = {
             class = { "scratchpad", "pyscratchpad",
-                "ytmscratchpad", "fmscratchpad",
+                "ytmscratchpad", "fmscratchpad", "OpenGL Tutorial",
             },
 
             instance = {
@@ -699,12 +711,13 @@ end)
 -- }}}
 
 local autostart = {
-    "picom -b --animations --animation-window-mass 0.5 " ..
-        "--animation-for-open-window zoom --animation-stiffness 350 " ..
-        "--config $HOME/.config/awesome/picom.conf",
-    "xautolock -time 10 -locker $HOME/.local/bin/i3lock_color -detectsleep &",
-    "redshift -P -O 2500K",
+    "picom -b --corner-radius 0",
+    "xwallpaper --output eDP --stretch ~/.local/share/wallpaper/wallpaper",
+    "xsettingsd &",
     "xrdb merge $HOME/Xresources",
+    "xautolock -time 10 -locker $HOME/.local/bin/i3lock_color -detectsleep &",
+    "gammy &",
+    "lxqt-policykit-agent &",
 }
 
 for _, cmd in ipairs(autostart) do

@@ -4,7 +4,7 @@ local dpi = xresources.apply_dpi
 local icon_directory = os.getenv("HOME") .. "/.config/awesome/icons/"
 
 local theme = {
-	font = "JetBrainsMonoMedium Nerd Font 13",
+	font = "JetBrainsMono Nerd Font, Medium 13",
 	bg_normal = "#1E1E2E",
 	bg_focus = "#96CDFB",
 	bg_urgent = "#F28FAD",
@@ -25,7 +25,7 @@ local theme = {
 	layout_spiral = icon_directory .. "spiral.png",
 	layout_dwindle = icon_directory .. "dwindle.png",
 	wallpaper = "~/.local/share/wallpaper/wallpaper",
-	-- icon_theme = "/usr/share/icons/ePapirus-Dark"
+	icon_theme = "/usr/share/icons/Papirus-Dark"
 }
 
 return theme
