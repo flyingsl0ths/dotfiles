@@ -54,7 +54,7 @@ map("n", "<S-w>", ":wa<CR>", default_options)
 map("n", "<C-q>", ":qa<CR>", default_options)
 
 -- Tab switching
-map("", "<C-t>", ":tabnew<space>", {})
+map("", "<C-n>", ":tabnew<space>", {})
 map("", "<leader>x", ":tabclose<CR>", silent)
 map("", "<S-t>", ":tabn<CR>", silent)
 map("", "<S-p>", ":tabp<CR>", silent)
@@ -83,9 +83,6 @@ map("t", "jk", "<C-\\><C-n>", {})
 -- hide a term from within terminal mode
 map("t", "JK", "<C-\\><C-n> :lua require('core.utils').close_buffer() <CR>", {})
 
--- pick a hidden terminal
-map("n", "<leader>W", ":Telescope terms <CR>", default_options)
-
 -- this opens on top of an existing vert/hori term
 map("n", "<leader>h",
 	":execute 15 .. 'new +terminal' | let b:term_type = 'hori' | startinsert <CR>",
@@ -100,7 +97,7 @@ map("n", "<leader>w",
 	default_options)
 
 -- Buffer-Line
-map('n', '<leader><TAB>', ':BufferLineCycleNext<CR>', default_options)
+map('n', '<C-t>', ':BufferLineCycleNext<CR>', default_options)
 map('n', '<S-TAB>', ':BufferLineCyclePrev<CR>', default_options)
 map('n', '<S-x>', ':bdelete<CR>', default_options)
 
@@ -127,9 +124,15 @@ map("n", "<leader>md", ":Telescope media_files <CR>", default_options)
 map("n", "<leader>ld", ":Telescope diagnostics <CR>", default_options)
 map("n", "<leader>ls", ":Telescope lsp_document_symbols <CR>", default_options)
 map("n", "<leader>es", ":EslintFixAll <CR>", default_options)
-map("n", "<leader>cc", ":Telescope commands <CR>", default_options)
+map("n", "<leader>cs", ":Telescope commands <CR>", default_options)
 map("n", "<leader>td", ":TodoTelescope <CR>", default_options)
 map("n", "<leader>kk", ":Telescope keymaps <CR>", default_options)
+map('n', '<leader>fr', ":Telescope lsp_references <CR>", default_options)
+map('n', '<leader>ch', ":Telescope command_history <CR>", default_options)
+map("n", "<leader>W", ":Telescope terms <CR>", default_options)
+map("n", "<leader>bf", ":Telescope current_buffer_fuzzy_find <CR>", default_options)
+map("n", "<leader>uc", ":Gitsigns preview_hunk <CR>", default_options)
+map('n', '<C-e>', "<cmd>lua vim.diagnostic.open_float()<CR>", default_options)
 
 -- Nvim Dap bindings
 map("n", "<F4>", ":lua require('osv').run_this()<CR>", default_options)
@@ -141,7 +144,7 @@ map("n", "<leader>b", ":lua require('dap').toggle_breakpoint()<CR>", default_opt
 map("n", "<leader>B", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", default_options)
 map("n", "<leader>lp", ":lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>",
 	default_options)
-map("n", "<leader>tt", ":lua require('dap').terminate()<CR>", default_options)
+map("n", "<leader>dt", ":lua require('dap').terminate()<CR>", default_options)
 
 map("n", "<leader>du", ":lua require('dapui').toggle()<CR>", default_options)
 
@@ -149,6 +152,6 @@ map("n", "<leader>du", ":lua require('dapui').toggle()<CR>", default_options)
 map("n", "<C-f>", ":NvimTreeToggle<CR>", enable_noremap)
 
 map("n", "<leader>af", ":ALEFix<CR>", default_options)
-map("n", "<leader>t", ":SymbolsOutline<CR>", default_options)
-map("n", "<leader>ss", ":source %<CR>", default_options)
+map("n", "<leader>ss", ":SymbolsOutline<CR>", default_options)
+map("n", "<leader>sr", ":source %<CR>", default_options)
 map("n", "<leader>p", ":PackerUpdate <CR>", default_options)

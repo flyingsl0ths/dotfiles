@@ -6,7 +6,8 @@ if present then
 		fg = "#D9E0EE",
 		yellow = "#FAE3B0",
 		cyan = "#B5E8E0",
-		darkblue = "#96CDFB",
+		sky = "#89DCEB",
+		teal = "#B5E8E0",
 		green = "#ABE9B3",
 		orange = "#F8BD96",
 		violet = "#F5C2E7",
@@ -46,7 +47,7 @@ if present then
 	local vi_mode_utils = require "feline.providers.vi_mode"
 
 	table.insert(components.active[LEFT_SIDE], {
-		provider = function() return " " .. vi_mode_utils.get_vim_mode() end,
+		provider = function() return "  " .. vi_mode_utils.get_vim_mode() end,
 		hl = function()
 			return {
 				name = vi_mode_utils.get_mode_highlight_name(),
@@ -64,10 +65,10 @@ if present then
 			opts = { colored_icon = false, type = "relative" }
 		},
 		hl = function()
-			return { fg = colors.bg, bg = colors.blue, style = "italic" }
+			return { fg = colors.bg, bg = colors.blue }
 		end,
 		left_sep = "block",
-		right_sep = "right_filled"
+		right_sep = "right_rounded"
 	})
 
 	local lsp = require "feline.providers.lsp"

@@ -15,6 +15,16 @@ vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { 
 
 vim.lsp.handlers["textDocument/signatureHelp"] = vim.lsp.with(vim.lsp.handlers.signature_help, { border = "single" })
 
+vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
+	vim.lsp.diagnostic.on_publish_diagnostics,
+	{
+		virtual_text = false,
+		signs = true,
+		update_in_insert = false,
+		underline = true,
+	}
+)
+
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 capabilities.textDocument.completion.completionItem.snippetSupport = true
@@ -53,7 +63,7 @@ local servers = {
 	"bashls",
 	"clangd",
 	"cmake",
-	"cssls",
+	"csharp_ls",
 	"cssls",
 	"denols",
 	"eslint",
@@ -63,9 +73,10 @@ local servers = {
 	"jdtls",
 	"jsonls",
 	"kotlin_language_server",
+	"lua_ls",
 	"pyright",
+	"purescriptls",
 	"rust_analyzer",
-	"sumneko_lua",
 	"tsserver",
 }
 
@@ -86,15 +97,15 @@ local function configure_jdtls(opts)
 	opts.cmd = { "jdtls" }
 	opts.root_dir = function(fname)
 		return require 'lspconfig'.util.root_pattern(
-			'build.xml', -- Ant
-			'pom.xml', -- Maven
-			'settings.gradle', -- Gradle
-			'settings.gradle.kts', -- Gradle
-			-- Multi-module projects
-			'build.gradle',
-			'build.gradle.kts',
-			".git"
-		)(fname) or vim.fn.getcwd()
+			    'build.xml', -- Ant
+			    'pom.xml', -- Maven
+			    'settings.gradle', -- Gradle
+			    'settings.gradle.kts', -- Gradle
+			    -- Multi-module projects
+			    'build.gradle',
+			    'build.gradle.kts',
+			    ".git"
+		    )(fname) or vim.fn.getcwd()
 	end
 end
 
@@ -117,7 +128,6 @@ for _, lsp in pairs(servers) do
 				"deno.json", "deno.jsonc"
 			)(fname)
 		end
-
 	elseif server.name == "tsserver" then
 		opts.root_dir = function(fname)
 			return require 'lspconfig'.util.root_pattern(

@@ -3,8 +3,9 @@ local utils = require "conf_utils.utils"
 
 local dap_args_env_var = "NVIM_DAP_ARGS"
 local function get_dap_args()
-	local args = os.getenv(dap_args_env_var)
-	return args and utils.split_at("%a+", args) or {}
+	local arg = os.getenv(dap_args_env_var)
+	local args = arg and utils.split_at(arg, "[^;]+") or {}
+	return args
 end
 
 dap.adapters.lldb = {

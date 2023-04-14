@@ -1,5 +1,3 @@
-# Nushell Environment Config File
-
 def create_left_prompt [] {
     let path_segment = if (is-admin) {
         $"(ansi red_bold)($env.PWD)"
@@ -14,16 +12,24 @@ def create_right_prompt [] {
     ""
 }
 
+# Kills all processes who's name matches the given pattern
+def kall [
+  pattern: string # The pattern describing all matching processes
+] {
+    pgrep $pattern | lines | each {|it| kill ($it | into int)}
+    null
+}
+
 # Use nushell functions to define your right and left prompt
 let-env PROMPT_COMMAND = { create_left_prompt }
 let-env PROMPT_COMMAND_RIGHT = { create_right_prompt }
 
 # The prompt indicators are environmental variables that represent
 # the state of the prompt
-let-env PROMPT_INDICATOR = { "〉" }
-let-env PROMPT_INDICATOR_VI_INSERT = { ": " }
-let-env PROMPT_INDICATOR_VI_NORMAL = { "〉" }
-let-env PROMPT_MULTILINE_INDICATOR = { "::: " }
+let-env PROMPT_INDICATOR = { "  " }
+let-env PROMPT_INDICATOR_VI_INSERT = { "   " }
+let-env PROMPT_INDICATOR_VI_NORMAL = { "  " }
+let-env PROMPT_MULTILINE_INDICATOR = { "-- " }
 
 # Specifies how environment variables are:
 # - converted from a string to a value on Nushell startup (from_string)
@@ -82,9 +88,9 @@ alias st_mariadb_srvc = doas systemctl stop mariadb
 alias cmb = cmake --build
 alias cmtg = cmake --target
 alias ccpp = clang++ -std = c++17 -Wall -Werror -Wextra -Wsign-conversion
-alias cmpc = clang -std = c99 -Wall -Werror -Wextra -Wsign-conversion -pedantic
+alias cmc = clang -std = c99 -Wall -Werror -Wextra -Wsign-conversion -pedantic
 alias cmcc = cmake -G Ninja -DCMAKE_C_COMPILER = clang
-alias cmcpp = cmake -G Ninja -DCMAKE_CXX_COMPILER = clang++
+alias cmcpp = cmake -G Ninja -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_CXX_INCLUDE_WHAT_YOU_USE=include-what-you-use
 alias ctv = ctest -VV
 
 alias nd = node
@@ -109,9 +115,7 @@ alias ld = cd -
 alias la = exa --icons -1 --all
 alias l1 = exa --icons -1 -l
 alias lh1 = exa --icons -1 -l -i
-
-alias mkdir = mkdir -p
-alias rmdir = rm -r
+alias rmd = rm -r
 
 alias pf = paste_file
 alias sp = scratchpad
@@ -119,6 +123,7 @@ alias fm = ranger
 alias xtr = tar xf
 alias code = vscodium
 alias nv = nvim
+alias hx = helix
 alias vm = TERM = xterm-256color vim
 alias zth = zathura
 alias valgrind = valgrind --leak-check = full
@@ -127,7 +132,7 @@ alias ctags = ctags --append = yes
 alias ugzp = gzip --uncompress
 alias mtp = jmtpfs -o auto_unmount
 alias paste = xclip -i -sel c
-alias ps = pipes.sh
+alias pps = pipes.sh
 alias cb = xclip -i -sel c
 alias br = broot
 

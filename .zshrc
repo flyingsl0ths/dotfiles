@@ -1,7 +1,7 @@
 export ZSH_PLUGINS_DIR=$HOME/.zsh
 export ANDROID_HOME=$HOME/Android/Sdk
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk
-export PATH=$PATH:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.cargo/bin:$HOME/.npm-global:$HOME/.npm-global/bin:$HOME/go/bin
+export PATH=$PATH:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.cargo/bin:$HOME/.npm-global:$HOME/.npm-global/bin:$HOME/go/bin:$HOME/.dotnet/tools
 export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 \
@@ -54,6 +54,8 @@ alias cmpc="clang -std=c99 -Wall -Werror -Wextra -Wsign-conversion -pedantic";
 alias cmcc="cmake -G Ninja -DCMAKE_C_COMPILER=clang";
 alias cmcpp="cmake -G Ninja -DCMAKE_CXX_COMPILER=clang++";
 alias ctv="ctest -VV";
+
+alias dn="dotnet"
 
 alias nd="node";
 

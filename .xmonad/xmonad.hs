@@ -524,16 +524,17 @@ myConfig =
     myStartUpHook :: X ()
     myStartUpHook =
         spawnOnce "dunst &"
+            >> spawnOnce "xsettingsd &"
+            >> spawnOnce "xrdb merge ~/Xresources"
+            >> spawnOnce "~/.config/polybar/launch.sh 'xmonad'"
+            >> spawnOnce "gammy &"
             >> spawnOnce
                 "picom -b"
-            >> spawnOnce "xsettingsd &"
-            >> spawnOnce "gammy &"
-            >> spawnOnce "xrdb merge ~/Xresources"
+            >> spawnOnce "xrandr -s 1920x1080 -r 144"
             >> spawnOnce
-                "xwallpaper --output eDP --stretch ~/.local/share/wallpaper/wallpaper"
+                "xwallpaper --output HDMI-A-0 --stretch ~/.local/share/wallpaper/wallpaper"
             >> spawnOnce
                 "xautolock -time 10 -locker ~/.local/bin/i3lock_color -detectsleep &"
-            >> spawnOnce "~/.config/polybar/launch.sh 'xmonad'"
             >> spawnOnce "lxqt-policykit-agent &"
 
     myManageHook :: ManageHook

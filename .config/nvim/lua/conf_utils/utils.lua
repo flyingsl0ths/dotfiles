@@ -1,9 +1,11 @@
 return {
-	split_at = function(pattern, xs)
+	split_at = function(xs, pattern)
 		local acc = {}
-		for word in xs:gmatch(pattern) do
-			table.insert(acc, word)
+
+		for token in string.gmatch(xs, pattern) do
+			table.insert(acc, token)
 		end
+
 		return acc
 	end,
 

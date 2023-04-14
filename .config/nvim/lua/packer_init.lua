@@ -32,7 +32,13 @@ packer.startup(function()
 		}
 	}
 
-	use "glepnir/dashboard-nvim"
+	use {
+		'goolord/alpha-nvim',
+		config = function()
+			require 'alpha'.setup(require 'alpha.themes.dashboard'.config)
+		end
+	}
+
 	use "neovim/nvim-lspconfig"
 	use "ray-x/lsp_signature.nvim"
 	use {
@@ -58,14 +64,20 @@ packer.startup(function()
 			{ "nvim-telescope/telescope-live-grep-args.nvim" },
 		}
 	}
+
 	use "udalov/kotlin-vim"
 
 	use "mfussenegger/nvim-dap"
 	use "rcarriga/nvim-dap-ui"
-
 	use "nvim-telescope/telescope-dap.nvim"
 	use "mfussenegger/nvim-dap-python"
 	use "jbyuki/one-small-step-for-vimkind"
+	use {
+		"simrat39/symbols-outline.nvim",
+		config = function()
+			require("symbols-outline").setup()
+		end
+	}
 
 	use "szw/vim-maximizer"
 	use "norcalli/nvim-colorizer.lua"
@@ -86,8 +98,6 @@ packer.startup(function()
 	use "mhartington/formatter.nvim"
 	use "ggandor/lightspeed.nvim"
 	use "andymass/vim-matchup"
-	-- use "lukas-reineke/indent-blankline.nvim"
-	-- use "luc-tielen/telescope_hoogle"
 	use 'fedepujol/move.nvim'
 	use "LnL7/vim-nix"
 

@@ -6,7 +6,8 @@ local prettier =
 			args = {
 				"--stdin-filepath",
 				vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
-			}, stdin = true
+			},
+			stdin = true
 		}
 	end
 }
@@ -19,39 +20,30 @@ local shfmt = {
 require('formatter').setup({
 	filetype = {
 		zsh = shfmt,
-
 		sh = shfmt,
-
 		html = prettier,
-
 		xhtml = prettier,
-
 		scss = prettier,
-
 		css = prettier,
-
 		markdown = prettier,
-
 		json = prettier,
-
 		javascriptreact = prettier,
-
 		typescriptreact = prettier,
-
 		yaml = prettier,
-
 		javascript = prettier,
-
 		typescript = prettier,
-
 		cabal = {
 			-- Shell Script Formatter
-			function() return { exe = "cabal-fmt", args = {
-					vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
-				}, stdin = true }
+			function()
+				return {
+					exe = "cabal-fmt",
+					args = {
+						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+					},
+					stdin = true
+				}
 			end
 		},
-
 		python = {
 			-- Configuration for psf/black
 			function()
@@ -65,11 +57,23 @@ require('formatter').setup({
 				}
 			end
 		},
-
 		nix = {
 			function()
 				return {
 					exe = "nixpkgs-fmt",
+					stdin = true,
+				}
+			end
+		},
+		haskell = {
+			function()
+				return {
+					exe = "fourmolu",
+					args = {
+						"-m",
+						"stdout",
+						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+					},
 					stdin = true,
 				}
 			end
@@ -80,6 +84,6 @@ require('formatter').setup({
 vim.api.nvim_exec([[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.lua,*.sh,*.html,*.xhtml,*.css,*scss,*.md,*.yaml,*.js,*.ts,*.jsx,*.tsx,*.json,*.py,*.nix,*.cabal FormatWrite
+  autocmd BufWritePost *.lua,*.sh,*.html,*.xhtml,*.css,*scss,*.md,*.yaml,*.js,*.ts,*.jsx,*.tsx,*.json,*.py,*.nix,*.cabal,*.hs FormatWrite
 augroup END
 ]], true)
