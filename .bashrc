@@ -14,7 +14,7 @@ export FZF_DEFAULT_OPTS=" \
 PS1='\[\e[0;38;5;241m\]\[\e[0;38;5;75m\]\[\e[0;38;5;105m\]\[\e[0m\] \[\e[0;38;5;117m\]𝝺\[\e[0m\] \[\e[0m\]\w\[\e[0m\] \[\e[0m\]'
 
 shopt -s autocd
-# set -o vi
+set -o vi
 
 # eval "$(starship init zsh)"
 eval "$(direnv hook bash)"
