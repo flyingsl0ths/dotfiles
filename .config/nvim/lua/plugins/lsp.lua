@@ -74,9 +74,9 @@ local servers = {
 	"jsonls",
 	"kotlin_language_server",
 	"lua_ls",
-	"pyright",
 	"purescriptls",
-	"rust_analyzer",
+	"pyright",
+	"tailwindcss",
 	"tsserver",
 }
 
