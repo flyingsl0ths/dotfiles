@@ -93,7 +93,7 @@ endif
 
 " Mappings for CoCList
 " Show all diagnostics.
-nnoremap <silent><nowait> <S-d>  :<C-u>CocList diagnostics<cr>
+nnoremap <silent><nowait> <space>dg  :<C-u>CocList diagnostics<cr>
 " Manage extensions.
 nnoremap <silent><nowait> <space>w  :<C-u>CocList extensions<cr>
 " Show commands.
