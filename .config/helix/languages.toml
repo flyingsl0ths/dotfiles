@@ -1,0 +1,41 @@
+[[language]]
+name = "python"
+scope = "source.python"
+injection-regex = "python"
+file-types = ["py","pyi","py3","pyw","ptl",".pythonstartup",".pythonrc","SConstruct"]
+shebangs = ["python"]
+roots = ["setup.py", "setup.cfg", "pyproject.toml"]
+comment-token = "#"
+language-server = { command = "pyright-langserver", args = ["--stdio"] }
+indent = { tab-width = 4, unit = "    " }
+# will get "Async jobs timed out" errors if this empty config is not added
+config = {}
+formatter = { command = "black", args = ["--quiet", "-"] }
+auto-format = true
+
+[[language]]
+name = "html"
+formatter = { command = 'prettier', args = ["--parser", "html"] }
+
+[[language]]
+name = "json"
+formatter = { command = 'prettier', args = ["--parser", "json"] }
+
+[[language]]
+name = "css"
+formatter = { command = 'prettier', args = ["--parser", "css"] }
+
+[[language]]
+name = "javascript"
+formatter = { command = 'prettier', args = ["--parser", "typescript"] }
+auto-format = true
+
+[[language]]
+name = "typescript"
+formatter = { command = 'prettier', args = ["--parser", "typescript"] }
+auto-format = true  
+
+[[language]]
+name = "purescript"
+formatter = { command = 'purty', args = ["-"] }
+auto-format = true  

@@ -16,9 +16,10 @@ hidden = false
 [keys.normal]
 "C-f" = ":format"
 "C-p" = ":write"
+"C-b" = ":buffer-next"
 "C-q" = ":q"
 "S-q" = ":wq"
-"C-r" = ":config-reload"
+"C-d" = "kill_to_line_end"
 "C-h" = "jump_view_left"
 "C-l" = "jump_view_right"
 "C-j" = "jump_view_down"
