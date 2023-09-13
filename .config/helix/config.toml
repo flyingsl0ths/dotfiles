@@ -1,17 +1,17 @@
-theme = "catppuccin"
+theme = "catppuccin_frappe"
 
 [editor]
 line-number = "relative"
-mouse = true
-true-color = true
+cursorline = true
+color-modes = true
 
 [editor.cursor-shape]
 insert = "bar"
 normal = "block"
 select = "underline"
 
-[editor.file-picker]
-hidden = false
+[editor.indent-guides]
+render = true
 
 [keys.normal]
 "C-f" = ":format"
