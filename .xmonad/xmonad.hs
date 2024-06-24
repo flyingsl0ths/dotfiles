@@ -531,6 +531,7 @@ myConfig =
             >> spawnOnce
                 "picom -b"
             >> spawnOnce "xrandr -s 1920x1080 -r 144"
+            >> spawnOnce "redshift -O 2500k"
             >> spawnOnce
                 "xwallpaper --output HDMI-A-0 --stretch ~/.local/share/wallpaper/wallpaper"
             >> spawnOnce

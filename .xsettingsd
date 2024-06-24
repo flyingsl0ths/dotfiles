@@ -1,10 +1,10 @@
-Net/ThemeName "Materia-dark-compact"
+Net/ThemeName "Catppuccin-Frappe-Standard-Teal-Dark"
 Net/IconThemeName "Papirus-Dark"
 Net/EnableEventSounds "0"
 Net/EnableInputFeedbackSounds "0"
-Gtk/CursorThemeName "macOS-BigSur"
+Gtk/CursorThemeName "Fluent-cursors"
 Xft/DPI "1"
 Xft/Hinting 1
-Xft/HintStyle "hintslight"
+Xft/HintStyle "hintfull"
 Xft/Antialias 1
 Xft/RGBA "none"

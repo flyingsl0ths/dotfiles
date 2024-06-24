@@ -1,6 +1,6 @@
 [user]
-	name = <username>
-	email = <email>
+	name = flyingsl0ths
+	email = randomemail33110@protonmail.com
 
 [alias]
 	am = commit --amend
@@ -9,7 +9,7 @@
 	co = checkout
     cl = clone
 	br = branch
-	graph = log --all --graph --decorate --oneline
+	grp = log --all --graph --decorate --oneline
 	last = log -1 HEAD
     pl = pull
 	nci = diff --staged
@@ -24,7 +24,12 @@
         
 [core]
 	editor = nvim
+    pager = delta
 
 [pull]
 	rebase = false
 
+
+[delta]
+    navigate = true
+    side-by-side = true

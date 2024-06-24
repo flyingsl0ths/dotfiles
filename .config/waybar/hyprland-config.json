@@ -1,0 +1,66 @@
+{
+  "layer": "top",
+  "position": "top",
+  "modules-left": ["hyprland/workspaces", "hyprland/submap"],
+  "modules-center": ["hyprland/window"],
+  "modules-right": ["pulseaudio", "network", "clock", "tray"],
+  "hyprland/workspaces": {
+    "disable-scroll": true,
+    "all-outputs": true,
+    "warp-on-scroll": false,
+    "format": "{name}: {icon}",
+    "format-icons": {
+      "1": " ",
+      "2": " ",
+      "3": " ",
+      "4": " ",
+      "5": " ",
+      "urgent": " ",
+      "focused": " ",
+      "default": ""
+    }
+  },
+  "hyprland/window": {
+    "max-length": 32
+  },
+  "hyprland/submap": {
+    "format": "{}"
+  },
+  "tray": {
+    "icon-size": 21,
+    "spacing": 10
+  },
+  "clock": {
+    "timezone": "America/Los_Angeles",
+    "format": "{:%I:%M%p}",
+    "format-alt": "{:%m-%d-%Y}",
+    "tooltip-format": "{:%Y-%m-%d}"
+  },
+  "network": {
+    "format-wifi": "{essid} ({signalStrength}%)  ",
+    "format-ethernet": "{ipaddr}/{cidr} ",
+    "tooltip-format": "{ifname} via {gwaddr} ",
+    "format-linked": "{ifname} (No IP) ",
+    "format-disconnected": "Disconnected ⚠",
+    "format-alt": "{ifname}: {ipaddr}/{cidr}"
+  },
+  "pulseaudio": {
+    "scroll-step": 1,
+    "format": "{volume}% {icon} {format_source}",
+    "format-bluetooth": "{volume}% {icon} {format_source}",
+    "format-bluetooth-muted": " {icon} {format_source}",
+    "format-muted": " {format_source}",
+    "format-source": "{volume}% ",
+    "format-source-muted": "",
+    "format-icons": {
+      "headphone": " ",
+      "hands-free": "",
+      "headset": "",
+      "phone": "",
+      "portable": "",
+      "car": "",
+      "default": ["", "", ""]
+    },
+    "on-click": "pavucontrol"
+  }
+}
