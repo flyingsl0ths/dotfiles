@@ -62,10 +62,9 @@ if present then
 	}
 
 	local extensions = {
-		"themes",
-		"terms",
 		"dap",
 		"live_grep_args",
+		"zoxide",
 		-- "hoogle"
 	}
 
@@ -76,5 +75,4 @@ if present then
 	for _, extnsion in ipairs(extensions) do
 		telescope.load_extension(extnsion)
 	end
-
 end

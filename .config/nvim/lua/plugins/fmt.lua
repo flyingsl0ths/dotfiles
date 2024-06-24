@@ -21,6 +21,8 @@ require('formatter').setup({
 	filetype = {
 		zsh = shfmt,
 		sh = shfmt,
+		dockerfile = shfmt,
+
 		html = prettier,
 		xhtml = prettier,
 		scss = prettier,
@@ -32,6 +34,7 @@ require('formatter').setup({
 		yaml = prettier,
 		javascript = prettier,
 		typescript = prettier,
+
 		cabal = {
 			-- Shell Script Formatter
 			function()
@@ -44,19 +47,43 @@ require('formatter').setup({
 				}
 			end
 		},
-		python = {
-			-- Configuration for psf/black
+
+		swift = {
 			function()
 				return {
-					exe = "black",
-					-- this should be available on your $PATH
+					exe = "swift-format",
 					args = {
-						"--stdin-filename",
+						"format",
 						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
 					},
+					stdin = true
 				}
 			end
 		},
+
+		cmake = {
+			function()
+				return {
+					exe = "cmake-format",
+					args = {
+						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+					},
+					stdin = true
+				}
+			end
+		},
+
+		-- python = {
+		-- 	function()
+		-- 		return {
+		-- 			exe = "autopep8",
+		-- 			args = {
+		-- 				vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+		-- 			},
+		-- 			stdin = true
+		-- 		}
+		-- 	end
+		-- },
 		nix = {
 			function()
 				return {
@@ -65,25 +92,25 @@ require('formatter').setup({
 				}
 			end
 		},
-		haskell = {
-			function()
-				return {
-					exe = "fourmolu",
-					args = {
-						"-m",
-						"stdout",
-						vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
-					},
-					stdin = true,
-				}
-			end
-		},
+		-- haskell = {
+		-- 	function()
+		-- 		return {
+		-- 			exe = "fourmolu",
+		-- 			args = {
+		-- 				"-m",
+		-- 				"stdout",
+		-- 				vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
+		-- 			},
+		-- 			stdin = true,
+		-- 		}
+		-- 	end
+		-- },
 	}
 })
 
 vim.api.nvim_exec([[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.lua,*.sh,*.html,*.xhtml,*.css,*scss,*.md,*.yaml,*.js,*.ts,*.jsx,*.tsx,*.json,*.py,*.nix,*.cabal,*.hs FormatWrite
+  autocmd BufWritePost *.lua,Dockerfile,*.sh,*.html,*.cmake,*.xhtml,*.css,*scss,*.swift,*.md,*.yaml,*.js,*.ts,*.jsx,*.tsx,*.json,*.nix,*.cabal FormatWrite
 augroup END
 ]], true)

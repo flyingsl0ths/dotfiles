@@ -108,7 +108,7 @@ if present then
 	table.insert(components.active[LEFT_SIDE], {
 		-- provider = "diagnostic_hints",
 		provider = function()
-			return "  " .. lsp.get_diagnostics_count(vim.diagnostic.HINT)
+			return "  " .. lsp.get_diagnostics_count(vim.diagnostic.HINT)
 		end,
 		enabled = function()
 			return lsp.diagnostics_exist(vim.diagnostic.severity.HINT)
@@ -118,7 +118,7 @@ if present then
 
 	table.insert(components.active[RIGHT_SIDE], {
 		provider = "lsp_client_names",
-		icon = "慎",
+		icon = " ",
 
 		hl = { fg = colors.yellow },
 		right_sep = " "
@@ -155,24 +155,24 @@ if present then
 
 	})
 
-	-- local function file_osinfo()
-	--     local os = vim.bo.fileformat:upper()
-	--     local icon
-	--     if os == "UNIX" then
-	--         icon = " "
-	--     elseif os == "MAC" then
-	--         icon = " "
-	--     else
-	--         icon = " "
-	--     end
-	--     return icon .. os
-	-- end
+	local function file_osinfo()
+	    local os = vim.bo.fileformat:upper()
+	    local icon
+	    if os == "UNIX" then
+	        icon = " "
+	    elseif os == "MAC" then
+	        icon = " "
+	    else
+	        icon = " "
+	    end
+	    return icon .. os
+	end
 
-	-- table.insert(components.active[RIGHT_SIDE], {
-	--     provider = file_osinfo,
-	--     left_sep = " ",
-	--     hl = {fg = colors.violet, style = "bold"}
-	-- })
+	table.insert(components.active[RIGHT_SIDE], {
+	    provider = file_osinfo,
+	    left_sep = " ",
+	    hl = {fg = colors.violet, style = "bold"}
+	})
 
 	table.insert(components.inactive[LEFT_SIDE], components.active[LEFT_SIDE][2])
 

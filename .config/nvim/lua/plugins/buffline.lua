@@ -38,9 +38,9 @@ if present then
 	bufferline.setup {
 		options = {
 			offsets = { { filetype = "NvimTree", text = "", padding = 1 } },
-			buffer_close_icon = "",
+			buffer_close_icon = "",
 			modified_icon = "",
-			close_icon = "",
+			close_icon = "",
 			show_close_icon = true,
 			left_trunc_marker = "",
 			right_trunc_marker = "",

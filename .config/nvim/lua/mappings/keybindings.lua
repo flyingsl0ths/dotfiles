@@ -3,10 +3,10 @@ local map = vim.api.nvim_set_keymap
 vim.g.mapleader = " "
 
 local enable_noremap = { noremap = true }
-local default_options = { noremap = true, silent = true }
+local default_options = { noremap = true, silent = true, }
 local silent = { silent = true }
 
--- Mode Keymap Maps-To Options --
+-- map() argument format: Mode Keymap Maps-To Options --
 
 -- Reminders to avoid used arrow keys
 map("n", "<Left>", ":echo \"Use h\"<CR>", enable_noremap)
@@ -39,13 +39,12 @@ map("n", "<C-d>", ":vertical resize +5<CR>", default_options)
 map("n", "<C-a>", ":vertical resize -5<CR>", default_options)
 map("n", "<C-x>", ":res +5<CR>", default_options)
 map("n", "<C-s>", ":res -5<CR>", default_options)
-vim.g.maximizer_default_mapping_key = "<leader>mm"
 
 -- Buffer movement
-map("n", "<S-Left>", "<C-w>r", enable_noremap)
-map("n", "<S-Right>", "<C-w>r", enable_noremap)
-map("n", "<S-Up>", "<C-w>H", enable_noremap)
-map("n", "<S-Down>", "<C-w>J", enable_noremap)
+map("n", "<A-b>", "<C-w>r", enable_noremap)
+map("n", "<A-,>", "<C-w>r", enable_noremap)
+map("n", "<A-m>", "<C-w>H", enable_noremap)
+map("n", "<A-n>", "<C-w>J", enable_noremap)
 
 -- Writing files
 map("n", "<C-p>", ":w<CR>", enable_noremap)
@@ -60,8 +59,8 @@ map("", "<S-t>", ":tabn<CR>", silent)
 map("", "<S-p>", ":tabp<CR>", silent)
 
 -- Open splits prompt
-map("n", "<leader>[", ":vsplit<space>", enable_noremap)
-map("n", "<leader>]", ":split<space>", enable_noremap)
+map("n", "<leader>;", ":vsplit<CR>", default_options)
+map("n", "<leader>'", ":split<CR>", default_options)
 
 -- Clears highlighted searches
 map("", "<leader><CR>", ":noh<CR>", silent)
@@ -101,14 +100,7 @@ map('n', '<C-t>', ':BufferLineCycleNext<CR>', default_options)
 map('n', '<S-TAB>', ':BufferLineCyclePrev<CR>', default_options)
 map('n', '<S-x>', ':bdelete<CR>', default_options)
 
--- Dashboard bindings
-map("n", "<leader>d", ":Dashboard <CR>", default_options)
-map("n", "<leader>djm", ":DashboardJumpMarks <CR>", default_options)
-map("n", "<leader>dnf", ":DashboardNewFile <CR>", default_options)
-map("n", "<leader>dss", ":SessionSave <CR>", default_options)
-map("n", "<leader>dsl", ":SessionLoad <CR>", default_options)
-
--- Telescope bindings
+-- Telescope
 map("n", "<leader>t", ":Telescope<CR>", default_options)
 map("n", "<leader>bb", ":Telescope buffers <CR>", default_options)
 map("n", "<leader>ff", ":Telescope find_files <CR>", default_options)
@@ -121,7 +113,6 @@ map("n", "<leader>lg", ":Telescope live_grep <CR>", default_options)
 map("n", "<leader>of", ":Telescope oldfiles <CR>", default_options)
 map("n", "<leader>bm", ":Telescope marks <CR>", default_options)
 map("n", "<leader>md", ":Telescope media_files <CR>", default_options)
-map("n", "<leader>ld", ":Telescope diagnostics <CR>", default_options)
 map("n", "<leader>ls", ":Telescope lsp_document_symbols <CR>", default_options)
 map("n", "<leader>es", ":EslintFixAll <CR>", default_options)
 map("n", "<leader>cs", ":Telescope commands <CR>", default_options)
@@ -133,13 +124,15 @@ map("n", "<leader>W", ":Telescope terms <CR>", default_options)
 map("n", "<leader>bf", ":Telescope current_buffer_fuzzy_find <CR>", default_options)
 map("n", "<leader>uc", ":Gitsigns preview_hunk <CR>", default_options)
 map('n', '<C-e>', "<cmd>lua vim.diagnostic.open_float()<CR>", default_options)
+map('n', '<leader>ld', "<cmd>:Telescope diagnostics<CR>", default_options)
+map("n", "<leader>cd", ":Telescope zoxide list <CR>", default_options)
 
--- Nvim Dap bindings
+-- Dap
 map("n", "<F4>", ":lua require('osv').run_this()<CR>", default_options)
-map("n", "<F5>", ":lua require('dap').continue()<CR>", default_options)
-map("n", "<F10>", ":lua require('dap').step_over()<CR>", default_options)
-map("n", "<F11>", ":lua require('dap').step_into()<CR>", default_options)
-map("n", "<F12>", ":lua require('dap').step_out()<CR>", default_options)
+map("n", "<leader>dc", ":lua require('dap').continue()<CR>", default_options)
+map("n", "<leader>ds", ":lua require('dap').step_over()<CR>", default_options)
+map("n", "<leader>di", ":lua require('dap').step_into()<CR>", default_options)
+map("n", "<leader>do", ":lua require('dap').step_out()<CR>", default_options)
 map("n", "<leader>b", ":lua require('dap').toggle_breakpoint()<CR>", default_options)
 map("n", "<leader>B", ":lua require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))<CR>", default_options)
 map("n", "<leader>lp", ":lua require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))<CR>",
@@ -148,10 +141,8 @@ map("n", "<leader>dt", ":lua require('dap').terminate()<CR>", default_options)
 
 map("n", "<leader>du", ":lua require('dapui').toggle()<CR>", default_options)
 
--- NvimTree bindings
-map("n", "<C-f>", ":NvimTreeToggle<CR>", enable_noremap)
+map("n", "<leader>d", ":NvimTreeToggle<CR>", { noremap = true, silent = true, })
 
-map("n", "<leader>af", ":ALEFix<CR>", default_options)
 map("n", "<leader>ss", ":SymbolsOutline<CR>", default_options)
 map("n", "<leader>sr", ":source %<CR>", default_options)
-map("n", "<leader>p", ":PackerUpdate <CR>", default_options)
+map("n", "<leader>lz", ":Lazy <CR>", default_options)

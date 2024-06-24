@@ -66,7 +66,10 @@ local servers = {
 	"csharp_ls",
 	"cssls",
 	"denols",
+	"docker_compose_language_service",
+	"dockerls",
 	"eslint",
+	"gopls",
 	"groovyls",
 	"hls",
 	"html",
@@ -74,10 +77,15 @@ local servers = {
 	"jsonls",
 	"kotlin_language_server",
 	"lua_ls",
+	"ocamllsp",
 	"purescriptls",
 	"pyright",
+	"ruff_lsp",
+	"rust_analyzer",
+	"sourcekit",
 	"tailwindcss",
 	"tsserver",
+	"zls",
 }
 
 local function configure_hls(opts)
@@ -97,15 +105,15 @@ local function configure_jdtls(opts)
 	opts.cmd = { "jdtls" }
 	opts.root_dir = function(fname)
 		return require 'lspconfig'.util.root_pattern(
-			    'build.xml', -- Ant
-			    'pom.xml', -- Maven
-			    'settings.gradle', -- Gradle
-			    'settings.gradle.kts', -- Gradle
-			    -- Multi-module projects
-			    'build.gradle',
-			    'build.gradle.kts',
-			    ".git"
-		    )(fname) or vim.fn.getcwd()
+			'build.xml', -- Ant
+			'pom.xml', -- Maven
+			'settings.gradle', -- Gradle
+			'settings.gradle.kts', -- Gradle
+			-- Multi-module projects
+			'build.gradle',
+			'build.gradle.kts',
+			".git"
+		)(fname) or vim.fn.getcwd()
 	end
 end
 
@@ -134,6 +142,8 @@ for _, lsp in pairs(servers) do
 				"package.json", "tsconfig.json", "jsconfig.json"
 			)(fname)
 		end
+	elseif server.name == "sourcekit" then
+		opts.filetypes = { "swift", "objective-c", "objective-cpp" }
 	end
 
 	server.setup(opts)

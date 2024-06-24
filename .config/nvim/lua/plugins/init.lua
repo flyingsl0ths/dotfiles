@@ -15,9 +15,15 @@ vim.opt.rtp:prepend(lazypath)
 
 local plugins = {
 	"wbthomason/packer.nvim",
-	"Nvchad/extensions",
 
-	{ "catppuccin/nvim", name = "catppuccin" },
+	{
+		"NvChad/nvterm",
+		config = function()
+			require("nvterm").setup()
+		end,
+	},
+
+	{ "catppuccin/nvim",   name = "catppuccin" },
 
 	{
 		'kyazdani42/nvim-tree.lua',
@@ -35,9 +41,9 @@ local plugins = {
 	{
 		'feline-nvim/feline.nvim',
 		dependencies = {
-				"lewis6991/gitsigns.nvim",
-                                "kyazdani42/nvim-web-devicons",
-				config = function() require("gitsigns").setup() end
+			"lewis6991/gitsigns.nvim",
+			"kyazdani42/nvim-web-devicons",
+			config = function() require("gitsigns").setup() end
 		}
 	},
 
@@ -53,7 +59,10 @@ local plugins = {
 
 	{
 		"nvim-treesitter/nvim-treesitter",
-		build = ":TSUpdate",
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter-textobjects",
+			"windwp/nvim-ts-autotag",
+		}
 	},
 
 	"rafamadriz/friendly-snippets",
@@ -64,6 +73,8 @@ local plugins = {
 	"hrsh7th/cmp-path",
 	"saadparwaiz1/cmp_luasnip",
 	"hrsh7th/cmp-nvim-lua",
+
+	"jvgrootveld/telescope-zoxide",
 
 	{
 		"nvim-telescope/telescope.nvim",
@@ -76,8 +87,20 @@ local plugins = {
 	},
 
 	"udalov/kotlin-vim",
-	"simrat39/rust-tools.nvim",
 
+	"purescript-contrib/purescript-vim",
+
+	{
+		'saecki/crates.nvim',
+		tag = 'v0.3.0',
+		dependencies = { 'nvim-lua/plenary.nvim' },
+		config = function()
+			require('crates').setup()
+		end,
+	},
+
+	{ "folke/neodev.nvim", opts = {} },
+	"nvim-neotest/nvim-nio",
 	"mfussenegger/nvim-dap",
 	"rcarriga/nvim-dap-ui",
 	"nvim-telescope/telescope-dap.nvim",
@@ -101,7 +124,7 @@ local plugins = {
 
 	{
 		"folke/todo-comments.nvim",
-		dependencies = {"nvim-lua/plenary.nvim"},
+		dependencies = { "nvim-lua/plenary.nvim" },
 		config = function()
 			require("todo-comments").setup {}
 		end
@@ -111,8 +134,15 @@ local plugins = {
 	"mhartington/formatter.nvim",
 	"ggandor/lightspeed.nvim",
 	"andymass/vim-matchup",
-	"fedepujol/move.nvim",
+	{
+		"fedepujol/move.nvim",
+		config = function()
+			require("move").setup()
+		end
+	},
 	"LnL7/vim-nix",
+	"vmchale/dhall-vim",
+	"github/copilot.vim"
 }
 
 local opts = {}
