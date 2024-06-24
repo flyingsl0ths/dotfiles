@@ -1,5 +1,52 @@
 [[language]]
 name = "python"
-roots = ["pyproject.toml"]
-language-server = { command = "pyright-langserver", args = ["--stdio"] }
-config = {} # <- this is the important line
+language-servers = [ "pyright", "ruff" ]
+
+[language-server.pyright.config.python.analysis]
+typeCheckingMode = "basic"
+
+[language-server.ruff]
+command = "ruff-lsp"
+
+[language-server.ruff.config.settings]
+args = ["--ignore", "E501"]
+
+[language.formatter]
+command = "black"
+args = ["--line-length", "88", "--quiet", "-"]
+
+[language-server.emmet-ls]
+args = ["--stdio"]
+command="emmet-ls"
+
+[[language]]
+name = "html"
+formatter = { command = 'prettier', args = ["--parser", "html"] }
+
+[[language]]
+name = "json"
+formatter = { command = 'prettier', args = ["--parser", "json"] }
+
+[[language]]
+name = "css"
+formatter = { command = 'prettier', args = ["--parser", "css"] }
+
+[[language]]
+name = "javascript"
+formatter = { command = 'prettier', args = ["--parser", "typescript"] }
+auto-format = true
+
+[[language]]
+name = "typescript"
+formatter = { command = 'prettier', args = ["--parser", "typescript"] }
+auto-format = true
+
+[[language]]
+name = "haskell"
+auto-format = true
+formatter = { command = "zsh", args = ["-c", "fourmolu --stdin-input-file $(pwd)" ] }
+
+[[language]]
+name = "swift"
+formatter = { command = 'swift-format', args = ["format"] }
+auto-format = true
