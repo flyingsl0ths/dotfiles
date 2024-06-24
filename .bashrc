@@ -1,19 +1,30 @@
-[[ $- == *i* ]] && source $HOME/.local/share/blesh/ble.sh --noattach
-export ZSH_PLUGINS_DIR=$HOME/.zsh
-export ANDROID_HOME=$HOME/Android/Sdk
-export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+[[ $- == *i* ]] && source "$HOME/.local/share/blesh/ble.sh" --noattach
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  export ANDROID_HOME=$HOME/Android/Sdk
+  export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+  export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
+fi
+
 export PATH=$PATH:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.cargo/bin:$HOME/.npm-global:$HOME/.npm-global/bin:$HOME/go/bin:$HOME/.dotnet/tools
-export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
+
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  export PATH="/opt/homebrew/opt/llvm@15/bin:$PATH:/opt/homebrew/bin:$HOME/Library/Python/3.9/bin"
+fi
+
 export FZF_DEFAULT_OPTS=" \
 --color=bg+:#414559,bg:#303446,spinner:#f2d5cf,hl:#e78284 \
 --color=fg:#c6d0f5,header:#e78284,info:#ca9ee6,pointer:#f2d5cf \
 --color=marker:#f2d5cf,fg+:#c6d0f5,prompt:#ca9ee6,hl+:#e78284"
 
-[ -f "/home/flyingsl0ths/.ghcup/env" ] && source "/home/flyingsl0ths/.ghcup/env" # ghcup-env
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 
 PS1='\[\e[0;38;5;241m\]\[\e[0;38;5;75m\]\[\e[0;38;5;105m\]\[\e[0m\] \[\e[0;38;5;117m\]𝝺\[\e[0m\] \[\e[0m\]\w\[\e[0m\] \[\e[0m\]'
 
-shopt -s autocd
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  shopt -s autocd
+fi
+
 set -o vi
 
 # eval "$(starship init zsh)"
@@ -22,11 +33,14 @@ eval "$(direnv hook bash)"
 export HISTFILE=$HOME/.bash_history
 export HISTSIZE=999
 export HISTFILESIZE=999
-export TERMINAL=/usr/local/bin/alacritty
-pokemon-colorscripts -r --no-title
 
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  export TERMINAL=/usr/local/bin/alacritty
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  export TERMINAL=/Applications/Alacritty.app/Contents/MacOS/alacritty
+fi
 
-source $HOME/.config/broot/launcher/bash/br
+source "$HOME/.config/broot/launcher/bash/br"
 
 alias py="python3"
 alias pip_install="pip3 install --user"
@@ -120,3 +134,5 @@ alias gp="git pull"
 alias brc="nvim ~/.bashrc"
 
 [[ ${BLE_VERSION-} ]] && ble-attach
+
+source /Users/flyingsl0ths/.config/broot/launcher/bash/br
