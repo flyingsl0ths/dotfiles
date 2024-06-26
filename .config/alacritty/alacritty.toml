@@ -86,11 +86,11 @@ TERM = "alacritty"
 size = 16
 
 [font.bold]
-family = "JetBrainsMono NFM"
+family = "JetBrainsMono NF"
 style = "Bold"
 
 [font.bold_italic]
-family = "JetBrainsMono NFM"
+family = "JetBrainsMono NF"
 style = "Bold Italic"
 
 [font.italic]
