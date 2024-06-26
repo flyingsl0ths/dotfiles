@@ -1,3 +1,5 @@
+export FZF_DEFAULT_COMMAND='fd --type d -H'
+export _ZO_ECHO=0
 export ZSH_PLUGINS_DIR=$HOME/.zsh
 export ANDROID_HOME=$HOME/Android/Sdk
 export ANDROID_SDK_ROOT=$HOME/Android/Sdk
@@ -34,9 +36,11 @@ pokemon-colorscripts -r --no-title
 source $ZSH_PLUGINS_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZSH_PLUGINS_DIR/fast-syntax-highlighting/fast-syntax-highlighting.plugin.zsh
 source $ZSH_PLUGINS_DIR/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-source $HOME/.config/broot/launcher/bash/br
+
+eval "$(zoxide init zsh)"
 
 function cc() eva "($*)"
+function sd() cd && cd "$(fzf)"
 
 alias py="python3"
 alias pip_install="pip3 install --user"
@@ -100,6 +104,7 @@ alias mtp="jmtpfs -o auto_unmount"
 alias paste="xclip -i -sel c"
 alias ps="pipes.sh"
 alias cb="xclip -i -sel c"
+alias zl="zellij"
 
 alias xmr="xmonad --recompile && xmonad --restart"
 alias mic="doas make install && doas make clean"
