@@ -1,5 +1,5 @@
 local bufferline = require "bufferline"
-local mocha = require("catppuccin.palettes").get_palette "mocha"
+-- local mocha = require("catppuccin.palettes").get_palette "mocha"
 
 bufferline.setup {
 	options = {
@@ -18,15 +18,15 @@ bufferline.setup {
 		separator_style = "slope",
 		always_show_bufferline = false,
 	},
-	highlights = require("catppuccin.groups.integrations.bufferline").get {
-		styles = { "italic", "bold" },
-		custom = {
-			all = {
-				fill = { bg = "#000000" },
-			},
-			mocha = {
-				background = { fg = mocha.text },
-			},
-		},
-	},
+	-- highlights = require("catppuccin.groups.integrations.bufferline").get {
+	-- 	styles = { "italic", "bold" },
+	-- 	custom = {
+	-- 		all = {
+	-- 			fill = { bg = "#000000" },
+	-- 		},
+	-- 		mocha = {
+	-- 			background = { fg = mocha.text },
+	-- 		},
+	-- 	},
+	-- },
 }

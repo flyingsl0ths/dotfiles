@@ -6,7 +6,7 @@ if wezterm.config_builder then
     config = wezterm.config_builder()
 end
 
-config.color_scheme = "catppuccin-frappe"
+config.color_scheme = "nord"
 
 config.font =
     wezterm.font('JetBrainsMono Nerd Font')
