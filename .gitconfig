@@ -7,11 +7,11 @@
 	ah = checkout master
 	ci = commit -v
 	co = checkout
-    cl = clone
+  cl = clone
 	br = branch
 	grp = log --all --graph --decorate --oneline
 	last = log -1 HEAD
-    pl = pull
+  pl = pull
 	nci = diff --staged
 	rmk = rm --cached
 	rmkf = rm --cached -f
@@ -24,12 +24,12 @@
         
 [core]
 	editor = nvim
-    pager = delta
+  pager = delta
 
 [pull]
 	rebase = false
 
 
 [delta]
-    navigate = true
-    side-by-side = true
+  navigate = true
+  side-by-side = true
