@@ -79,6 +79,7 @@ local servers = {
 	"lua_ls",
 	"ocamllsp",
 	"purescriptls",
+	"pylsp",
 	"pyright",
 	"ruff_lsp",
 	"rust_analyzer",
