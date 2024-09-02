@@ -93,6 +93,8 @@ local plugins = {
 
 	"udalov/kotlin-vim",
 
+	"tikhomirov/vim-glsl",
+
 	"purescript-contrib/purescript-vim",
 
 	{
