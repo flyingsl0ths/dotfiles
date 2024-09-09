@@ -1,76 +1,55 @@
 live_config_reload = true
 
-[[colors.indexed_colors]]
-color = "#EF9F76"
-index = 16
-
-[[colors.indexed_colors]]
-color = "#F2D5CF"
-index = 17
-
-[colors.bright]
-black = "#626880"
-blue = "#8CAAEE"
-cyan = "#81C8BE"
-green = "#A6D189"
-magenta = "#F4B8E4"
-red = "#E78284"
-white = "#A5ADCE"
-yellow = "#E5C890"
+[colors.primary]
+background = "#2e3440"
+foreground = "#d8dee9"
+dim_foreground = "#a5abb6"
 
 [colors.cursor]
-cursor = "#F2D5CF"
-text = "#303446"
-
-[colors.dim]
-black = "#51576D"
-blue = "#8CAAEE"
-cyan = "#81C8BE"
-green = "#A6D189"
-magenta = "#F4B8E4"
-red = "#E78284"
-white = "#B5BFE2"
-yellow = "#E5C890"
-
-[colors.hints.end]
-background = "#A5ADCE"
-foreground = "#303446"
-
-[colors.hints.start]
-background = "#E5C890"
-foreground = "#303446"
-
-[colors.normal]
-black = "#51576D"
-blue = "#8CAAEE"
-cyan = "#81C8BE"
-green = "#A6D189"
-magenta = "#F4B8E4"
-red = "#E78284"
-white = "#B5BFE2"
-yellow = "#E5C890"
-
-[colors.primary]
-background = "#303446"
-bright_foreground = "#C6D0F5"
-dim_foreground = "#C6D0F5"
-foreground = "#C6D0F5"
-
-[colors.search.focused_match]
-background = "#A6D189"
-foreground = "#303446"
-
-[colors.search.matches]
-background = "#A5ADCE"
-foreground = "#303446"
-
-[colors.selection]
-background = "#F2D5CF"
-text = "#303446"
+text = "#2e3440"
+cursor = "#d8dee9"
 
 [colors.vi_mode_cursor]
-cursor = "#BABBF1"
-text = "#303446"
+text = "#2e3440"
+cursor = "#d8dee9"
+
+[colors.selection]
+text = "CellForeground"
+background = "#4c566a"
+
+[colors.search.matches]
+foreground = "CellBackground"
+background = "#88c0d0"
+
+[colors.normal]
+black = "#3b4252"
+red = "#bf616a"
+green = "#a3be8c"
+yellow = "#ebcb8b"
+blue = "#81a1c1"
+magenta = "#b48ead"
+cyan = "#88c0d0"
+white = "#e5e9f0"
+
+[colors.bright]
+black = "#4c566a"
+red = "#bf616a"
+green = "#a3be8c"
+yellow = "#ebcb8b"
+blue = "#81a1c1"
+magenta = "#b48ead"
+cyan = "#8fbcbb"
+white = "#eceff4"
+
+[colors.dim]
+black = "#373e4d"
+red = "#94545d"
+green = "#809575"
+yellow = "#b29e75"
+blue = "#68809a"
+magenta = "#8c738c"
+cyan = "#6d96a5"
+white = "#aeb3bb"
 
 [cursor]
 blink_interval = 750
@@ -83,7 +62,7 @@ shape = "Block"
 TERM = "alacritty"
 
 [font]
-size = 16
+size = 19
 
 [font.bold]
 family = "JetBrainsMono NF"
@@ -109,7 +88,7 @@ decorations = "full"
 decorations_theme_variant = "Dark"
 dynamic_padding = true
 dynamic_title = true
-opacity = 0.9
+opacity = 1
 
 [window.dimensions]
 columns = 85
