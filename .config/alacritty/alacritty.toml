@@ -1,4 +1,4 @@
-live_config_reload = true
+general.live_config_reload = true
 
 [colors.primary]
 background = "#2e3440"
@@ -80,7 +80,7 @@ style = "Italic"
 family = "JetBrainsMono NF"
 style = "Regular"
 
-[shell]
+[terminal.shell]
 program = "/bin/zsh"
 
 [window]
