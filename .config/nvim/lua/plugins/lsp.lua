@@ -80,12 +80,11 @@ local servers = {
 	"ocamllsp",
 	"purescriptls",
 	"pylsp",
-	"pyright",
 	"ruff_lsp",
-	"rust_analyzer",
+	-- "rust_analyzer",
 	"sourcekit",
 	"tailwindcss",
-	"tsserver",
+	"ts_ls",
 	"zls",
 }
 
