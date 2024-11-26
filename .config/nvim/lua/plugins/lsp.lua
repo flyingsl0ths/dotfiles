@@ -80,7 +80,7 @@ local servers = {
 	"ocamllsp",
 	"purescriptls",
 	"pylsp",
-	"ruff_lsp",
+	"ruff",
 	-- "rust_analyzer",
 	"sourcekit",
 	"tailwindcss",
