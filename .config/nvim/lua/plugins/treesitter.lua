@@ -19,6 +19,7 @@ ts_config.setup({
 		"json",
 		"kotlin",
 		"lua",
+		"meson",
 		"markdown",
 		"markdown_inline",
 		"ocaml",
