@@ -13,24 +13,9 @@ vim.keymap.set("n", "<Down>", ":echo 'Use j'<CR>", default_options)
 -- Cursor mappings
 vim.keymap.set("n", "<leader>hc", "*<CR>", silent_options)
 vim.keymap.set("n", "<leader><CR>", ":noh<CR>", silent_options)
-vim.keymap.set('n', '<leader>gc', ':%s/<C-R><C-W>//g<Left><Left>', { noremap = true })
 
-vim.keymap.set("v", "<leader>rc", function()
-	if vim.fn.visualmode() == "V" then
-		return ":s/<C-R><C-W>//<Left>"
-	else
-		return "<Esc>"
-	end
-end, { noremap = true, silent = true, expr = true })
-
--- Range substitution
-vim.keymap.set("v", "<leader>rs", function()
-	if vim.fn.visualmode() == "V" then
-		return ":s//<Left>"
-	else
-		return "<Esc>"
-	end
-end, { noremap = true, silent = true, expr = true })
+-- Substitution mappings
+vim.api.nvim_set_keymap('x', '<leader>sr', '"sy:\'<,\'>s/<C-r>s//g<Left><Left>', { noremap = true, silent = true })
 
 -- Move.nvim mappings
 vim.keymap.set("n", "<A-j>", ":MoveLine(1)<CR>", default_options)
@@ -75,7 +60,7 @@ vim.keymap.set("n", "<leader>'", ":split<CR>", default_options)
 vim.keymap.set("n", "<leader>n", ":set nu!<CR>", default_options)
 
 -- Toggle spellchecker
-vim.keymap.set("n", "<leader>s", ":setlocal spell!<CR>", default_options)
+vim.keymap.set("n", "<leader>sp", ":setlocal spell!<CR>", default_options)
 
 -- Copy/Paste
 vim.keymap.set("v", "<C-q>", '"+y', default_options)
