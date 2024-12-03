@@ -4,17 +4,16 @@ from sys import argv
 from subprocess import check_output, CalledProcessError
 from os import system
 
-BRIGHTNESS_CMD: str = "mac-brightnessctl"
+# Assumes that the "mac-brightnessctl" is installed via homebrew
+BRIGHTNESS_CMD = "/opt/homebrew/bin/mac-brightnessctl"
 
-Number = int | float
 
-
-def clamp[T: Number](n: Number, lower: Number, upper: Number) -> Number:
+def clamp(n, lower, upper):
     """Clamp a number between a lower and upper bound"""
     return max(min(n, upper), lower)
 
 
-def check_if_brightness_cmd_exists() -> None:
+def check_if_brightness_cmd_exists():
     try:
         check_output(f"{BRIGHTNESS_CMD}", shell=True, text=True)
     except CalledProcessError:
@@ -22,22 +21,24 @@ def check_if_brightness_cmd_exists() -> None:
 
 
 def main() -> None:
-    SCRIPT_NAME: str = argv[0]
+    SCRIPT_NAME = argv[0]
+
+    USAGE_WARNING = f"{SCRIPT_NAME}: usage: -/+<amount>"
 
     if len(argv) != 2:
-        print(f"Usage: {SCRIPT_NAME} +/-:<number>")
+        print(USAGE_WARNING)
         exit(1)
     else:
-        arg: str = argv[1]
+        arg = argv[1]
 
-        modifier: str = arg[0]
+        modifier = arg[0]
 
-        if modifier != "+" and modifier != "-":
-            print(f"Usage: {SCRIPT_NAME} +/-:<number>")
+        if modifier != "-" and modifier != "+":
+            print(USAGE_WARNING)
             exit(1)
         else:
             try:
-                amount: float = float(arg[1:])
+                amount = float(arg[1:])
 
                 brightness = check_output(f"{BRIGHTNESS_CMD}", shell=True, text=True)
 
@@ -55,7 +56,7 @@ def main() -> None:
 
                 exit(0)
             except ValueError:
-                print(f"Usage: {SCRIPT_NAME} +/-:<number>")
+                print(USAGE_WARNING)
                 exit(1)
 
 
