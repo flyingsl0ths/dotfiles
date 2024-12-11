@@ -1,15 +1,6 @@
 -- Individual Server Configs
 local lspconfig = require "lspconfig"
 
-local function lsp_symbol(name, icon)
-	vim.fn.sign_define("LspDiagnosticsSign" .. name,
-		{ text = icon, numhl = "LspDiagnosticsDefault" .. name })
-end
-
-lsp_symbol("Error", "")
-lsp_symbol("Information", "")
-lsp_symbol("Hint", "")
-lsp_symbol("Warning", "")
 
 vim.lsp.handlers["textDocument/hover"] = vim.lsp.with(vim.lsp.handlers.hover, { border = "single" })
 
@@ -21,6 +12,13 @@ local signs = {
 	HINT = '',
 	INFO = '',
 }
+
+for _, type in ipairs({ "Error", "Warn", "Info", "Hint" }) do
+	local hl = "DiagnosticSign" .. type
+	local hl2 = "Diagnostic" .. type
+	vim.fn.sign_define(hl, { text = signs[type:upper()], texthl = hl2, numhl = hl2 })
+end
+
 vim.lsp.handlers["textDocument/publishDiagnostics"] = vim.lsp.with(
 	vim.lsp.diagnostic.on_publish_diagnostics,
 	{
@@ -43,7 +41,7 @@ lspconfig.emmet_ls.setup {
 		'typescriptreact', 'haml', 'xml', 'xsl', 'pug', 'slim', 'sass',
 		'stylus', 'less', 'sss'
 	},
-	root_dir = function(fname) return vim.loop.cwd() end,
+	root_dir = function() return vim.loop.cwd() end,
 }
 
 capabilities.textDocument.completion.completionItem.documentationFormat = {
