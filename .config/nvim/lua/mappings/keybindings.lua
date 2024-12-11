@@ -86,6 +86,7 @@ vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", default_options)
 vim.keymap.set("n", "<leader>lg", ":Telescope live_grep<CR>", default_options)
 vim.keymap.set("n", "<leader>ht", ":Telescope help_tags<CR>", default_options)
 vim.keymap.set("n", "<leader>bb", ":Telescope buffers<CR>", default_options)
+vim.keymap.set("n", "<leader>kk", ":Telescope keymaps<CR>", default_options)
 
 -- Diagnostics
 vim.keymap.set("n", "<C-e>", "<cmd>lua vim.diagnostic.open_float()<CR>", default_options)
