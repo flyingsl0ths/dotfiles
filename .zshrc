@@ -69,6 +69,14 @@ eval "$(zoxide init zsh)"
 
 function sd() cd && cd $(fzf)
 
+function zed()  {
+if [[ "$OSTYPE" == "darwin"* ]]; then
+  open -a "Zed"
+elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  zeditor
+fi
+}
+
 alias py="python3.12"
 alias pip_install="pip3 install --user"
 alias bpy="bpython"
@@ -120,7 +128,6 @@ alias sp="scratchpad"
 alias fm="ranger"
 alias xtr="tar xf"
 alias code="vscodium"
-alias zed="zeditor"
 alias n="nvim"
 alias v="TERM=xterm-256color vim"
 alias zth="zathura"
