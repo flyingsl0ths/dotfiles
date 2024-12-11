@@ -96,7 +96,7 @@ table.insert(components.active[LEFT_SIDE], {
 table.insert(components.active[LEFT_SIDE], {
 	-- provider = "diagnostic_info",
 	provider = function()
-		return "  " .. lsp.get_diagnostics_count(vim.diagnostic.INFO)
+		return "  " .. lsp.get_diagnostics_count(vim.diagnostic.INFO)
 	end,
 	enabled = function()
 		return lsp.diagnostics_exist(vim.diagnostic.severity.INFO)
@@ -107,7 +107,7 @@ table.insert(components.active[LEFT_SIDE], {
 table.insert(components.active[LEFT_SIDE], {
 	-- provider = "diagnostic_hints",
 	provider = function()
-		return "  " .. lsp.get_diagnostics_count(vim.diagnostic.HINT)
+		return "  " .. lsp.get_diagnostics_count(vim.diagnostic.HINT)
 	end,
 	enabled = function()
 		return lsp.diagnostics_exist(vim.diagnostic.severity.HINT)
