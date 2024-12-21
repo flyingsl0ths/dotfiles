@@ -15,7 +15,8 @@ vim.keymap.set("n", "<leader>hc", "*<CR>", silent_options)
 vim.keymap.set("n", "<leader><CR>", ":noh<CR>", silent_options)
 
 -- Substitution mappings
-vim.api.nvim_set_keymap('x', '<leader>sr', '"sy:\'<,\'>s/<C-r>s//g<Left><Left>', { noremap = true, silent = true })
+vim.api.nvim_set_keymap('x', '<leader>sr', '"sy:\'<,\'>s/<C-r>s//g<Left><Left>',
+	{ noremap = true, silent = true })
 
 -- Move.nvim mappings
 vim.keymap.set("n", "<A-j>", ":MoveLine(1)<CR>", default_options)
@@ -87,6 +88,7 @@ vim.keymap.set("n", "<leader>lg", ":Telescope live_grep<CR>", default_options)
 vim.keymap.set("n", "<leader>ht", ":Telescope help_tags<CR>", default_options)
 vim.keymap.set("n", "<leader>bb", ":Telescope buffers<CR>", default_options)
 vim.keymap.set("n", "<leader>kk", ":Telescope keymaps<CR>", default_options)
+vim.keymap.set("n", "<leader>sh", ":Telescope search_history<CR>", default_options)
 
 -- Diagnostics
 vim.keymap.set("n", "<C-e>", "<cmd>lua vim.diagnostic.open_float()<CR>", default_options)
