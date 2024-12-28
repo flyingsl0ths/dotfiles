@@ -89,10 +89,16 @@ vim.keymap.set("n", "<leader>ht", ":Telescope help_tags<CR>", default_options)
 vim.keymap.set("n", "<leader>bb", ":Telescope buffers<CR>", default_options)
 vim.keymap.set("n", "<leader>kk", ":Telescope keymaps<CR>", default_options)
 vim.keymap.set("n", "<leader>sh", ":Telescope search_history<CR>", default_options)
+vim.keymap.set("n", "<leader>sh", ":Telescope search_history<CR>", default_options)
 
--- Diagnostics
+-- Telescope:Git
+vim.keymap.set("n", "<leader>cs", ":Telescope git_commits<CR>", default_options)
+vim.keymap.set("n", "<leader>bs", ":Telescope git_branches<CR>", default_options)
+
+-- Telescope:Lsp
 vim.keymap.set("n", "<C-e>", "<cmd>lua vim.diagnostic.open_float()<CR>", default_options)
 vim.keymap.set("n", "<leader>ld", ":Telescope diagnostics<CR>", default_options)
+vim.keymap.set("n", "<leader>ls", ":Telescope treesitter<CR>", default_options)
 
 -- Debugging (DAP)
 vim.keymap.set("n", "<F4>", ":lua require('osv').run_this()<CR>", default_options)
