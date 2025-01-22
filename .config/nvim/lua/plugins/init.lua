@@ -106,12 +106,6 @@ local plugins = {
 		end,
 	},
 
-	{
-		'mrcjkb/rustaceanvim',
-		version = '^5', -- Recommended
-		lazy = false, -- This plugin is already lazy
-	},
-
 	{ "folke/neodev.nvim", opts = {} },
 	"nvim-neotest/nvim-nio",
 	"mfussenegger/nvim-dap",

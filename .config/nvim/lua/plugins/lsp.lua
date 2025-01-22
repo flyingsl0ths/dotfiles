@@ -85,7 +85,7 @@ local servers = {
 	"purescriptls",
 	"pylsp",
 	"ruff",
-	-- "rust_analyzer",
+	"rust_analyzer",
 	"sourcekit",
 	"tailwindcss",
 	"ts_ls",
