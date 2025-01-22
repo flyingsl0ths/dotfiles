@@ -4,6 +4,7 @@ theme = "catppuccin_frappe"
 line-number = "relative"
 cursorline = true
 color-modes = true
+end-of-line-diagnostics = "hint"
 
 [editor.cursor-shape]
 insert = "bar"
@@ -13,10 +14,14 @@ select = "underline"
 [editor.indent-guides]
 render = true
 
+[editor.inline-diagnostics]
+cursor-line = "error"
+
 [keys.normal]
 "C-f" = ":format"
-"C-p" = ":write"
-"C-b" = ":buffer-next"
+"C-w" = ":write"
+"C-n" = ":buffer-previous"
+"C-m" = ":buffer-next"
 "C-q" = ":q"
 "S-q" = ":wq"
 "C-d" = "kill_to_line_end"
@@ -26,3 +31,5 @@ render = true
 "C-k" = "jump_view_up"
 "C-e" = ":vsplit-new"
 "C-r" = ":hsplit-new"
+"S-y" = ":primary-clipboard-yank"
+"C-p" = ":primary-clipboard-paste-after"
