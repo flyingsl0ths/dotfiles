@@ -1,4 +1,4 @@
-theme = "catppuccin_frappe"
+theme = "nord-night"
 
 [editor]
 true-color = true
@@ -28,7 +28,7 @@ hidden = false
 [keys.normal]
 esc = ["collapse_selection", "keep_primary_selection"]
 tab = ":buffer-previous"
-"C-f" = ":format"
+"A-f" = ":format"
 "C-w" = ":write"
 "S-tab" = ":buffer-next"
 "C-q" = ":q"
@@ -40,9 +40,7 @@ tab = ":buffer-previous"
 "C-k" = "jump_view_up"
 "C-e" = ":vsplit-new"
 "C-r" = ":hsplit-new"
-"S-y" = ":primary-clipboard-yank"
 "S-k" = "hover"
-"C-p" = ":primary-clipboard-paste-after"
 "A-r" = ":config-reload"
 "A-j" = ["extend_to_line_bounds", "delete_selection", "paste_after"]
 "A-k" = ["extend_to_line_bounds", "delete_selection", "move_line_up", "paste_before"]
