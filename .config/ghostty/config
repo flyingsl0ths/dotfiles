@@ -1,0 +1,4 @@
+theme = nord
+font-family = "JetBrainsMono Nerd Font"
+font-size = 22
+cursor-style = block_hollow
