@@ -11,9 +11,7 @@ if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   export ANDROID_HOME=$HOME/Android/Sdk
   export ANDROID_SDK_ROOT=$ANDROID_HOME
   export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
-fi
-
-if [[ "$OSTYPE" == "darwin"* ]]; then
+elif [[ "$OSTYPE" == "darwin"* ]]; then
   export ANDROID_HOME=$HOME/Library/Android/sdk
   export ANDROID_SDK_ROOT=$ANDROID_HOME
   export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
@@ -144,15 +142,11 @@ alias fm="ranger"
 alias xtr="tar xf"
 alias code="vscodium"
 alias n="nvim"
-
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  alias hx="helix"
-fi
-
 alias v="TERM=xterm-256color vim"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
   alias e="helix"
+  alias hx="helix"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
   alias e="hx"
 fi
