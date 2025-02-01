@@ -8,19 +8,19 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
     --color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b'
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-	export ANDROID_HOME=$HOME/Android/Sdk
-	export ANDROID_SDK_ROOT=$ANDROID_HOME
-	export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
+  export ANDROID_HOME=$HOME/Android/Sdk
+  export ANDROID_SDK_ROOT=$ANDROID_HOME
+  export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
 fi
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-	export ANDROID_HOME=$HOME/Library/Android/sdk
-	export ANDROID_SDK_ROOT=$ANDROID_HOME
-	export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
-	export PATH="/opt/homebrew/opt/llvm/bin:$PATH:/opt/homebrew/bin"
-	for version in $(ls "$HOME/Library/Python"); do
-		export PATH=$PATH:"$HOME/Library/Python/$version/bin"
-	done
+  export ANDROID_HOME=$HOME/Library/Android/sdk
+  export ANDROID_SDK_ROOT=$ANDROID_HOME
+  export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
+  export PATH="/opt/homebrew/opt/llvm/bin:$PATH:/opt/homebrew/bin"
+  for version in $(ls "$HOME/Library/Python"); do
+    export PATH=$PATH:"$HOME/Library/Python/$version/bin"
+  done
 fi
 
 # BEGIN opam configuration
@@ -45,9 +45,9 @@ SAVEHIST=1000
 HISTSIZE=999
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-	TERMINAL=/usr/local/bin/alacritty
+  TERMINAL=/usr/local/bin/alacritty
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-	TERMINAL=/Applications/Alacritty.app/Contents/MacOS/alacritty
+  TERMINAL=/Applications/Alacritty.app/Contents/MacOS/alacritty
 fi
 
 # enable vi mode
@@ -70,26 +70,26 @@ eval "$(zoxide init zsh)"
 function sd() cd && cd $(fzf)
 
 function zed() {
-   if [ -n "$1" ] && [ "$1" = "q" ]; then
-        quit_after=true
-    else
-        quit_after=false
-    fi
+  if [ -n "$1" ] && [ "$1" = "q" ]; then
+    quit_after=true
+  else
+    quit_after=false
+  fi
 
-	if [[ "$OSTYPE" == "darwin"* ]]; then
+  if [[ "$OSTYPE" == "darwin"* ]]; then
     if [ "$quit_after" = true ]; then
       open -a "Zed" && exit
     else
       open -a "Zed"
     fi
-	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
     if [ "$quit_after" = true ]; then
       zeditor && exit
     else
       zeditor
     fi
-	fi
+  fi
 }
 
 alias py="python3.12"
@@ -144,9 +144,19 @@ alias fm="ranger"
 alias xtr="tar xf"
 alias code="vscodium"
 alias n="nvim"
-alias hx="helix"
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  alias hx="helix"
+fi
+
 alias v="TERM=xterm-256color vim"
-alias e="helix"
+
+if [[ "$OSTYPE" == "linux-gnu"* ]]; then
+  alias e="helix"
+elif [[ "$OSTYPE" == "darwin"* ]]; then
+  alias e="hx"
+fi
+
 alias zth="zathura"
 alias valgrind="valgrind --leak-check=full"
 alias cat="bat --theme 'Catppuccin Frappe'"
