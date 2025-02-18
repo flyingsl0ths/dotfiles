@@ -34,6 +34,7 @@ cmp.setup {
 				luasnip = "[LuaSnip]",
 				nvim_lua = "[Lua]",
 				latex_symbols = "[LaTeX]",
+				npm = "[npm]",
 			})[entry.source.name]
 
 			return vim_item

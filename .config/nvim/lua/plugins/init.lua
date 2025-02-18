@@ -102,6 +102,7 @@ local plugins = {
 
 	{
 		"David-Kunz/cmp-npm",
+		event = { "BufRead package.json" },
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		ft = "json",
 		config = function()
