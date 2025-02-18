@@ -27,10 +27,12 @@ hidden = false
 
 [keys.normal]
 esc = ["collapse_selection", "keep_primary_selection"]
-tab = ":buffer-previous"
+tab = ":buffer-next"
+"A-w" = ":write-all"
+"S-tab" = ":buffer-previous"
+"S-d" = ["extend_line_below", "delete_selection"]
 "A-f" = ":format"
 "C-w" = ":write"
-"S-tab" = ":buffer-next"
 "C-q" = ":q"
 "S-q" = ":wq"
 "C-d" = "kill_to_line_end"
