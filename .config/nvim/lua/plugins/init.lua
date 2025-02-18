@@ -24,7 +24,7 @@ local plugins = {
 	},
 
 
-	-- { "catppuccin/nvim",   name = "catppuccin", priority = 1000 },
+	{ "catppuccin/nvim",   name = "catppuccin", priority = 1000 },
 
 	"nordtheme/vim",
 
@@ -86,7 +86,6 @@ local plugins = {
 		dependencies = {
 			"nvim-lua/popup.nvim",
 			"nvim-lua/plenary.nvim",
-			"nvim-telescope/telescope-media-files.nvim",
 			"nvim-telescope/telescope-live-grep-args.nvim",
 		}
 	},
