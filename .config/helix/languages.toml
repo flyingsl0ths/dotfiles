@@ -43,8 +43,8 @@ auto-format = true
 
 [[language]]
 name = "haskell"
+formatter = { command = "stylish-haskell", args = [] }
 auto-format = true
-formatter = { command = "zsh", args = ["-c", "fourmolu --stdin-input-file $(pwd)" ] }
 
 [[language]]
 name = "swift"
