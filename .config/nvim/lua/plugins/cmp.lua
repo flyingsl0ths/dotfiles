@@ -4,12 +4,14 @@ vim.g.completeopt = "menu,menuone,noselect,noinsert"
 -- Don't show the dumb matching stuff.
 vim.opt.shortmess:append "c"
 
-require("luasnip/loaders/from_vscode").load()
 
--- nvim-cmp setup
 local cmp = require 'cmp'
 local lspkind_icons = require("plugins.lspkind_icons")
 local luasnip = require('luasnip')
+
+require("luasnip.loaders.from_vscode").lazy_load()
+require('cmp-npm').setup({})
+
 
 cmp.setup {
 	view = {
@@ -72,8 +74,18 @@ cmp.setup {
 	},
 
 	sources = {
-		{ name = 'nvim_lsp' }, { name = "path" }, { name = "buffer" }, { name = 'luasnip' },
-		{ name = "nvim_lua" }, { name = "crates" }
+		{ name = 'luasnip' },
+		{ name = 'nvim_lsp' },
+		{ name = "nvim_lua" },
+		{ name = "buffer" },
+		{ name = "buffer-lines" },
+		{ name = "crates" },
+		{ name = "crates" },
+		{ name = 'npm',         keyword_length = 4 },
+		{ name = "path" },
+		{ name = "calc" },
+		{ name = "emoji" },
+		{ name = "nerdfont" }
 	}
 
 }

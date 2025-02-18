@@ -70,16 +70,47 @@ local plugins = {
 		}
 	},
 
-	"rafamadriz/friendly-snippets",
-	"L3MON4D3/LuaSnip",
+
 	"hrsh7th/nvim-cmp",
 	"hrsh7th/cmp-nvim-lsp",
 	"hrsh7th/cmp-buffer",
 	"hrsh7th/cmp-path",
-	"saadparwaiz1/cmp_luasnip",
+	"hrsh7th/cmp-calc",
 	"hrsh7th/cmp-nvim-lua",
+	"hrsh7th/cmp-emoji",
+
+	{
+		"L3MON4D3/LuaSnip",
+		-- follow latest release.
+		version = "v2.*", -- Replace <CurrentMajor> by the latest released major (first number of latest release)
+		-- install jsregexp (optional!).
+		build = "make install_jsregexp",
+		dependencies = { "rafamadriz/friendly-snippets" }
+	},
+
+	"amarakon/nvim-cmp-buffer-lines",
+
+	"saadparwaiz1/cmp_luasnip",
+
+	{
+		'saecki/crates.nvim',
+		event = { "BufRead Cargo.toml" },
+		config = function()
+			require('crates').setup()
+		end,
+	},
+
+	{
+		"David-Kunz/cmp-npm",
+		dependencies = { 'nvim-lua/plenary.nvim' },
+		ft = "json",
+		config = function()
+			require('cmp-npm').setup({})
+		end
+	},
 
 	"jvgrootveld/telescope-zoxide",
+	"chrisgrieser/cmp-nerdfont",
 
 	{
 		"nvim-telescope/telescope.nvim",
@@ -95,15 +126,6 @@ local plugins = {
 	"tikhomirov/vim-glsl",
 
 	"purescript-contrib/purescript-vim",
-
-	{
-		'saecki/crates.nvim',
-		tag = 'v0.3.0',
-		dependencies = { 'nvim-lua/plenary.nvim' },
-		config = function()
-			require('crates').setup()
-		end,
-	},
 
 	{ "folke/neodev.nvim", opts = {} },
 	"nvim-neotest/nvim-nio",
