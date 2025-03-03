@@ -4,7 +4,7 @@ local dpi = xresources.apply_dpi
 local icon_directory = os.getenv("HOME") .. "/.config/awesome/icons/"
 
 local theme = {
-	font = "JetBrainsMono Nerd Font, Medium 13",
+	font = "JetBrainsMono Nerd Font, Medium 10",
 	bg_normal = "#1E1E2E",
 	bg_focus = "#96CDFB",
 	bg_urgent = "#F28FAD",
