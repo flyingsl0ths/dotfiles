@@ -130,7 +130,7 @@ alias ld="cd -"
 alias ls="eza --icons -1"
 alias la="eza --icons -1 --all"
 alias ll="eza --icons -1 -l"
-alias lhi="eza --icons -1 -l -i"
+alias li="eza --icons -1 -l -i"
 alias dcr="gpg --quiet -d"
 
 alias mkdir="mkdir -p"
