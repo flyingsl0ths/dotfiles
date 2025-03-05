@@ -1,4 +1,4 @@
-theme = nord
 font-family = "JetBrainsMono Nerd Font"
-font-size = 22
+font-size = 20
 cursor-style = block_hollow
+window-padding-x = 4
