@@ -36,11 +36,6 @@ capabilities.textDocument.completion.completionItem.snippetSupport = true
 lspconfig.emmet_ls.setup {
 	capabilities = capabilities,
 
-	filetypes = {
-		'html', 'css', 'scss', 'javascript', 'javascriptreact', 'typescript',
-		'typescriptreact', 'haml', 'xml', 'xsl', 'pug', 'slim', 'sass',
-		'stylus', 'less', 'sss'
-	},
 	root_dir = function() return vim.loop.cwd() end,
 }
 
@@ -65,6 +60,7 @@ capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
 local servers = {
 	"bashls",
+	"biome",
 	"clangd",
 	"cmake",
 	"csharp_ls",
@@ -92,10 +88,22 @@ local servers = {
 	"zls",
 }
 
+local function configure_tailwindcss(opts)
+	local filetypes = {}
+
+	for _, filetype in ipairs(opts.filetypes) do
+		if not (filetype == "javascript" or filetype == "typescript") then
+			table.insert(filetypes, filetype)
+		end
+	end
+
+	opts.filetypes = filetypes
+end
+
 local function configure_hls(opts)
 	opts.settings = {
 		haskell = {
-			formattingProvider = "fourmolu",
+			formattingProvider = "stylish-haskell",
 			plugin = {
 				hlint = {
 					diagnosticsOn = true
@@ -140,12 +148,9 @@ for _, lsp in pairs(servers) do
 				"deno.json", "deno.jsonc"
 			)(fname)
 		end
-	elseif server.name == "tsserver" then
-		opts.root_dir = function(fname)
-			return require 'lspconfig'.util.root_pattern(
-				"package.json", "tsconfig.json", "jsconfig.json"
-			)(fname)
-		end
+	elseif server.name == "tailwindcss" then
+		opts.filetypes = server.config_def.default_config.filetypes
+		configure_tailwindcss(opts)
 	elseif server.name == "sourcekit" then
 		opts.filetypes = { "swift", "objective-c", "objective-cpp" }
 	end

@@ -1,17 +1,3 @@
-local prettier =
-{
-	function()
-		return {
-			exe = "prettier",
-			args = {
-				"--stdin-filepath",
-				vim.fn.fnameescape(vim.api.nvim_buf_get_name(0))
-			},
-			stdin = true
-		}
-	end
-}
-
 local shfmt = {
 	-- Shell Script Formatter
 	function() return { exe = "shfmt", args = { "-i", 2 }, stdin = true } end
@@ -22,18 +8,6 @@ require('formatter').setup({
 		zsh = shfmt,
 		sh = shfmt,
 		dockerfile = shfmt,
-
-		html = prettier,
-		xhtml = prettier,
-		scss = prettier,
-		css = prettier,
-		markdown = prettier,
-		json = prettier,
-		javascriptreact = prettier,
-		typescriptreact = prettier,
-		yaml = prettier,
-		javascript = prettier,
-		typescript = prettier,
 
 		cabal = {
 			-- Shell Script Formatter
@@ -111,6 +85,6 @@ require('formatter').setup({
 vim.api.nvim_exec([[
 augroup FormatAutogroup
   autocmd!
-  autocmd BufWritePost *.lua,Dockerfile,*.sh,*.html,*.cmake,*.xhtml,*.css,*scss,*.swift,*.md,*.yaml,*.js,*.ts,*.jsx,*.tsx,*.json,*.nix,*.cabal FormatWrite
+  autocmd BufWritePost *.lua,Dockerfile,*.sh,*.cmake,*.swift,*.md,*.nix,*.cabal FormatWrite
 augroup END
 ]], true)
