@@ -90,7 +90,7 @@ function zed() {
   fi
 }
 
-alias py="python3.12"
+alias py="python3"
 alias pip_install="pip3 install --user"
 alias bpy="bpython"
 alias cc="noglob cc"
