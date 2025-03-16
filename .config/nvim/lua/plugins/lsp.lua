@@ -1,4 +1,3 @@
--- Individual Server Configs
 local lspconfig = require "lspconfig"
 
 
@@ -129,7 +128,7 @@ local function configure_jdtls(opts)
 	end
 end
 
-local lsp_utils = require "conf_utils.lsp_utils"
+local lsp_utils = require "conf_utils.lsp"
 
 for _, lsp in pairs(servers) do
 	local server = lspconfig[lsp]
