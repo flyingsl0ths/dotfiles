@@ -1,26 +1,31 @@
+-- Bootstrap lazy.nvim
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
-
-if not vim.loop.fs_stat(lazypath) then
-	vim.fn.system({
-		"git",
-		"clone",
-		"--filter=blob:none",
-		"https://github.com/folke/lazy.nvim.git",
-		"--branch=stable", -- latest stable release
-		lazypath,
-	})
+if not (vim.uv or vim.loop).fs_stat(lazypath) then
+	local lazyrepo = "https://github.com/folke/lazy.nvim.git"
+	local out = vim.fn.system({ "git", "clone", "--filter=blob:none", "--branch=stable", lazyrepo, lazypath })
+	if vim.v.shell_error ~= 0 then
+		vim.api.nvim_echo({
+			{ "Failed to clone lazy.nvim:\n", "ErrorMsg" },
+			{ out,                            "WarningMsg" },
+			{ "\nPress any key to exit..." },
+		}, true, {})
+		vim.fn.getchar()
+		os.exit(1)
+	end
 end
-
 vim.opt.rtp:prepend(lazypath)
+
+-- Make sure to setup `mapleader` and `maplocalleader` before
+-- loading lazy.nvim so that mappings are correct.
+-- This is also a good place to setup other settings (vim.opt)
+vim.g.mapleader = " "
+vim.g.maplocalleader = "\\"
 
 local plugins = {
 	"wbthomason/packer.nvim",
 
 	{
-		"NvChad/nvterm",
-		config = function()
-			require("nvterm").setup()
-		end,
+		"NvChad/nvterm", opts = {}
 	},
 
 
@@ -48,7 +53,7 @@ local plugins = {
 		dependencies = {
 			"lewis6991/gitsigns.nvim",
 			"kyazdani42/nvim-web-devicons",
-			config = function() require("gitsigns").setup() end
+			opts = {}
 		}
 	},
 
@@ -95,9 +100,7 @@ local plugins = {
 	{
 		'saecki/crates.nvim',
 		event = { "BufRead Cargo.toml" },
-		config = function()
-			require('crates').setup()
-		end,
+		opts = {}
 	},
 
 	{
@@ -105,9 +108,7 @@ local plugins = {
 		event = { "BufRead package.json" },
 		dependencies = { 'nvim-lua/plenary.nvim' },
 		ft = "json",
-		config = function()
-			require('cmp-npm').setup({})
-		end
+		opts = {}
 	},
 
 	"jvgrootveld/telescope-zoxide",
@@ -131,16 +132,19 @@ local plugins = {
 	{ "folke/neodev.nvim", opts = {} },
 	"nvim-neotest/nvim-nio",
 	"mfussenegger/nvim-dap",
-	"rcarriga/nvim-dap-ui",
+
+	{
+		"rcarriga/nvim-dap-ui",
+		opts = {}
+	},
+
 	"nvim-telescope/telescope-dap.nvim",
 	"mfussenegger/nvim-dap-python",
 	"jbyuki/one-small-step-for-vimkind",
 
 	{
 		"simrat39/symbols-outline.nvim",
-		config = function()
-			require("symbols-outline").setup()
-		end
+		opts = {}
 	},
 
 	"szw/vim-maximizer",
@@ -148,15 +152,13 @@ local plugins = {
 
 	{
 		'numToStr/Comment.nvim',
-		config = function() require('Comment').setup() end
+		opts = {}
 	},
 
 	{
 		"folke/todo-comments.nvim",
 		dependencies = { "nvim-lua/plenary.nvim" },
-		config = function()
-			require("todo-comments").setup {}
-		end
+		opts = {}
 	},
 
 	"gpanders/editorconfig.nvim",
@@ -165,9 +167,7 @@ local plugins = {
 	"andymass/vim-matchup",
 	{
 		"fedepujol/move.nvim",
-		config = function()
-			require("move").setup()
-		end
+		opts = {}
 	},
 	"LnL7/vim-nix",
 	"vmchale/dhall-vim",
@@ -181,6 +181,4 @@ local plugins = {
 
 }
 
-local opts = {}
-
-require("lazy").setup(plugins, opts)
+require("lazy").setup(plugins)
