@@ -1,11 +1,10 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [
-      # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+  ];
 
   nixpkgs.config.allowUnfree = true;
 
@@ -17,14 +16,12 @@
 
   networking.hostName = "nixos"; # Define your hostname.
 
-  networking.extraHosts =
-    let
-      myHostFile = pkgs.fetchurl {
-        url = "https://block.energized.pro/ultimate/formats/hosts.txt";
-        sha256 = "sha256-RH1p0E/0DDnFHdXrhM7rsQJXHZzG9QyMoCylBdjJYSI=";
-      };
-    in
-    '' ${builtins.readFile myHostFile} '';
+  networking.extraHosts = let
+    myHostFile = pkgs.fetchurl {
+      url = "https://block.energized.pro/ultimate/formats/hosts.txt";
+      sha256 = "sha256-RH1p0E/0DDnFHdXrhM7rsQJXHZzG9QyMoCylBdjJYSI=";
+    };
+  in "${builtins.readFile myHostFile} ";
 
   # Enable networking
   networking.networkmanager.enable = true;
@@ -70,9 +67,8 @@
         };
       });
 
-      vim_configurable = super.vim_configurable.overrideAttrs (old: {
-        python = pkgs.python310;
-      });
+      vim_configurable = super.vim_configurable.overrideAttrs
+        (old: { python = pkgs.python310; });
     })
   ];
 
@@ -86,11 +82,10 @@
   services.gnome.core-utilities.enable = false;
 
   # Enable the i3 window manager
-  services.xserver.windowManager.i3 =
-    {
-      enable = true;
-      package = pkgs.i3-gaps;
-    };
+  services.xserver.windowManager.i3 = {
+    enable = true;
+    package = pkgs.i3-gaps;
+  };
 
   services.xserver.windowManager.awesome.enable = true;
 
@@ -119,9 +114,7 @@
   ];
 
   # For 32 bit applications 
-  hardware.opengl.extraPackages32 = with pkgs; [
-    pkgsi686Linux.libva
-  ];
+  hardware.opengl.extraPackages32 = with pkgs; [ pkgsi686Linux.libva ];
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -152,10 +145,7 @@
     extraGroups = [ "networkmanager" "wheel" ];
   };
 
-  users.users.flyingsloths.packages = with pkgs;
-    [
-      vulkan-tools
-    ];
+  users.users.flyingsloths.packages = with pkgs; [ vulkan-tools ];
 
   programs.bash.enableCompletion = true;
   users.users.flyingsloths.shell = pkgs.zsh;
@@ -286,9 +276,12 @@
     zathura
   ];
 
-  fonts.fonts = with pkgs; [
-    (nerdfonts.override { fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ]; })
-  ];
+  fonts.fonts = with pkgs;
+    [
+      (nerdfonts.override {
+        fonts = [ "FiraCode" "DroidSansMono" "JetBrainsMono" ];
+      })
+    ];
 
   # List services that you want to enable:
 
