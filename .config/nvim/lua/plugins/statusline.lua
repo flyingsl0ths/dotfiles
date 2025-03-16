@@ -1,19 +1,34 @@
 local statusline = require "feline"
 
-local colors = {
-	bg = "#3B4252",
-	fg = "#E5E9F0",
+local colors = vim.g.colorscheme == "nord" and ({
+	bg = "#2E3440",
+	black = "#3B4252",
 	yellow = "#EBCB8B",
 	cyan = "#88C0D0",
-	sky = "#89DCEB",
-	teal = "#8FBCBB",
+	oceanblue = "#81A1C1",
 	green = "#A3BE8C",
 	orange = "#D08770",
-	violet = "#F5C2E7",
-	magenta = "#B48EAD",
-	blue = "#81A1C1",
-	red = "#BF616A"
-}
+	violet = "#B48EAD",
+	magenta = "#BF616A",
+	white = "#ECEFF4",
+	fg = "#ECEFF4",
+	skyblue = "#8FBCBB",
+	red = "#BF616A",
+}) or ({
+	bg = "#303446",
+	black = "#292C3C",
+	yellow = "#F2D5CF",
+	cyan = "#81C8BE",
+	oceanblue = "#8CAAEE",
+	green = "#A6D189",
+	orange = "#EF9F76",
+	violet = "#CA9EE6",
+	magenta = "#E78284",
+	white = "#C6D0F5",
+	fg = "#C6D0F5",
+	skyblue = "#99D1DB",
+	red = "#E78284",
+})
 
 local vi_mode_colors = {
 	NORMAL = colors.green,
