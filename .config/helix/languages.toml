@@ -2,6 +2,10 @@
 name = "python"
 language-servers = [ "pyright", "ruff" ]
 
+[language.formatter]
+command = "black"
+args = ["--line-length", "88", "--quiet", "-"]
+
 [language-server.pyright.config.python.analysis]
 typeCheckingMode = "basic"
 
@@ -11,17 +15,13 @@ command = "ruff-lsp"
 [language-server.ruff.config.settings]
 args = ["--ignore", "E501"]
 
-[language.formatter]
-command = "black"
-args = ["--line-length", "88", "--quiet", "-"]
+[[language]]
+name = "html"
+formatter = { command = 'prettier', args = ["--parser", "html"] }
 
 [language-server.emmet-ls]
 args = ["--stdio"]
 command="emmet-ls"
-
-[[language]]
-name = "html"
-formatter = { command = 'prettier', args = ["--parser", "html"] }
 
 [[language]]
 name = "json"
@@ -50,6 +50,7 @@ auto-format = true
 name = "purescript"
 formatter = { command = 'purs-tidy', args = ["format"] }
 auto-format = true
+
 [[language]]
 name = "swift"
 formatter = { command = 'swift-format', args = ["format"] }
