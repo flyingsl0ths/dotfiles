@@ -47,6 +47,10 @@ formatter = { command = "stylish-haskell", args = [] }
 auto-format = true
 
 [[language]]
+name = "purescript"
+formatter = { command = 'purs-tidy', args = ["format"] }
+auto-format = true
+[[language]]
 name = "swift"
 formatter = { command = 'swift-format', args = ["format"] }
 auto-format = true
