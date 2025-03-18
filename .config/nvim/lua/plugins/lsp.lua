@@ -57,101 +57,28 @@ capabilities.textDocument.completion.completionItem.resolveSupport = {
 
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
-local servers = {
-	"bashls",
-	"biome",
-	"clangd",
-	"cmake",
-	"csharp_ls",
-	"cssls",
-	"denols",
-	"docker_compose_language_service",
-	"dockerls",
-	"eslint",
-	"gopls",
-	"groovyls",
-	"hls",
-	"html",
-	"jdtls",
-	"jsonls",
-	"kotlin_language_server",
-	"lua_ls",
-	"ocamllsp",
-	"purescriptls",
-	"pylsp",
-	"ruff",
-	"rust_analyzer",
-	"sourcekit",
-	"tailwindcss",
-	"ts_ls",
-	"zls",
-}
-
-local function configure_tailwindcss(opts)
-	local filetypes = {}
-
-	for _, filetype in ipairs(opts.filetypes) do
-		if not (filetype == "javascript" or filetype == "typescript") then
-			table.insert(filetypes, filetype)
-		end
-	end
-
-	opts.filetypes = filetypes
-end
-
-local function configure_hls(opts)
-	opts.settings = {
-		haskell = {
-			formattingProvider = "stylish-haskell",
-			plugin = {
-				hlint = {
-					diagnosticsOn = true
-				}
-			}
-		}
-	}
-end
-
-local function configure_jdtls(opts)
-	opts.cmd = { "jdtls" }
-	opts.root_dir = function(fname)
-		return require 'lspconfig'.util.root_pattern(
-			'build.xml', -- Ant
-			'pom.xml', -- Maven
-			'settings.gradle', -- Gradle
-			'settings.gradle.kts', -- Gradle
-			-- Multi-module projects
-			'build.gradle',
-			'build.gradle.kts',
-			".git"
-		)(fname) or vim.fn.getcwd()
-	end
-end
-
 local lsp_utils = require "conf_utils.lsp"
+
+local servers = lsp_utils.servers
 
 for _, lsp in pairs(servers) do
 	local server = lspconfig[lsp]
+
 	local opts = {
 		on_attach    = lsp_utils.on_attach,
 		capabilities = capabilities
 	}
 
 	if server.name == "hls" then
-		configure_hls(opts)
+		lsp_utils.configure_hls(opts)
 	elseif server.name == "jdtls" then
-		configure_jdtls(opts)
-	elseif server.name == "denols" then
-		opts.root_dir = function(fname)
-			return require 'lspconfig'.util.root_pattern(
-				"deno.json", "deno.jsonc"
-			)(fname)
-		end
+		lsp_utils.configure_jdtls(opts)
+	elseif server.name == "purescriptls" then
+		lsp_utils.configure_purescriptls(opts)
 	elseif server.name == "tailwindcss" then
-		opts.filetypes = server.config_def.default_config.filetypes
-		configure_tailwindcss(opts)
+		lsp_utils.configure_tailwindcss(server, opts)
 	elseif server.name == "sourcekit" then
-		opts.filetypes = { "swift", "objective-c", "objective-cpp" }
+		lsp_utils.configure_sourcekit(opts)
 	end
 
 	server.setup(opts)

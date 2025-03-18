@@ -55,5 +55,85 @@ return {
 
 		buf_set_keymap("v", "<space>ca",
 			"<cmd>lua vim.lsp.buf.range_code_action()<CR>", opts)
-	end
+	end,
+
+	servers = {
+		"bashls",
+		"biome",
+		"clangd",
+		"cmake",
+		"csharp_ls",
+		"cssls",
+		"denols",
+		"docker_compose_language_service",
+		"dockerls",
+		"eslint",
+		"gopls",
+		"groovyls",
+		"hls",
+		"html",
+		"jdtls",
+		"jsonls",
+		"kotlin_language_server",
+		"lua_ls",
+		"ocamllsp",
+		"purescriptls",
+		"pylsp",
+		"ruff",
+		"rust_analyzer",
+		"sourcekit",
+		"tailwindcss",
+		"ts_ls",
+		"zls",
+	},
+
+	configure_tailwindcss = function(server, opts)
+		opts.filetypes = server.config_def.default_config.filetypes
+
+		local filetypes = {}
+
+		for _, filetype in ipairs(opts.filetypes) do
+			if not (filetype == "javascript" or filetype == "typescript") then
+				table.insert(filetypes, filetype)
+			end
+		end
+
+		opts.filetypes = filetypes
+	end,
+
+	configure_sourcekit = function(opts)
+		opts.filetypes = { "swift", "objc", "objcpp" }
+	end,
+
+	configure_purescriptls = function(opts)
+		opts.settings = { purescript = { formatter = "purs-tidy" } }
+	end,
+
+	configure_hls = function(opts)
+		opts.settings = {
+			haskell = {
+				formattingProvider = "stylish-haskell",
+				plugin = {
+					hlint = {
+						diagnosticsOn = true
+					}
+				}
+			}
+		}
+	end,
+
+	configure_jdtls = function(opts)
+		opts.cmd = { "jdtls" }
+		opts.root_dir = function(fname)
+			return require 'lspconfig'.util.root_pattern(
+				'build.xml', -- Ant
+				'pom.xml', -- Maven
+				'settings.gradle', -- Gradle
+				'settings.gradle.kts', -- Gradle
+				-- Multi-module projects
+				'build.gradle',
+				'build.gradle.kts'
+			)(fname) or vim.fn.getcwd()
+		end
+	end,
 }
