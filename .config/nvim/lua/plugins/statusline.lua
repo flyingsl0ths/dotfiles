@@ -79,7 +79,7 @@ table.insert(components.active[LEFT_SIDE], {
 		opts = { colored_icon = false, type = "relative" }
 	},
 	hl = function()
-		return { fg = colors.bg, bg = colors.blue }
+		return { fg = colors.bg, bg = colors.oceanblue }
 	end,
 	left_sep = "block",
 	right_sep = "right_rounded"
@@ -116,7 +116,7 @@ table.insert(components.active[LEFT_SIDE], {
 	enabled = function()
 		return lsp.diagnostics_exist(vim.diagnostic.severity.INFO)
 	end,
-	hl = { fg = colors.blue }
+	hl = { fg = colors.oceanblue }
 })
 
 table.insert(components.active[LEFT_SIDE], {
@@ -165,7 +165,7 @@ table.insert(components.active[RIGHT_SIDE],
 table.insert(components.active[RIGHT_SIDE], {
 	provider = "scroll_bar",
 	left_sep = " ",
-	hl = { fg = colors.blue, style = "bold" }
+	hl = { fg = colors.oceanblue, style = "bold" }
 
 })
 
