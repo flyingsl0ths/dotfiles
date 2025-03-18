@@ -121,19 +121,4 @@ return {
 			}
 		}
 	end,
-
-	configure_jdtls = function(opts)
-		opts.cmd = { "jdtls" }
-		opts.root_dir = function(fname)
-			return require 'lspconfig'.util.root_pattern(
-				'build.xml', -- Ant
-				'pom.xml', -- Maven
-				'settings.gradle', -- Gradle
-				'settings.gradle.kts', -- Gradle
-				-- Multi-module projects
-				'build.gradle',
-				'build.gradle.kts'
-			)(fname) or vim.fn.getcwd()
-		end
-	end,
 }

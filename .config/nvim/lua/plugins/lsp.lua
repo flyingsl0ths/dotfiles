@@ -71,8 +71,6 @@ for _, lsp in pairs(servers) do
 
 	if server.name == "hls" then
 		lsp_utils.configure_hls(opts)
-	elseif server.name == "jdtls" then
-		lsp_utils.configure_jdtls(opts)
 	elseif server.name == "purescriptls" then
 		lsp_utils.configure_purescriptls(opts)
 	elseif server.name == "tailwindcss" then
