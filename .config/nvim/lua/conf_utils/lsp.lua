@@ -86,6 +86,9 @@ return {
 		"ts_ls",
 		"zls",
 	},
+	configure_clangd = function(opts)
+		opts.cmd = { "clangd", "--clang-tidy" }
+	end,
 
 	configure_tailwindcss = function(server, opts)
 		opts.filetypes = server.config_def.default_config.filetypes

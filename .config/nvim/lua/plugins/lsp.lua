@@ -69,7 +69,10 @@ for _, lsp in pairs(servers) do
 		capabilities = capabilities
 	}
 
-	if server.name == "hls" then
+
+	if server.name == "clangd" then
+		lsp_utils.configure_clangd(opts)
+	elseif server.name == "hls" then
 		lsp_utils.configure_hls(opts)
 	elseif server.name == "purescriptls" then
 		lsp_utils.configure_purescriptls(opts)
