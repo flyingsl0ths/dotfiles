@@ -10,15 +10,21 @@ vim.keymap.set("n", "<Right>", ":echo 'Use l'<CR>", default_options)
 vim.keymap.set("n", "<Up>", ":echo 'Use k'<CR>", default_options)
 vim.keymap.set("n", "<Down>", ":echo 'Use j'<CR>", default_options)
 
--- Cursor mappings
+-- Cursor
 vim.keymap.set("n", "<leader>hc", "*<CR>", silent_options)
 vim.keymap.set("n", "<leader><CR>", ":noh<CR>", silent_options)
+vim.keymap.set("n", "<leader>sc", '"syiw/<C-r>s<CR>', { noremap = true })
 
--- Substitution mappings
+-- Substitution
 vim.api.nvim_set_keymap('x', '<leader>sr', '"sy:\'<,\'>s/<C-r>s//g<Left><Left>',
 	{ noremap = true, silent = true })
 
--- Move.nvim mappings
+vim.keymap.set("v", "<leader>r", '"sy:%s/<C-r>s//<Left>', { noremap = true })
+
+-- Selection
+vim.keymap.set("v", "<S-f>", '"sy/<C-r>s<CR>', { noremap = true })
+
+-- Move.nvim
 vim.keymap.set("n", "<A-j>", ":MoveLine(1)<CR>", default_options)
 vim.keymap.set("n", "<A-k>", ":MoveLine(-1)<CR>", default_options)
 vim.keymap.set("n", "<A-h>", ":MoveHChar(-1)<CR>", default_options)
@@ -64,8 +70,9 @@ vim.keymap.set("n", "<leader>n", ":set nu!<CR>", default_options)
 vim.keymap.set("n", "<leader>sp", ":setlocal spell!<CR>", default_options)
 
 -- Copy/Paste
-vim.keymap.set("v", "<C-q>", '"+y', default_options)
-vim.keymap.set("n", "<C-w>", '"+p', default_options)
+vim.keymap.set({ "n", "v" }, "<A-q>", '"+y', default_options)
+vim.keymap.set("n", "<A-w>", '"+p', default_options)
+
 
 -- Terminal commands
 vim.keymap.set("t", "jk", "<C-\\><C-n>", default_options)
@@ -110,3 +117,6 @@ vim.keymap.set("n", "<leader>lz", ":Lazy<CR>", default_options)
 vim.keymap.set("n", "<leader>d", ":NvimTreeToggle<CR>", default_options)
 vim.keymap.set("n", "<leader>sr", ":source %<CR>", default_options)
 vim.keymap.set("n", "<leader>ss", ":SymbolsOutline<CR>", default_options)
+
+-- Etc
+vim.keymap.set("n", "<leader>x", "<cmd>!chmod +x %<CR>", { silent = true })
