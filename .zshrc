@@ -21,15 +21,15 @@ elif [[ "$OSTYPE" == "darwin"* ]]; then
   done
 fi
 
+export PATH=$PATH:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.cargo/bin:$HOME/.npm-global:$HOME/.npm-global/bin:$HOME/go/bin
+
 # BEGIN opam configuration
 # This is useful if you're using opam as it adds:
 #   - the correct directories to the PATH
 #   - auto-completion for the opam binary
 # This section can be safely removed at any time if needed.
-[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" >/dev/null 2>/dev/null
+[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
 # END opam configuration
-
-export PATH=$PATH:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.cargo/bin:$HOME/.npm-global:$HOME/.npm-global/bin:$HOME/go/bin
 
 PROMPT="%F{244}%f%F{74}%f%F{111}%f %F{153}𝝺%f %F{7}%~%f "
 
