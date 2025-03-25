@@ -13,13 +13,14 @@ vim.keymap.set("n", "<Down>", ":echo 'Use j'<CR>", default_options)
 -- Cursor
 vim.keymap.set("n", "<leader>hc", "*<CR>", silent_options)
 vim.keymap.set("n", "<leader><CR>", ":noh<CR>", silent_options)
-vim.keymap.set("n", "<leader>sc", '"syiw/<C-r>s<CR>', { noremap = true })
+vim.keymap.set("n", "<leader>sc", '"syiw/<C-r>s<CR>', default_options)
 
 -- Substitution
 vim.api.nvim_set_keymap('x', '<leader>sr', '"sy:\'<,\'>s/<C-r>s//g<Left><Left>',
 	{ noremap = true, silent = true })
 
-vim.keymap.set("v", "<leader>r", '"sy:%s/<C-r>s//<Left>', { noremap = true })
+vim.keymap.set("v", "<leader>r", '"sy:\'<,\'>s/<C-r>s//<Left>', { noremap = true })
+vim.keymap.set("v", "<leader>gr", '"sy:%s/<C-r>s//<Left>', { noremap = true })
 
 -- Selection
 vim.keymap.set("v", "<S-f>", '"sy/<C-r>s<CR>', { noremap = true })
