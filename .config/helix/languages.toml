@@ -1,13 +1,8 @@
 [[language]]
 name = "python"
-language-servers = [ "pyright", "ruff" ]
-
-[language.formatter]
-command = "black"
-args = ["--line-length", "88", "--quiet", "-"]
-
-[language-server.pyright.config.python.analysis]
-typeCheckingMode = "basic"
+language-servers = [ "basedpyright" , "ruff"]
+formatter = { command = "ruff", args = ["format", "--line-length", "80", "-"] }
+auto-format = true
 
 [language-server.ruff]
 command = "ruff-lsp"
@@ -17,7 +12,7 @@ args = ["--ignore", "E501"]
 
 [[language]]
 name = "html"
-formatter = { command = 'prettier', args = ["--parser", "html"] }
+formatter = { command = 'biome', args = ["format"] }
 
 [language-server.emmet-ls]
 args = ["--stdio"]
@@ -25,20 +20,20 @@ command="emmet-ls"
 
 [[language]]
 name = "json"
-formatter = { command = 'prettier', args = ["--parser", "json"] }
+formatter = { command = 'biome', args = ["format"] }
 
 [[language]]
 name = "css"
-formatter = { command = 'prettier', args = ["--parser", "css"] }
+formatter = { command = 'biome', args = ["format"] }
 
 [[language]]
 name = "javascript"
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
+formatter = { command = 'biome', args = ["format"] }
 auto-format = true
 
 [[language]]
 name = "typescript"
-formatter = { command = 'prettier', args = ["--parser", "typescript"] }
+formatter = { command = 'biome', args = ["format"] }
 auto-format = true
 
 [[language]]

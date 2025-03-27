@@ -39,5 +39,5 @@
 *dmenu.selbackground: #96CDFB
 *dmenu.selforeground: #1E1E2E
 
-! Xft.dpi: 213
-! Xcursor.size: 32
+Xft.dpi: 203
+Xcursor.size: 32

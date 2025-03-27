@@ -1,3 +1,5 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/fsl0ths/.zsh/completions:"* ]]; then export FPATH="/home/fsl0ths/.zsh/completions:$FPATH"; fi
 export FZF_DEFAULT_COMMAND='fd --type d -H'
 export ZSH_PLUGINS_DIR=$HOME/.zsh
 export _ZO_ECHO=0
@@ -191,3 +193,7 @@ alias zrc="nvim ~/.zshrc"
 alias cd="z"
 alias purs-f="purs-tidy format-in-place"
 alias lzg="lazygit"
+. "/home/fsl0ths/.deno/env"
+# Initialize zsh completions (added by deno install script)
+autoload -Uz compinit
+compinit
