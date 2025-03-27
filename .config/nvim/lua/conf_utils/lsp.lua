@@ -1,3 +1,5 @@
+local lsp_utils = require "lspconfig.util"
+
 return {
 	on_attach = function(_, bufnr)
 		local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
@@ -88,6 +90,15 @@ return {
 	},
 	configure_clangd = function(opts)
 		opts.cmd = { "clangd", "--clang-tidy" }
+	end,
+
+	configure_ts_ls = function(opts)
+		opts.root_dir = lsp_utils.root_pattern('tsconfig.json', 'jsconfig.json', 'package.json')
+		opts.single_file_support = false
+	end,
+
+	configure_denols = function(opts)
+		opts.root_dir = lsp_utils.root_pattern('deno.json', 'deno.jsonc')
 	end,
 
 	configure_tailwindcss = function(server, opts)

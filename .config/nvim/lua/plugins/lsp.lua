@@ -72,6 +72,10 @@ for _, lsp in pairs(servers) do
 
 	if server.name == "clangd" then
 		lsp_utils.configure_clangd(opts)
+	elseif server.name == "denols" then
+		lsp_utils.configure_denols(opts)
+	elseif server.name == "ts_ls" then
+		lsp_utils.configure_ts_ls(opts)
 	elseif server.name == "hls" then
 		lsp_utils.configure_hls(opts)
 	elseif server.name == "purescriptls" then
