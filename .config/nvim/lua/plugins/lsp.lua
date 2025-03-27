@@ -32,12 +32,6 @@ local capabilities = vim.lsp.protocol.make_client_capabilities()
 
 capabilities.textDocument.completion.completionItem.snippetSupport = true
 
-lspconfig.emmet_ls.setup {
-	capabilities = capabilities,
-
-	root_dir = function() return vim.loop.cwd() end,
-}
-
 capabilities.textDocument.completion.completionItem.documentationFormat = {
 	"markdown", "plaintext"
 }
@@ -74,6 +68,8 @@ for _, lsp in pairs(servers) do
 		lsp_utils.configure_clangd(opts)
 	elseif server.name == "denols" then
 		lsp_utils.configure_denols(opts)
+	elseif server.name == "emmet_ls" then
+		lsp_utils.configure_emmet_ls(opts)
 	elseif server.name == "ts_ls" then
 		lsp_utils.configure_ts_ls(opts)
 	elseif server.name == "hls" then

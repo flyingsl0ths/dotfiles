@@ -69,6 +69,7 @@ return {
 		"denols",
 		"docker_compose_language_service",
 		"dockerls",
+		"emmet_ls",
 		"eslint",
 		"gopls",
 		"groovyls",
@@ -88,6 +89,11 @@ return {
 		"ts_ls",
 		"zls",
 	},
+
+	configure_emmet_ls = function(opts)
+		opts.root_dir = function() return vim.loop.cwd() end
+	end,
+
 	configure_clangd = function(opts)
 		opts.cmd = { "clangd", "--clang-tidy" }
 	end,
