@@ -45,9 +45,9 @@ SAVEHIST=1000
 HISTSIZE=999
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  TERMINAL=/usr/local/bin/alacritty
+  TERMINAL=/usr/local/bin/ghostty
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  TERMINAL=/Applications/Alacritty.app/Contents/MacOS/alacritty
+  TERMINAL=/Applications/Ghostty.app/Contents/MacOS/ghostty
 fi
 
 # enable vi mode
