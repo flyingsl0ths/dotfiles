@@ -1,3 +1,4 @@
+# Add deno completions to search path
 if [[ ":$FPATH:" != *":$HOME/.zsh/completions:"* ]]; then export FPATH="$HOME/.zsh/completions:$FPATH"; fi
 
 export FZF_DEFAULT_COMMAND='fd --type d -H'
@@ -10,17 +11,17 @@ export FZF_DEFAULT_OPTS=$FZF_DEFAULT_OPTS'
     --color=marker:#a3be8b,spinner:#b48dac,header:#a3be8b'
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  export ANDROID_HOME=$HOME/Android/Sdk
-  export ANDROID_SDK_ROOT=$ANDROID_HOME
-  export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
+	export ANDROID_HOME=$HOME/Android/Sdk
+	export ANDROID_SDK_ROOT=$ANDROID_HOME
+	export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  export ANDROID_HOME=$HOME/Library/Android/sdk
-  export ANDROID_SDK_ROOT=$ANDROID_HOME
-  export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
-  export PATH="/opt/homebrew/opt/llvm/bin:$PATH:/opt/homebrew/bin"
-  for version in $(ls "$HOME/Library/Python"); do
-    export PATH=$PATH:"$HOME/Library/Python/$version/bin"
-  done
+	export ANDROID_HOME=$HOME/Library/Android/sdk
+	export ANDROID_SDK_ROOT=$ANDROID_HOME
+	export PATH=$PATH:$ANDROID_SDK_ROOT/emulator:$ANDROID_SDK_ROOT/platform-tools
+	export PATH="/opt/homebrew/opt/llvm/bin:$PATH:/opt/homebrew/bin"
+	for version in $(ls "$HOME/Library/Python"); do
+		export PATH=$PATH:"$HOME/Library/Python/$version/bin"
+	done
 fi
 
 export PATH=$PATH:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.cargo/bin:$HOME/.npm-global:$HOME/.npm-global/bin:$HOME/go/bin
@@ -30,7 +31,7 @@ export PATH=$PATH:$HOME/.local/bin:$HOME/.cabal/bin:$HOME/.cargo/bin:$HOME/.npm-
 #   - the correct directories to the PATH
 #   - auto-completion for the opam binary
 # This section can be safely removed at any time if needed.
-[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" > /dev/null 2> /dev/null
+[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" >/dev/null 2>/dev/null
 # END opam configuration
 
 PROMPT="%F{244}%f%F{74}%f%F{111}%f %F{153}𝝺%f %F{7}%~%f "
@@ -45,9 +46,9 @@ SAVEHIST=1000
 HISTSIZE=999
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  TERMINAL=/usr/local/bin/ghostty
+	TERMINAL=/usr/local/bin/ghostty
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  TERMINAL=/Applications/Ghostty.app/Contents/MacOS/ghostty
+	TERMINAL=/Applications/Ghostty.app/Contents/MacOS/ghostty
 fi
 
 # enable vi mode
@@ -70,31 +71,36 @@ eval "$(zoxide init zsh)"
 function sd() cd && cd $(fzf)
 
 function zed() {
-  if [ -n "$1" ] && [ "$1" = "q" ]; then
-    quit_after=true
-  else
-    quit_after=false
-  fi
+	if [ -n "$1" ] && [ "$1" = "q" ]; then
+		quit_after=true
+	else
+		quit_after=false
+	fi
 
-  if [[ "$OSTYPE" == "darwin"* ]]; then
-    if [ "$quit_after" = true ]; then
-      open -a "Zed" && exit
-    else
-      open -a "Zed"
-    fi
-  elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
+	if [[ "$OSTYPE" == "darwin"* ]]; then
+		if [ "$quit_after" = true ]; then
+			open -a "Zed" && exit
+		else
+			open -a "Zed"
+		fi
+	elif [[ "$OSTYPE" == "linux-gnu"* ]]; then
 
-    if [ "$quit_after" = true ]; then
-      zeditor && exit
-    else
-      zeditor
-    fi
-  fi
+		if [ "$quit_after" = true ]; then
+			zeditor && exit
+		else
+			zeditor
+		fi
+	fi
+}
+
+function ppea() {
+	"eval $(poetry env activate)"
 }
 
 alias py="python3"
 alias pip_install="pip3 install --user"
 alias bpy="bpython"
+alias ppy="poetry run python"
 alias cc="noglob cc"
 
 alias sql_login="doas mycli -u root"
@@ -147,10 +153,10 @@ alias n="nvim"
 alias v="TERM=xterm-256color vim"
 
 if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-  alias e="helix"
-  alias hx="helix"
+	alias e="helix"
+	alias hx="helix"
 elif [[ "$OSTYPE" == "darwin"* ]]; then
-  alias e="hx"
+	alias e="hx"
 fi
 
 alias zth="zathura"
@@ -193,6 +199,7 @@ alias zrc="nvim ~/.zshrc"
 alias cd="z"
 alias purs-f="purs-tidy format-in-place"
 alias lzg="lazygit"
+
 . "$HOME/.deno/env"
 # Initialize zsh completions (added by deno install script)
 autoload -Uz compinit
