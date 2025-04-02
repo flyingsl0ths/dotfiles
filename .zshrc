@@ -54,16 +54,13 @@ fi
 # enable vi mode
 bindkey -v
 
-zstyle ':autocomplete:tab:*' widget-style menu-select
-zstyle ':autocomplete:*' min-input 2
+# zstyle ':autocomplete:tab:*' widget-style menu-select
+# zstyle ':autocomplete:*' min-input 2
 
 #pokemon-colorscripts -r --no-title
 
-source $ZSH_PLUGINS_DIR/zsh-autosuggestions/zsh-autosuggestions.zsh
 source $ZSH_PLUGINS_DIR/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-source $ZSH_PLUGINS_DIR/zsh-autocomplete/zsh-autocomplete.plugin.zsh
-
-eval "$(zoxide init zsh)"
+source $ZSH_PLUGINS_DIR/zsh-autosuggestions/zsh-autosuggestions.plugin.zsh
 
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 [ -f $HOME/.config/broot/launcher/bash/br ] && source $HOME/.config/broot/launcher/bash/br
@@ -204,3 +201,4 @@ alias lzg="lazygit"
 # Initialize zsh completions (added by deno install script)
 autoload -Uz compinit
 compinit
+eval "$(zoxide init zsh)"
