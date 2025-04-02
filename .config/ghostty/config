@@ -3,3 +3,13 @@ font-size = 22
 cursor-style = block_hollow
 theme = "catppuccin-frappe"
 window-padding-x = 4
+
+keybind = ctrl+a>w=new_split:up
+keybind = ctrl+a>a=new_split:left
+keybind = ctrl+a>s=new_split:down
+keybind = ctrl+a>d=new_split:right
+
+keybind = ctrl+a>i=goto_split:up
+keybind = ctrl+a>j=goto_split:left
+keybind = ctrl+a>k=goto_split:down
+keybind = ctrl+a>l=goto_split:right
