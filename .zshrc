@@ -140,6 +140,7 @@ alias dcr="gpg --quiet -d"
 
 alias mkdir="mkdir -p"
 alias rmdir="rm -r"
+alias rm="rm -i"
 
 alias pf="paste_file"
 alias sp="scratchpad"
