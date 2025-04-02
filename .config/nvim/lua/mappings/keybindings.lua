@@ -94,14 +94,14 @@ vim.keymap.set("n", "<leader>t", ":Telescope<CR>", default_options)
 vim.keymap.set("n", "<leader>ff", ":Telescope find_files<CR>", default_options)
 vim.keymap.set("n", "<leader>lg", ":Telescope live_grep<CR>", default_options)
 vim.keymap.set("n", "<leader>ht", ":Telescope help_tags<CR>", default_options)
-vim.keymap.set("n", "<leader>bb", ":Telescope buffers<CR>", default_options)
+vim.keymap.set("n", "<leader>b", ":Telescope buffers<CR>", default_options)
 vim.keymap.set("n", "<leader>kk", ":Telescope keymaps<CR>", default_options)
 vim.keymap.set("n", "<leader>sh", ":Telescope search_history<CR>", default_options)
-vim.keymap.set("n", "<leader>sh", ":Telescope search_history<CR>", default_options)
+vim.keymap.set("n", "<leader>zl", ":Telescope zoxide list<CR>", default_options)
 
 -- Telescope:Git
 vim.keymap.set("n", "<leader>cs", ":Telescope git_commits<CR>", default_options)
-vim.keymap.set("n", "<leader>bs", ":Telescope git_branches<CR>", default_options)
+vim.keymap.set("n", "<leader>br", ":Telescope git_branches<CR>", default_options)
 
 -- Telescope:Lsp
 vim.keymap.set("n", "<C-e>", "<cmd>lua vim.diagnostic.open_float()<CR>", default_options)
